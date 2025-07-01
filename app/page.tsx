@@ -11,7 +11,6 @@ import { Github, Linkedin, Mail, Phone, MapPin, Download, ExternalLink } from "l
 import { useRef } from "react"
 import { FloatingNavbar } from "@/components/floating-navbar"
 
-
 import { ProjectsShowcase } from "@/components/projects-showcase"
 import { SkillsExpertise } from "@/components/skills-expertise"
 import { ScrollToTop } from "@/components/scroll-to-top"
@@ -20,32 +19,15 @@ import { HeroSection } from "@/components/hero-section"
 import { ScrollProgress } from "@/components/scrollProgress"
 import Experience from "@/components/experience"
 
-
-
-
-
-
 export default function Portfolio() {
- 
-
-
-
-
-
-
   return (
-    
     <>
-      <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
+      <div className="min-h-screen bg-background text-foreground transition-colors duration-300 text-base sm:text-lg md:text-xl">
         <FloatingNavbar />
         <HeroSection />
 
-   
-
         <SkillsExpertise />
-      
         <ProjectsShowcase />
-
         <Experience />
 
         {/* Contact Section */}
@@ -58,14 +40,14 @@ export default function Portfolio() {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 caveat-bold">
+              <h2 className="text-xl sm:text-3xl md:text-5xl font-bold mb-6 caveat-bold">
                 Let's{" "}
                 <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent caveat-text">
                   Connect
                 </span>
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8"></div>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
                 Ready to bring your ideas to life? Let's discuss your next project.
               </p>
             </motion.div>
@@ -83,8 +65,8 @@ export default function Portfolio() {
                     <Mail className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">Email</h3>
-                    <p className="text-muted-foreground">sachitdahal33@gmail.com</p>
+                    <h3 className="font-semibold text-base sm:text-lg">Email</h3>
+                    <p className="text-sm sm:text-base text-muted-foreground">sachitdahal33@gmail.com</p>
                   </div>
                 </div>
 
@@ -93,8 +75,8 @@ export default function Portfolio() {
                     <Phone className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">Phone</h3>
-                    <p className="text-muted-foreground">+977 9803033781</p>
+                    <h3 className="font-semibold text-base sm:text-lg">Phone</h3>
+                    <p className="text-sm sm:text-base text-muted-foreground">+977 9803033781</p>
                   </div>
                 </div>
 
@@ -103,8 +85,8 @@ export default function Portfolio() {
                     <MapPin className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">Location</h3>
-                    <p className="text-muted-foreground">Pasikot, Kathmandu, Nepal</p>
+                    <h3 className="font-semibold text-base sm:text-lg">Location</h3>
+                    <p className="text-sm sm:text-base text-muted-foreground">Pasikot, Kathmandu, Nepal</p>
                   </div>
                 </div>
 
@@ -157,29 +139,29 @@ export default function Portfolio() {
                     <form className="space-y-6">
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-sm font-medium mb-2 block">Name</label>
-                          <Input placeholder="Your name" className="bg-background/50" />
+                          <label className="text-base sm:text-sm font-medium mb-2 block">Name</label>
+                          <Input placeholder="Your name" className="bg-background/50 text-base sm:text-sm" />
                         </div>
                         <div>
-                          <label className="text-sm font-medium mb-2 block">Email</label>
-                          <Input type="email" placeholder="your@email.com" className="bg-background/50" />
+                          <label className="text-base sm:text-sm font-medium mb-2 block">Email</label>
+                          <Input type="email" placeholder="your@email.com" className="bg-background/50 text-base sm:text-sm" />
                         </div>
                       </div>
                       <div>
-                        <label className="text-sm font-medium mb-2 block">Subject</label>
-                        <Input placeholder="Project discussion" className="bg-background/50" />
+                        <label className="text-base sm:text-sm font-medium mb-2 block">Subject</label>
+                        <Input placeholder="Project discussion" className="bg-background/50 text-base sm:text-sm" />
                       </div>
                       <div>
-                        <label className="text-sm font-medium mb-2 block">Message</label>
+                        <label className="text-base sm:text-sm font-medium mb-2 block">Message</label>
                         <Textarea
                           placeholder="Tell me about your project..."
-                          className="min-h-[120px] bg-background/50 resize-none"
+                          className="min-h-[120px] bg-background/50 resize-none text-base sm:text-sm"
                         />
                       </div>
                       <Button
                         type="submit"
                         size="lg"
-                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-base sm:text-lg"
                       >
                         Send Message
                       </Button>
@@ -194,7 +176,7 @@ export default function Portfolio() {
         {/* Footer */}
         <footer className="py-8 border-t">
           <div className="container mx-auto px-4 text-center">
-            <p className="text-muted-foreground">
+            <p className="text-sm sm:text-base text-muted-foreground">
               © {new Date().getFullYear()} Sachit Dahal. Crafted with passion and code.
             </p>
           </div>
