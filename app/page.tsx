@@ -25,6 +25,7 @@ export default function Portfolio() {
       <div className="min-h-screen bg-background text-foreground transition-colors duration-300 text-base sm:text-lg md:text-xl">
         <FloatingNavbar />
         <HeroSection />
+        
 
         <SkillsExpertise />
         <ProjectsShowcase />

@@ -40,23 +40,24 @@ const AnimatedCounter = ({ end, duration = 2000 }: { end: number; duration?: num
     </span>
   )
 }
-
 export default function About() {
   return (
-    <section id="about" className="py-20">
+    <section id="about" className="py-24 sm:py-32">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true, amount: 0.2 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-4xl caveat-bold md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-6">About Me</h2>
+          <h2 className="text-4xl caveat-bold md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-6">
+            About Me
+          </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -99,6 +100,7 @@ export default function About() {
                 <div className="text-sm text-muted-foreground">Years Experience</div>
               </div>
             </div>
+            
           </motion.div>
         </div>
       </div>

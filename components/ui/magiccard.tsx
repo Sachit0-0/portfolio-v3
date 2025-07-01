@@ -1,4 +1,4 @@
-import Image from "next/image"
+import Image from "next/image";
 
 const MagicCard = () => {
   return (
@@ -20,25 +20,31 @@ const MagicCard = () => {
           <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
         </svg>
       </button>
-      <div className="profile-pic" style={{ position: "relative", width: "100%", height: "auto", aspectRatio: "1 / 1" }}>
-        <Image
-          src="https://as2.ftcdn.net/jpg/03/10/98/07/1000_F_310980750_HIO0JpkHvjkrYfmYq5S2qTdkoSqeO8hW.jpg"
-          alt="Sachit"
-          fill
-          style={{ objectFit: "cover", borderRadius: "inherit" }}
-          priority
-        />
+      <div className="profile-pic">
+      <Image
+  src="https://as2.ftcdn.net/jpg/03/10/98/07/1000_F_310980750_HIO0JpkHvjkrYfmYq5S2qTdkoSqeO8hW.jpg"
+  alt="Sachit"
+  fill
+  className="object-cover rounded-full"
+/>
+
+
+
+
+
+
+
       </div>
       <div className="bottom">
         <div className="content">
           <span className="name">Sachit</span>
-          <span className="about-me">
-            Hey please free to reach out to me for any queries, suggestions or just to say hi.
+          <span className="about-me"
+            >Hey free to reach out to me for suggestions or just to say hi.
           </span>
         </div>
         <div className="bottom-bottom">
           <div className="social-links-container">
-            {/* SVG icons unchanged */}
+
             <svg
               viewBox="0 0 16 15.999"
               height="15.999"
@@ -68,7 +74,7 @@ const MagicCard = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MagicCard
+export default MagicCard;
