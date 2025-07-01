@@ -294,7 +294,7 @@ function TechCard({ tech, index }: TechCardProps) {
 	)
 }
 
-export function TechShowcase() {
+export default function TechShowcase() {
     const [mounted, setMounted] = useState(false)
 
     useEffect(() => {

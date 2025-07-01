@@ -1,14 +1,17 @@
 "use client"
 
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ArrowDown, Github, Linkedin, Mail, Download, Terminal, Code, Coffee, Zap, ExternalLink, Database, Server } from "lucide-react"
 import { useRef, useState, useEffect } from "react"
 import Image from "next/image"
 import sachit from "@/public/sachitt.jpg"
-import MagicCard from "@/components/ui/magiccard"
+import CvButton from "./ui/cvButton"
+import SocialButtons from "./ui/socialButtons"
+import About from "./aboutSection"
+
+
 
 const AnimatedCounter = ({ end, duration = 2000 }: { end: number; duration?: number }) => {
   const [count, setCount] = useState(0)
@@ -100,7 +103,7 @@ export function HeroSection() {
 
             {/* Name */}
             <motion.h1
-              className="text-4xl   sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight bg-gradient-to-r from-blue-600 via-slate-400 to-purple-600 bg-clip-text text-transparent drop-shadow-2xl"
+              className="text-4xl caveat-text  sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight bg-gradient-to-r from-blue-600 via-slate-400 to-purple-600 bg-clip-text text-transparent drop-shadow-2xl"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -111,7 +114,7 @@ export function HeroSection() {
 
             {/* Title */}
             <motion.div
-              className="text-xl sm:text-2xl lg:text-3xl font-semibold text-primary"
+              className="text-xl indie-text sm:text-2xl lg:text-3xl font-semibold text-primary"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -121,65 +124,22 @@ export function HeroSection() {
 
             {/* Description */}
             <motion.p
-              className="text-base sm:text-lg lg:text-xl xl:text-2xl text-muted-foreground leading-relaxed max-w-2xl"
+              className="text-base indie-text sm:text-lg lg:text-xl xl:text-2xl text-muted-foreground leading-relaxed max-w-2xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               Building scalable, responsive web applications with React, Next.js, and Django.
               <br className="hidden sm:block" />
+              
               <span className="block sm:inline"> Passionate about creating exceptional user experiences.</span>
             </motion.p>
 
             {/* CTA Buttons */}
-            <motion.div
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-            >
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-blue-600 to-slate-600 hover:from-blue-700 hover:to-slate-700 text-white px-6 py-3 lg:px-8 lg:py-4 text-base lg:text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <Download className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
-                Curriculum vitae
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="px-6 py-3 lg:px-8 lg:py-4 text-base lg:text-lg rounded-full border-2 hover:bg-foreground hover:text-background transition-all duration-300 bg-transparent"
-                onClick={() => scrollToSection("projects")}
-              >
-                View My Work
-              </Button>
-            </motion.div>
-
+          
+            <CvButton />
             {/* Social Links */}
-            <motion.div
-              className="flex space-x-3 lg:space-x-4"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1 }}
-            >
-              {[
-                { icon: Github, href: "https://github.com/Sachit0-0", label: "GitHub" },
-                { icon: Linkedin, href: "https://www.linkedin.com/in/sachit-da-hal-59a05b212/", label: "LinkedIn" },
-                { icon: Mail, href: "mailto:sachitdahal33@gmail.com", label: "Email" },
-              ].map((social, index) => (
-                <motion.a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-muted/50 backdrop-blur-sm border border-border/50 flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <social.icon className="w-4 h-4 lg:w-5 lg:h-5" />
-                </motion.a>
-              ))}
-            </motion.div>
+           <SocialButtons />
           </motion.div>
 
           {/* Right Side - Floating Elements */}
@@ -517,70 +477,8 @@ export function HeroSection() {
         </div>
       </motion.div>
            {/* About Section */}
-              <section id="about" className="py-20">
-                <div className="container mx-auto px-4">
-                  <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    className="text-center mb-16"
-                  >
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6">About Me</h2>
-                    <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8"></div>
-                  </motion.div>
-      
-                  <div className="grid md:grid-cols-2 gap-12 items-center">
-                    <motion.div
-                      initial={{ opacity: 0, x: -50 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.8 }}
-                      viewport={{ once: true }}
-                    >
-                      <MagicCard />
-                    </motion.div>
-      
-                    <motion.div
-                      initial={{ opacity: 0, x: 50 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.8 }}
-                      viewport={{ once: true }}
-                      className="space-y-6"
-                    >
-                      <p className="text-lg text-muted-foreground leading-relaxed">
-                        I'm a passionate full-stack web developer with 2+ years of experience building scalable, responsive,
-                        and user-friendly web applications. I specialize in React, Next.js, Django, and modern UI/UX
-                        principles.
-                      </p>
-      
-                      <p className="text-lg text-muted-foreground leading-relaxed">
-                        Based in Kathmandu, Nepal, I have a proven track record of delivering high-quality code and
-                        collaborating effectively with cross-functional teams. I'm passionate about creating innovative
-                        solutions that make a real impact.
-                      </p>
-      
-                      <div className="grid grid-cols-2 gap-8 pt-8">
-                        <div className="text-center">
-                          <div className="text-3xl font-bold text-primary">
-                            <AnimatedCounter end={15} />+
-                          </div>
-                          <div className="text-sm text-muted-foreground">Projects Completed</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-3xl font-bold text-primary">
-                            <AnimatedCounter end={2} />+
-                          </div>
-                          <div className="text-sm text-muted-foreground">Years Experience</div>
-                        </div>
-                      </div>
-      
-                      <div className="pt-6">
-                    
-                      </div>
-                    </motion.div>
-                  </div>
-                </div>
-              </section>
+           <About />
+           
               </section>
   )
 }

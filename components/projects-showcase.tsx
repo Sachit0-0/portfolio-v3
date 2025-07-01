@@ -141,12 +141,12 @@ export function ProjectsShowcase() {
 					animate={isInView ? { opacity: 1, y: 0 } : {}}
 					transition={{ duration: 0.8 }}
 				>
-					<h2 className="text-5xl md:text-6xl font-bold mb-6">
+					<h2 className="text-5xl caveat-bold md:text-6xl text-primary font-bold mb-6">
 						Featured{" "}
 						<span className=" text-">Projects</span>
 					</h2>
 					<div className="w-32 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8" />
-					<p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
+					<p className="text-xl caveat-bold md:text-2xl text-muted-foreground max-w-3xl mx-auto">
 						Showcasing innovative solutions and cutting-edge web applications
 					</p>
 				</motion.div>
