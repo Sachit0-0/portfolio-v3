@@ -4,9 +4,11 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowDown, Github, Linkedin, Mail, Download, Terminal, Code, Coffee, Zap } from "lucide-react"
+import { ArrowDown, Github, Linkedin, Mail, Download, Terminal, Code, Coffee, Zap, ExternalLink, Database, Server } from "lucide-react"
 import { useRef, useState, useEffect } from "react"
+import Image from "next/image"
 import sachit from "@/public/sachitt.jpg"
+import MagicCard from "@/components/ui/magiccard"
 
 const AnimatedCounter = ({ end, duration = 2000 }: { end: number; duration?: number }) => {
   const [count, setCount] = useState(0)
@@ -87,20 +89,22 @@ export function HeroSection() {
           <motion.div className="space-y-6 lg:space-y-8">
             {/* Greeting */}
             <motion.div
-              className="inline-block px-4 py-2 lg:px-6 lg:py-2 rounded-full bg-white/20 dark:bg-white/10 backdrop-blur-md border border-white/30 text-black dark:text-white/90 text-sm lg:text-lg font-medium"
+              className="inline-block animate-bounce px-4 py-2 lg:px-6 lg:py-2 rounded-full bg-white/20 dark:bg-white/10 backdrop-blur-md border border-blue text-primary dark:text-white/90 text-sm lg:text-lg font-medium"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
+                 style={{  animationIterationCount: 3 }}
             >
               Hello, I'm
             </motion.div>
 
             {/* Name */}
             <motion.h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight bg-gradient-to-r from-blue-600 via-slate-200 to-purple-600 bg-clip-text text-transparent drop-shadow-2xl"
+              className="text-4xl   sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight bg-gradient-to-r from-blue-600 via-slate-400 to-purple-600 bg-clip-text text-transparent drop-shadow-2xl"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
+            
             >
               Sachit Dahal
             </motion.h1>
@@ -205,7 +209,7 @@ export function HeroSection() {
                       </div>
                       <div className="font-mono text-sm">
                         <div className="text-green-500">Encrypted...</div>
-                        <div className="text-muted-foreground mt-1 text-xs">Probably working rn</div>
+                        <div className="text-muted-foreground mt-1  text-xs">Probably working rn</div>
                       </div>
                     </div>
                   </CardContent>
@@ -222,10 +226,13 @@ export function HeroSection() {
                 <Card className="bg-background/95 backdrop-blur-sm border shadow-2xl">
                   <CardContent className="p-4 text-center">
                     <div className="w-16 h-16 mx-auto mb-3 rounded-full overflow-hidden border-4 border-primary/20">
-                      <img
-                        src="/placeholder.svg?height=64&width=64"
+                      <Image
+                        src={sachit}
                         alt="Sachit Dahal"
+                        width={96}
+                        height={96}
                         className="w-full h-full object-cover"
+                        priority
                       />
                     </div>
                     <h3 className="text-lg font-bold mb-1">Sachit Dahal</h3>
@@ -296,7 +303,7 @@ export function HeroSection() {
             </div>
 
             {/* Desktop: Floating Cards */}
-            <div className="hidden lg:block pdrelative h-[700px]">
+            <div className="hidden lg:block relative h-[700px]">
               {/* Terminal Status Card */}
               <motion.div
                 style={{ y: y1 }}
@@ -341,10 +348,13 @@ export function HeroSection() {
                 <Card className="w-72 bg-background/95 backdrop-blur-sm border shadow-2xl">
                   <CardContent className="p-6 text-center">
                     <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary/20">
-                      <img
-                    src={sachit.src}
+                      <Image
+                        src={sachit}
                         alt="Sachit Dahal"
+                        width={96}
+                        height={96}
                         className="w-full h-full object-cover"
+                        priority
                       />
                     </div>
                     <h3 className="text-xl font-bold mb-1">Sachit Dahal</h3>
@@ -371,10 +381,10 @@ export function HeroSection() {
                 </Card>
               </motion.div>
 
-              {/* Skills Floating Card */}
+              {/* Skills Floating Card - Only on Desktop */}
               <motion.div
                 style={{ y: y3 }}
-                className="absolute bottom-20 right-8 z-10"
+                className="absolute bottom-16 right-0 z-10"
                 initial={{ opacity: 0, scale: 0.8, rotate: 2 }}
                 animate={{ opacity: 1, scale: 1, rotate: 1 }}
                 transition={{ duration: 0.8, delay: 0.9 }}
@@ -415,49 +425,87 @@ export function HeroSection() {
                 </Card>
               </motion.div>
 
-              {/* Floating Icons */}
-              <motion.div
-                className="absolute top-20 left-10"
-                animate={{
-                  y: [0, -20, 0],
-                  rotate: [0, 10, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeInOut",
-                }}
-              >
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-sm border border-border/50 flex items-center justify-center">
-                  <Coffee className="w-6 h-6 text-primary" />
-                </div>
-              </motion.div>
-
-              <motion.div
-                className="absolute bottom-32 left-0"
-                animate={{
-                  y: [0, 15, 0],
-                  rotate: [0, -10, 0],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Number.POSITIVE_INFINITY,
-                  ease: "easeInOut",
-                  delay: 1,
-                }}
-              >
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500/20 to-blue-500/20 backdrop-blur-sm border border-border/50 flex items-center justify-center">
-                  <Zap className="w-6 h-6 text-primary" />
-                </div>
-              </motion.div>
+              {/* Floating Icons Layer */}
+              <div className="pointer-events-none absolute inset-0 z-0">
+                {/* Code Icon */}
+                <motion.div
+                  className="absolute top-20 left-10"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: [0, -20, 0] }}
+                  transition={{
+                    opacity: { duration: 1, delay: 0.3, ease: "easeOut" },
+                    y: { duration: 6, repeat: Infinity, repeatType: "loop", ease: "easeInOut" },
+                  }}
+                >
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-sm border border-border/50 flex items-center justify-center">
+                    <Code className="w-6 h-6 text-primary" />
+                  </div>
+                </motion.div>
+                {/* Database Icon */}
+                <motion.div
+                  className="absolute bottom-32 left-0"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: [0, 20, 0] }}
+                  transition={{
+                    opacity: { duration: 1, delay: 0.5, ease: "easeOut" },
+                    y: { duration: 7, repeat: Infinity, repeatType: "loop", ease: "easeInOut" },
+                  }}
+                >
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500/20 to-blue-500/20 backdrop-blur-sm border border-border/50 flex items-center justify-center">
+                    <Database className="w-6 h-6 text-primary" />
+                  </div>
+                </motion.div>
+                {/* Server Icon */}
+                <motion.div
+                  className="absolute top-1/2 left-1/4"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: [0, -15, 0] }}
+                  transition={{
+                    opacity: { duration: 1, delay: 0.7, ease: "easeOut" },
+                    y: { duration: 8, repeat: Infinity, repeatType: "loop", ease: "easeInOut" },
+                  }}
+                >
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-400/20 to-pink-400/20 backdrop-blur-sm border border-border/50 flex items-center justify-center">
+                    <Server className="w-6 h-6 text-primary" />
+                  </div>
+                </motion.div>
+                {/* Terminal Icon */}
+                <motion.div
+                  className="absolute bottom-10 right-2/4"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: [0, 15, 0] }}
+                  transition={{
+                    opacity: { duration: 1, delay: 0.9, ease: "easeOut" },
+                    y: { duration: 7, repeat: Infinity, repeatType: "loop", ease: "easeInOut" },
+                  }}
+                >
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500/20 to-blue-500/20 backdrop-blur-sm border border-border/50 flex items-center justify-center">
+                    <Terminal className="w-6 h-6 text-primary" />
+                  </div>
+                </motion.div>
+                {/* Zap Icon */}
+                <motion.div
+                  className="absolute top-32 right-16"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: [0, -18, 0] }}
+                  transition={{
+                    opacity: { duration: 1, delay: 1.1, ease: "easeOut" },
+                    y: { duration: 8, repeat: Infinity, repeatType: "loop", ease: "easeInOut" },
+                  }}
+                >
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-400/20 to-green-400/20 backdrop-blur-sm border border-border/50 flex items-center justify-center">
+                    <Zap className="w-6 h-6 text-primary" />
+                  </div>
+                </motion.div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Indicator - Hidden on smaller screens */}
       <motion.div
-        className="absolute bottom-4 lg:bottom-8 right-4 lg:right-8 transform cursor-pointer"
+        className="hidden lg:block absolute bottom-4 lg:bottom-8 right-4 lg:right-8 transform cursor-pointer"
         style={{ opacity }}
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
@@ -468,6 +516,71 @@ export function HeroSection() {
           <ArrowDown className="w-4 h-4 lg:w-5 lg:h-5" />
         </div>
       </motion.div>
+           {/* About Section */}
+              <section id="about" className="py-20">
+                <div className="container mx-auto px-4">
+                  <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    className="text-center mb-16"
+                  >
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6">About Me</h2>
+                    <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8"></div>
+                  </motion.div>
+      
+                  <div className="grid md:grid-cols-2 gap-12 items-center">
+                    <motion.div
+                      initial={{ opacity: 0, x: -50 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.8 }}
+                      viewport={{ once: true }}
+                    >
+                      <MagicCard />
+                    </motion.div>
+      
+                    <motion.div
+                      initial={{ opacity: 0, x: 50 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.8 }}
+                      viewport={{ once: true }}
+                      className="space-y-6"
+                    >
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        I'm a passionate full-stack web developer with 2+ years of experience building scalable, responsive,
+                        and user-friendly web applications. I specialize in React, Next.js, Django, and modern UI/UX
+                        principles.
+                      </p>
+      
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        Based in Kathmandu, Nepal, I have a proven track record of delivering high-quality code and
+                        collaborating effectively with cross-functional teams. I'm passionate about creating innovative
+                        solutions that make a real impact.
+                      </p>
+      
+                      <div className="grid grid-cols-2 gap-8 pt-8">
+                        <div className="text-center">
+                          <div className="text-3xl font-bold text-primary">
+                            <AnimatedCounter end={15} />+
+                          </div>
+                          <div className="text-sm text-muted-foreground">Projects Completed</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-3xl font-bold text-primary">
+                            <AnimatedCounter end={2} />+
+                          </div>
+                          <div className="text-sm text-muted-foreground">Years Experience</div>
+                        </div>
+                      </div>
+      
+                      <div className="pt-6">
+                    
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+              </section>
               </section>
   )
 }

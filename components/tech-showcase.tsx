@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
 import { SiDjango, SiReactquery, SiGraphql, SiPrisma, SiFramer } from "react-icons/si"
-import { cn } from "@/lib/utils"
+
 
 const technologies = [
 	{

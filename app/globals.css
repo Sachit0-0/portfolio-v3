@@ -113,8 +113,10 @@ html {
   background: linear-gradient(to bottom right, hsl(0 0% 8%), hsl(0 0% 12%));
 }
 
-
-
+/* Add this to your globals.css if not present */
+.bg-gradient-to-br {
+  pointer-events: none;
+}
 
 /* magic card */
 /* From Uiverse.io by Centered101 */ 

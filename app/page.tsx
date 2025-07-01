@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo, useCallback } from "react"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,81 +11,57 @@ import { Github, Linkedin, Mail, Phone, MapPin, Download, ExternalLink } from "l
 import { useRef } from "react"
 import { FloatingNavbar } from "@/components/floating-navbar"
 
-import { TechShowcase } from "@/components/tech-showcase"
+
 import { ProjectsShowcase } from "@/components/projects-showcase"
 import { SkillsExpertise } from "@/components/skills-expertise"
 import { ScrollToTop } from "@/components/scroll-to-top"
 import { HeroSection } from "@/components/hero-section"
-import MagicCard from "@/components/ui/magiccard"
+
 import { ScrollProgress } from "@/components/scrollProgress"
 
 
 
-const AnimatedCounter = ({ end, duration = 2000 }: { end: number; duration?: number }) => {
-  const [count, setCount] = useState(0)
-  const ref = useRef(null)
-  const isInView = useInView(ref)
 
-  useEffect(() => {
-    if (isInView) {
-      let startTime: number
-      const animate = (currentTime: number) => {
-        if (!startTime) startTime = currentTime
-        const progress = Math.min((currentTime - startTime) / duration, 1)
-        setCount(Math.floor(progress * end))
-        if (progress < 1) {
-          requestAnimationFrame(animate)
-        }
-      }
-      requestAnimationFrame(animate)
-    }
-  }, [isInView, end, duration])
 
-  return <span ref={ref}>{count}</span>
-}
+const experienceData = [
+  {
+    title: "Associate Developer",
+    company: "Monal Tech Pvt. Ltd.",
+    period: "Sep 2023 - May 2025",
+    location: "Hybrid",
+    description:
+      "Started as Junior Web Developer after completing 3-month internship. Designed and implemented reusable UI components using React, Next.js, and Tailwind CSS. Developed scalable full-stack applications with Django REST and PostgreSQL.",
+    achievements: [
+      "Built interactive data visualization dashboards for national BI platform using Recharts and Chart.js",
+      "Improved team workflows by enhancing documentation and establishing reusable code patterns",
+      "Collaborated with cross-functional teams to deliver client and in-house projects on schedule",
+    ],
+    technologies: ["React", "Next.js", "Django REST", "PostgreSQL", "Tailwind CSS", "Recharts"],
+  },
+  {
+    title: "Junior Developer",
+    company: "Nebham LLC",
+    period: "Nov 2023 - Mar 2024",
+    location: "Remote",
+    description:
+      "US-based company partnered with Monal Tech. Created dynamic UI components with Next.js and TypeScript. Enhanced application performance and usability while transforming prototype designs into production-ready components.",
+    achievements: [
+      "Transformed Figma and Balsamiq prototypes into production-ready components",
+      "Developed core features for Nebham Patro mobile app and calendar system",
+      "Enhanced application performance and improved user experience",
+    ],
+    technologies: ["Next.js", "TypeScript", "React", "Figma", "Mobile Development"],
+  },
+]
 
 export default function Portfolio() {
-  const { scrollYProgress } = useScroll()
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+ 
 
-  const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    })
-  }
 
-  const experience = [
-    {
-      title: "Associate Developer",
-      company: "Monal Tech Pvt. Ltd.",
-      period: "Sep 2023 - May 2025",
-      location: "Hybrid",
-      description:
-        "Started as Junior Web Developer after completing 3-month internship. Designed and implemented reusable UI components using React, Next.js, and Tailwind CSS. Developed scalable full-stack applications with Django REST and PostgreSQL.",
-      achievements: [
-        "Built interactive data visualization dashboards for national BI platform using Recharts and Chart.js",
-        "Improved team workflows by enhancing documentation and establishing reusable code patterns",
-        "Collaborated with cross-functional teams to deliver client and in-house projects on schedule",
-      ],
-      technologies: ["React", "Next.js", "Django REST", "PostgreSQL", "Tailwind CSS", "Recharts"],
-    },
-    {
-      title: "Junior Developer",
-      company: "Nebham LLC",
-      period: "Nov 2023 - Mar 2024",
-      location: "Remote",
-      description:
-        "US-based company partnered with Monal Tech. Created dynamic UI components with Next.js and TypeScript. Enhanced application performance and usability while transforming prototype designs into production-ready components.",
-      achievements: [
-        "Transformed Figma and Balsamiq prototypes into production-ready components",
-        "Developed core features for Nebham Patro mobile app and calendar system",
-        "Enhanced application performance and improved user experience",
-      ],
-      technologies: ["Next.js", "TypeScript", "React", "Figma", "Mobile Development"],
-    },
-  ]
+  // Memoize experience data
+  const experience = useMemo(() => experienceData, [])
+
+
 
   return (
     <>
@@ -93,79 +69,10 @@ export default function Portfolio() {
         <FloatingNavbar />
         <HeroSection />
 
-        {/* About Section */}
-        <section id="about" className="py-20">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">About Me</h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8"></div>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <MagicCard />
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="space-y-6"
-              >
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  I'm a passionate full-stack web developer with 2+ years of experience building scalable, responsive,
-                  and user-friendly web applications. I specialize in React, Next.js, Django, and modern UI/UX
-                  principles.
-                </p>
-
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  Based in Kathmandu, Nepal, I have a proven track record of delivering high-quality code and
-                  collaborating effectively with cross-functional teams. I'm passionate about creating innovative
-                  solutions that make a real impact.
-                </p>
-
-                <div className="grid grid-cols-2 gap-8 pt-8">
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-primary">
-                      <AnimatedCounter end={15} />+
-                    </div>
-                    <div className="text-sm text-muted-foreground">Projects Completed</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-primary">
-                      <AnimatedCounter end={2} />+
-                    </div>
-                    <div className="text-sm text-muted-foreground">Years Experience</div>
-                  </div>
-                </div>
-
-                <div className="pt-6">
-                  <Button size="lg" variant="outline" className="group bg-transparent" asChild>
-                    <a href="https://sachit.info.np" target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="w-4 h-4 mr-2" />
-                      Visit My Portfolio
-                    </a>
-                  </Button>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
+   
 
         <SkillsExpertise />
-        <TechShowcase />
+      
         <ProjectsShowcase />
 
         {/* Experience Section */}
@@ -175,7 +82,7 @@ export default function Portfolio() {
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.2 }}
               className="text-center mb-16"
             >
               <h2 className="text-4xl md:text-5xl font-bold mb-6">
@@ -200,7 +107,7 @@ export default function Portfolio() {
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8, delay: index * 0.2 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.2 }}
                     className="relative md:pl-20 pb-12"
                   >
                     <div className="absolute left-6 w-4 h-4 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full border-4 border-background hidden md:block"></div>
