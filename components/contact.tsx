@@ -13,7 +13,7 @@ export default function Contact() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section id="contact" className="relative z-50 py-20 overflow-x-hidden" ref={ref}>
+    <section id="contact" className="relative  py-20 overflow-x-hidden" ref={ref}>
       <div className="container mx-auto px-4 text-center">
         <motion.div
           initial={{ opacity: 0, y: 50 }}

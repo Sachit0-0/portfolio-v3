@@ -10,6 +10,7 @@ import sachit from "@/public/sachitt.jpg"
 import SocialButtons from "./ui/socialButtons"
 import About from "./aboutSection"
 import CvButton from "./ui/cvButton"
+import { TypingAnimation } from "./magicui/typing-animation"
 
 export function HeroSection() {
   const ref = useRef(null)
@@ -113,7 +114,8 @@ export function HeroSection() {
                       </div>
                       <div className="font-mono text-sm">
                         <div className="text-green-500">Encrypted...</div>
-                        <div className="text-muted-foreground mt-1 text-xs">Probably working rn</div>
+                        <div className="text-muted-foreground  mt-1 text-xs">Probably working rn</div>
+                       
                       </div>
                     </div>
                   </CardContent>
@@ -230,7 +232,7 @@ export function HeroSection() {
                       </div>
                       <div className="font-mono text-sm">
                         <div className="text-green-500">Encrypted...</div>
-                        <div className="text-muted-foreground mt-1">Probably working rn</div>
+                        <div className=" text-muted-foreground mt-1"><TypingAnimation duration={100} className="text-xs">Probably Working RN...</TypingAnimation></div>
                       </div>
                     </div>
                   </CardContent>
@@ -321,9 +323,9 @@ export function HeroSection() {
                 </Card>
               </motion.div>
 
-              {/* Simplified Floating Icons Layer */}
-              <div className="pointer-events-none absolute inset-0 z-0">
-                {/* Code Icon */}
+          
+              <div className="pointer-events-none animate-pulse absolute inset-0 z-0">
+             
                 <motion.div
                   className="absolute top-20 left-10"
                   initial={{ opacity: 0, y: 20 }}
@@ -335,7 +337,6 @@ export function HeroSection() {
                   </div>
                 </motion.div>
 
-                {/* Database Icon */}
                 <motion.div
                   className="absolute bottom-32 left-0"
                   initial={{ opacity: 0, y: 20 }}
