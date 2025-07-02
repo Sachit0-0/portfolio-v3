@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { FloatingNavbar } from "@/components/floating-navbar"
+import { FloatingNavbar } from "@/components/floating-navbar";
 
-import { HeroSection } from "@/components/hero-section"
-import { ProjectsShowcase } from "@/components/projects-showcase"
-import { ScrollToTop } from "@/components/scroll-to-top"
-import { SkillsExpertise } from "@/components/skills-expertise"
+import { HeroSection } from "@/components/hero-section";
+import { ProjectsShowcase } from "@/components/projects-showcase";
+import { ScrollToTop } from "@/components/scroll-to-top";
+import { SkillsExpertise } from "@/components/skills-expertise";
 
-import Experience from "@/components/experience"
-import { ScrollProgress } from "@/components/scrollProgress"
-import Contact from "@/components/contact"
+import Experience from "@/components/experience";
+import { ScrollProgress } from "@/components/scrollProgress";
+import Contact from "@/components/contact";
 
 export default function Portfolio() {
   return (
@@ -17,19 +17,17 @@ export default function Portfolio() {
       <div className="min-h-screen bg-background text-foreground transition-colors duration-300 text-base sm:text-lg md:text-xl">
         <FloatingNavbar />
         <HeroSection />
-        
-
         <SkillsExpertise />
         <ProjectsShowcase />
         <Experience />
-
-     <Contact />
+        <Contact />
 
         {/* Footer */}
         <footer className="py-8 border-t">
           <div className="container mx-auto px-4 text-center">
             <p className="text-sm sm:text-base text-muted-foreground">
-              © {new Date().getFullYear()} Sachit Dahal. Crafted with passion and code.
+              © {new Date().getFullYear()} Sachit Dahal. Crafted with passion
+              and code.
             </p>
           </div>
         </footer>
@@ -38,5 +36,5 @@ export default function Portfolio() {
         <ScrollProgress />
       </div>
     </>
-  )
+  );
 }

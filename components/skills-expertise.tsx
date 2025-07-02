@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, useInView, useScroll, useTransform } from "framer-motion"
+import { motion, useInView } from "framer-motion"
 import { Badge } from "@/components/ui/badge"
 import { Code2, Database, ArrowRight } from "lucide-react"
 import { useRef, memo, useMemo } from "react"
@@ -40,19 +40,16 @@ const FloatingSkillBadge = memo(({ skill, index, categoryIndex }: any) => {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, scale: 0.95, rotate: -6 }}
-      animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{
-        duration: 0.5,
-        delay: categoryIndex * 0.15 + index * 0.07,
-        type: "spring",
-        stiffness: 180,
-        damping: 18,
+        duration: 0.3,
+        delay: categoryIndex * 0.1 + index * 0.05,
+        ease: "easeOut",
       }}
-      whileHover={{ scale: 1.04, y: -4 }}
       className="group cursor-pointer"
     >
-      <div className="relative p-6 rounded-2xl border bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-xl hover:shadow-2xl border-white/20 dark:border-gray-700/30 transition-all duration-400">
+      <div className="relative p-6 rounded-2xl border bg-white/90 dark:bg-gray-900/90 shadow-lg hover:shadow-xl border-gray-200 dark:border-gray-700 transition-shadow duration-200">
         {/* Skill level arc */}
         <div className="absolute -top-2 -right-2">
           <div className="relative w-12 h-12">
@@ -63,7 +60,7 @@ const FloatingSkillBadge = memo(({ skill, index, categoryIndex }: any) => {
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeDasharray={`${skill.level}, 100`}
-                className="text-blue-500 drop-shadow-sm"
+                className="text-blue-500"
               />
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
@@ -73,7 +70,7 @@ const FloatingSkillBadge = memo(({ skill, index, categoryIndex }: any) => {
         </div>
 
         <div className="space-y-3">
-          <h4 className="font-bold text-lg text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+          <h4 className="font-bold text-lg text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
             {skill.name}
           </h4>
           <div className="flex items-center gap-2">
@@ -85,9 +82,6 @@ const FloatingSkillBadge = memo(({ skill, index, categoryIndex }: any) => {
             </Badge>
           </div>
         </div>
-
-        {/* Hover effect */}
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
       </div>
     </motion.div>
   )
@@ -97,82 +91,72 @@ FloatingSkillBadge.displayName = "FloatingSkillBadge"
 
 export function SkillsExpertise() {
   const containerRef = useRef(null)
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" })
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  })
-
-  const y = useTransform(scrollYProgress, [0, 1], [0, -40])
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
+  const isInView = useInView(containerRef, { once: true, margin: "-50px" })
 
   const categories = useMemo(() => skillsData, [])
 
   return (
-    <section id="skills" ref={containerRef} className="relative py-32 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50 dark:from-gray-950 dark:via-blue-950/30 dark:to-indigo-950/50" />
+    <section id="skills" ref={containerRef} className="relative py-24 overflow-hidden">
+      {/* Simplified background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-blue-50/50 dark:from-gray-950 dark:to-blue-950/30" />
 
-      {/* Animated orbs */}
-      <motion.div style={{ y }} className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-3xl animate-pulse" />
-        <div
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-emerald-400/20 to-cyan-400/20 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "1s" }}
-        />
-      </motion.div>
+      {/* Single subtle background element */}
+      <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
 
-      <motion.div style={{ opacity }} className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="text-center mb-20"
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            <span className="bg-gradient-to-r caveat-text text-primary">Crafting Digital</span>
-            <br />
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+          
             <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent caveat-bold">
-              Experiences
+          Technologies & Tools
             </span>
           </h2>
+                         <div className="w-32 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8" />
+
         </motion.div>
 
         {/* Skills list */}
-        <div className="space-y-24">
+        <div className="space-y-20">
           {categories.map((category, categoryIndex) => (
             <motion.div
               key={category.category}
-              initial={{ opacity: 0, y: 80 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{
-                duration: 0.7,
-                delay: categoryIndex * 0.22,
+                duration: 0.4,
+                delay: categoryIndex * 0.15,
                 ease: "easeOut",
               }}
               className="relative"
             >
               {/* Category header */}
-              <div className="flex items-center gap-6 mb-12">
-                <motion.div
-                  whileHover={{ scale: 1.07, rotate: 4 }}
-                  className={`w-20 h-20 rounded-3xl bg-gradient-to-br ${category.gradient} flex items-center justify-center shadow-2xl`}
+              <div className="flex items-center gap-6 mb-10">
+                <div
+                  className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${category.gradient} flex items-center justify-center shadow-lg`}
                 >
-                  <category.icon className="w-10 h-10 text-white" />
-                </motion.div>
+                  <category.icon className="w-8 h-8 text-white" />
+                </div>
                 <div className="flex-1">
-                  <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">{category.category}</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                    {category.category}
+                  </h3>
                   <div className="flex items-center gap-3">
-                    <div className={`h-1 w-24 bg-gradient-to-r ${category.gradient} rounded-full`} />
-                    <span className="text-gray-500 dark:text-gray-400 font-medium">{category.skills.length} Technologies</span>
+                    <div className={`h-1 w-20 bg-gradient-to-r ${category.gradient} rounded-full`} />
+                    <span className="text-gray-500 dark:text-gray-400 font-medium">
+                      {category.skills.length} Technologies
+                    </span>
                   </div>
                 </div>
-                <motion.div whileHover={{ x: 4 }} className="hidden md:flex items-center gap-2 text-gray-400 dark:text-gray-500">
+                <div className="hidden md:flex items-center gap-2 text-gray-400 dark:text-gray-500">
                   <span className="text-sm font-medium">Explore</span>
                   <ArrowRight className="w-4 h-4" />
-                </motion.div>
+                </div>
               </div>
 
               {/* Skills grid */}
@@ -183,9 +167,22 @@ export function SkillsExpertise() {
               </div>
             </motion.div>
           ))}
-          <TechShowcase />
+
+          {/* TechShowcase Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{
+              duration: 0.4,
+              delay: categories.length * 0.15 + 0.2,
+              ease: "easeOut",
+            }}
+            className="relative"
+          >
+            <TechShowcase />
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
     </section>
   )
 }

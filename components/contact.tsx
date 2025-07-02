@@ -23,7 +23,7 @@ export default function Contact() {
         >
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-6 caveat-bold">
             Let's{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent caveat-text">
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent caveat-bold">
               Connect
             </span>
           </h2>

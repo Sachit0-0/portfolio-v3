@@ -54,7 +54,7 @@ export default function Experience() {
         >
           <h2 className="text-5xl caveat-bold font-bold mb-4 tracking-tight">
             Work{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent caveat-text">
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent caveat-bold">
               Experience
             </span>
           </h2>

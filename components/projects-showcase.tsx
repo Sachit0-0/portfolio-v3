@@ -145,9 +145,7 @@ export function ProjectsShowcase() {
             Featured <span className="text-">Projects</span>
           </h2>
           <div className="w-32 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8" />
-          <p className="text-xl caveat-bold md:text-2xl text-muted-foreground max-w-3xl mx-auto">
-            Showcasing innovative solutions and cutting-edge web applications
-          </p>
+      
         </motion.div>
 
         {/* Projects */}
