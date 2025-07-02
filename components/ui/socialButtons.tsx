@@ -10,21 +10,21 @@ export default function SocialButtons() {
       icon: <Github className="w-5 h-5 text-white group-hover:text-[#171543] transition-colors duration-300" />,
       color: "bg-purple-500",
       border: "border-purple-500",
-      link: "https://github.com/your-username",
+      link: "https://github.com/sachit0-0",
     },
     {
       name: "LinkedIn",
       icon: <Linkedin className="w-5 h-5 text-white group-hover:text-[#171543] transition-colors duration-300" />,
       color: "bg-blue-500",
       border: "border-blue-500",
-      link: "https://linkedin.com/in/your-profile",
+      link: "https://www.linkedin.com/in/sachit-dahal-59a05b212/",
     },
     {
       name: "Email",
       icon: <Mail className="w-5 h-5 text-white group-hover:text-[#171543] transition-colors duration-300" />,
       color: "bg-red-400",
       border: "border-red-400",
-      link: "mailto:you@example.com",
+      link: "mailto:sachitdahal33@gmail.com",
     },
   ]
 

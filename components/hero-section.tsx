@@ -3,17 +3,32 @@
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowDown, Github, Linkedin, Mail, Download, Terminal, Code, Coffee, Zap, ExternalLink, Database, Server } from "lucide-react"
+import {
+  ArrowDown,
+  Github,
+  Linkedin,
+  Mail,
+  Terminal,
+  Code,
+  Database,
+  Server,
+  Zap,
+} from "lucide-react"
 import { useRef, useState, useEffect } from "react"
 import Image from "next/image"
 import sachit from "@/public/sachitt.jpg"
-import CvButton from "./ui/cvButton"
+
 import SocialButtons from "./ui/socialButtons"
 import About from "./aboutSection"
+import CvButton from "./ui/cvButton"
 
-
-
-const AnimatedCounter = ({ end, duration = 2000 }: { end: number; duration?: number }) => {
+const AnimatedCounter = ({
+  end,
+  duration = 2000,
+}: {
+  end: number
+  duration?: number
+}) => {
   const [count, setCount] = useState(0)
   const ref = useRef(null)
   const isInView = useInView(ref)
@@ -56,7 +71,11 @@ export function HeroSection() {
   }
 
   return (
-    <section ref={ref} id="home" className="min-h-screen relative overflow-hidden">
+    <section
+      ref={ref}
+      id="home"
+      className="min-h-screen relative overflow-hidden"
+    >
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-gray-50/20 to-slate-50/30 dark:from-gray-950/30 dark:via-gray-900/20 dark:to-black/30" />
 
@@ -92,29 +111,28 @@ export function HeroSection() {
           <motion.div className="space-y-6 lg:space-y-8">
             {/* Greeting */}
             <motion.div
-              className="inline-block animate-bounce px-4 py-2 lg:px-6 lg:py-2 rounded-full bg-white/20 dark:bg-white/10 backdrop-blur-md border border-blue text-primary dark:text-white/90 text-sm lg:text-lg font-medium"
+              className="inline-block animate-bounce px-6 py-3 rounded-full bg-white/20 dark:bg-white/10 backdrop-blur-md border border-blue text-primary dark:text-white/90 text-lg sm:text-xl font-medium"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-                 style={{  animationIterationCount: 3 }}
+              style={{ animationIterationCount: 3 }}
             >
               Hello, I'm
             </motion.div>
 
             {/* Name */}
             <motion.h1
-              className="text-4xl caveat-text  sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight bg-gradient-to-r from-blue-600 via-slate-400 to-purple-600 bg-clip-text text-transparent drop-shadow-2xl"
+              className="text-6xl caveat-text sm:text-7xl md:text-8xl lg:text-9xl xl:text-[6rem] font-bold leading-tight bg-gradient-to-r from-blue-600 via-slate-400 to-purple-600 bg-clip-text text-transparent drop-shadow-2xl"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-            
             >
               Sachit Dahal
             </motion.h1>
 
             {/* Title */}
             <motion.div
-              className="text-xl indie-text sm:text-2xl lg:text-3xl font-semibold text-primary"
+              className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-primary indie-text"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -124,28 +142,31 @@ export function HeroSection() {
 
             {/* Description */}
             <motion.p
-              className="text-base indie-text sm:text-lg lg:text-xl xl:text-2xl text-muted-foreground leading-relaxed max-w-2xl"
+              className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-muted-foreground leading-relaxed max-w-2xl indie-text"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Building scalable, responsive web applications with React, Next.js, and Django.
+              Building scalable, responsive web applications with React,
+              Next.js, and Django.
               <br className="hidden sm:block" />
-              
-              <span className="block sm:inline"> Passionate about creating exceptional user experiences.</span>
+              <span className="block sm:inline">
+                Passionate about creating exceptional user experiences.
+              </span>
             </motion.p>
 
             {/* CTA Buttons */}
-          
-            <CvButton />
+            <div className="flex items-center">
+              <CvButton />
+            </div>
             {/* Social Links */}
-           <SocialButtons />
+            <SocialButtons />
           </motion.div>
 
           {/* Right Side - Floating Elements */}
           <div className="relative mt-24">
             {/* Mobile: Stacked Cards */}
-            <div className="flex flex-col  items-center gap-4 lg:hidden">
+            <div className="flex flex-col items-center gap-4 lg:hidden">
               {/* Terminal Status Card */}
               <motion.div
                 className="w-full max-w-sm"
@@ -161,7 +182,9 @@ export function HeroSection() {
                         <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                         <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                       </div>
-                      <span className="text-xs font-mono text-muted-foreground">Status</span>
+                      <span className="text-xs font-mono text-muted-foreground">
+                        Status
+                      </span>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
@@ -169,7 +192,9 @@ export function HeroSection() {
                       </div>
                       <div className="font-mono text-sm">
                         <div className="text-green-500">Encrypted...</div>
-                        <div className="text-muted-foreground mt-1  text-xs">Probably working rn</div>
+                        <div className="text-muted-foreground mt-1 text-xs">
+                          Probably working rn
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -185,7 +210,7 @@ export function HeroSection() {
               >
                 <Card className="bg-background/95 backdrop-blur-sm border shadow-2xl">
                   <CardContent className="p-4 text-center">
-                    <div className="w-16 h-16 mx-auto mb-3 rounded-full overflow-hidden border-4 border-primary/20">
+                    <div className="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden border-4 border-primary/20">
                       <Image
                         src={sachit}
                         alt="Sachit Dahal"
@@ -195,12 +220,15 @@ export function HeroSection() {
                         priority
                       />
                     </div>
-                    <h3 className="text-lg font-bold mb-1">Sachit Dahal</h3>
+                    <h3 className="text-xl font-bold mb-1">Sachit Dahal</h3>
                     <p className="text-primary text-sm mb-3">Developer</p>
                     <p className="text-xs text-muted-foreground mb-3">Stay in Touch</p>
                     <div className="flex justify-center space-x-2">
                       {[
-                        { icon: Linkedin, href: "https://www.linkedin.com/in/sachit-da-hal-59a05b212/" },
+                        {
+                          icon: Linkedin,
+                          href: "https://www.linkedin.com/in/sachit-da-hal-59a05b212/",
+                        },
                         { icon: Github, href: "https://github.com/Sachit0-0" },
                         { icon: Mail, href: "mailto:sachitdahal33@gmail.com" },
                       ].map((social, index) => (
@@ -322,7 +350,10 @@ export function HeroSection() {
                     <p className="text-xs text-muted-foreground mb-4">Stay in Touch</p>
                     <div className="flex justify-center space-x-3">
                       {[
-                        { icon: Linkedin, href: "https://www.linkedin.com/in/sachit-da-hal-59a05b212/" },
+                        {
+                          icon: Linkedin,
+                          href: "https://www.linkedin.com/in/sachit-da-hal-59a05b212/",
+                        },
                         { icon: Github, href: "https://github.com/Sachit0-0" },
                         { icon: Mail, href: "mailto:sachitdahal33@gmail.com" },
                       ].map((social, index) => (
@@ -445,7 +476,7 @@ export function HeroSection() {
                 </motion.div>
                 {/* Zap Icon */}
                 <motion.div
-                  className="absolute top-32 right-16"
+                  className="absolute top-52 right-2"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: [0, -18, 0] }}
                   transition={{
@@ -476,9 +507,9 @@ export function HeroSection() {
           <ArrowDown className="w-4 h-4 lg:w-5 lg:h-5" />
         </div>
       </motion.div>
-           {/* About Section */}
-           <About />
-           
-              </section>
+
+      {/* About Section */}
+      <About />
+    </section>
   )
 }
