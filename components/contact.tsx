@@ -71,36 +71,17 @@ export default function Contact() {
 
             {/* Social Buttons */}
             <div className="flex space-x-4 pt-8 justify-center lg:justify-start">
-              <Button
-                size="icon"
-                variant="outline"
-                className="hover:bg-blue-600 hover:text-white bg-transparent"
-                asChild
-              >
+              <Button size="icon" variant="outline" className="hover:bg-blue-600 hover:text-white bg-transparent" asChild>
                 <a href="https://github.com/Sachit0-0" target="_blank" rel="noopener noreferrer">
                   <Github className="w-5 h-5" />
                 </a>
               </Button>
-              <Button
-                size="icon"
-                variant="outline"
-                className="hover:bg-blue-600 hover:text-white bg-transparent"
-                asChild
-              >
-                <a
-                  href="https://www.linkedin.com/in/sachit-da-hal-59a05b212/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+              <Button size="icon" variant="outline" className="hover:bg-blue-600 hover:text-white bg-transparent" asChild>
+                <a href="https://www.linkedin.com/in/sachit-da-hal-59a05b212/" target="_blank" rel="noopener noreferrer">
                   <Linkedin className="w-5 h-5" />
                 </a>
               </Button>
-              <Button
-                size="icon"
-                variant="outline"
-                className="hover:bg-blue-600 hover:text-white bg-transparent"
-                asChild
-              >
+              <Button size="icon" variant="outline" className="hover:bg-blue-600 hover:text-white bg-transparent" asChild>
                 <a href="mailto:sachitdahal33@gmail.com">
                   <Mail className="w-5 h-5" />
                 </a>
@@ -108,7 +89,7 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* Contact Form (no backend yet) */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -117,73 +98,26 @@ export default function Contact() {
           >
             <Card className="border-0 bg-gradient-to-br from-background to-muted/30">
               <CardContent className="p-6">
-                <form
-                  name="contact"
-                  method="POST"
-                  data-netlify="true"
-                  className="space-y-6"
-                >
-                  <input type="hidden" name="form-name" value="contact" />
-                  
-                  {/* Manual honeypot field for bots */}
-                  <p hidden>
-                    <label>
-                      Don’t fill this out if you're human: <input name="bot-field" />
-                    </label>
-                  </p>
-
+                <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="name" className="text-base sm:text-sm font-medium mb-2 block">
-                        Name
-                      </label>
-                      <Input
-                        id="name"
-                        name="name"
-                        required
-                        placeholder="Your name"
-                        className="bg-background/50 text-base sm:text-sm"
-                      />
+                      <label htmlFor="name" className="text-base sm:text-sm font-medium mb-2 block">Name</label>
+                      <Input id="name" name="name" required placeholder="Your name" className="bg-background/50 text-base sm:text-sm" />
                     </div>
                     <div>
-                      <label htmlFor="email" className="text-base sm:text-sm font-medium mb-2 block">
-                        Email
-                      </label>
-                      <Input
-                        id="email"
-                        type="email"
-                        name="email"
-                        required
-                        placeholder="your@email.com"
-                        className="bg-background/50 text-base sm:text-sm"
-                      />
+                      <label htmlFor="email" className="text-base sm:text-sm font-medium mb-2 block">Email</label>
+                      <Input id="email" type="email" name="email" required placeholder="your@email.com" className="bg-background/50 text-base sm:text-sm" />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="subject" className="text-base sm:text-sm font-medium mb-2 block">
-                      Subject
-                    </label>
-                    <Input
-                      id="subject"
-                      name="subject"
-                      required
-                      placeholder="Project discussion"
-                      className="bg-background/50 text-base sm:text-sm"
-                    />
+                    <label htmlFor="subject" className="text-base sm:text-sm font-medium mb-2 block">Subject</label>
+                    <Input id="subject" name="subject" required placeholder="Project discussion" className="bg-background/50 text-base sm:text-sm" />
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="text-base sm:text-sm font-medium mb-2 block">
-                      Message
-                    </label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      required
-                      placeholder="Tell me about your project..."
-                      className="min-h-[120px] bg-background/50 resize-none text-base sm:text-sm"
-                    />
+                    <label htmlFor="message" className="text-base sm:text-sm font-medium mb-2 block">Message</label>
+                    <Textarea id="message" name="message" required placeholder="Tell me about your project..." className="min-h-[120px] bg-background/50 resize-none text-base sm:text-sm" />
                   </div>
 
                   <Button
