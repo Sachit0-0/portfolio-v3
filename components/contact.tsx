@@ -121,11 +121,16 @@ export default function Contact() {
                   name="contact"
                   method="POST"
                   data-netlify="true"
-                  netlify-honeypot="bot-field"
                   className="space-y-6"
                 >
                   <input type="hidden" name="form-name" value="contact" />
-                  <input type="hidden" name="bot-field" />
+                  
+                  {/* Manual honeypot field for bots */}
+                  <p hidden>
+                    <label>
+                      Don’t fill this out if you're human: <input name="bot-field" />
+                    </label>
+                  </p>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
