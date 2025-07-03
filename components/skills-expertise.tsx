@@ -148,9 +148,7 @@ export function SkillsExpertise() {
                   </h3>
                   <div className="flex items-center gap-3">
                     <div className={`h-1 w-20 bg-gradient-to-r ${category.gradient} rounded-full`} />
-                    <span className="text-gray-500 dark:text-gray-400 font-medium">
-                      {category.skills.length} Technologies
-                    </span>
+                  
                   </div>
                 </div>
                 <div className="hidden md:flex items-center gap-2 text-gray-400 dark:text-gray-500">

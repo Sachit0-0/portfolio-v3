@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useSpring, useTransform } from "framer-motion"
 import Image from "next/image"
+import boat from "@/public/boat.avif";
 
 export function ScrollProgress() {
   const { scrollYProgress } = useScroll()
@@ -82,10 +83,12 @@ export function ScrollProgress() {
           }}
         >
           <Image
-            src="/boat.png"
-            alt="Boat progress indicator"
-            width={40}
-            height={40}
+           src={boat}
+  width={42}
+  height={44}
+  quality={70}
+  alt="Boat"
+  loading="lazy"
 
           />
         </motion.div>

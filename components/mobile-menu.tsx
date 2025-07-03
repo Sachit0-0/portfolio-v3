@@ -8,15 +8,12 @@ import { cn } from "@/lib/utils"
 import { ThemeToggle } from "./theme-toggle"
 
 const navItems = [
-	{ name: "Home", link: "#home" },
-	{ name: "About", link: "#about" },
-	{ name: "Skills", link: "#skills" },
-	{ name: "Tech", link: "#technologies" },
-	{ name: "Projects", link: "#projects" },
-	{ name: "Experience", link: "#experience" },
-	{ name: "Contact", link: "#contact" },
+  { name: "Home", link: "#home" },
+  { name: "Skills", link: "#skills" },
+  { name: "Projects", link: "#projects" },
+  { name: "Experience", link: "#experience" },
+  { name: "Contact", link: "#contact" },
 ]
-
 interface MobileMenuProps {
 	activeSection: string
 	onSectionClick: (sectionId: string) => void
