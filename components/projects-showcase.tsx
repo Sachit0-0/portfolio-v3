@@ -4,11 +4,12 @@ import { Badge } from "@/components/ui/badge"
 import dhn from "@/public/dhn.png"
 import makescan from "@/public/makemyscan.png"
 import { cubicBezier, motion, useInView } from "framer-motion"
-import { ExternalLink, Star, Zap, Calendar, Globe } from "lucide-react"
-import { useRef } from "react"
+import { ExternalLink, Zap, Calendar, Globe } from "lucide-react"
+import { useRef, useEffect, useState } from "react"
 import Image from "next/image"
 
-const customEase = cubicBezier(0.42, 0, 0.58, 1)
+const customEase = cubicBezier(0.25, 0.46, 0.45, 0.94) // Smoother easing for mobile
+const mobileEase = cubicBezier(0.4, 0, 0.2, 1) // Even gentler for mobile
 
 const projects = [
   {
@@ -45,34 +46,78 @@ const projects = [
   },
 ]
 
-// Individual project card component for better performance
 const ProjectCard = ({ project, index }: { project: (typeof projects)[0]; index: number }) => {
   const cardRef = useRef(null)
-  const isInView = useInView(cardRef, { once: true, margin: "-100px" })
+  const isInView = useInView(cardRef, { once: true, margin: "-50px" })
   const isReversed = index % 2 === 1
+  const [isMobile, setIsMobile] = useState(false)
 
-  const imageVariants = {
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  // Simplified mobile animations
+  const mobileImageVariants = {
     hidden: {
       opacity: 0,
-      x: isReversed ? 100 : -100,
-      scale: 0.9,
+      y: 30,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: mobileEase,
+        delay: 0.1,
+      },
+    },
+  }
+
+  const mobileContentVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: mobileEase,
+        delay: 0.2,
+      },
+    },
+  }
+
+  // Desktop animations (more complex)
+  const desktopImageVariants = {
+    hidden: {
+      opacity: 0,
+      x: isReversed ? 60 : -60,
+      scale: 0.95,
     },
     visible: {
       opacity: 1,
       x: 0,
       scale: 1,
       transition: {
-        duration: 0.8,
+        duration: 0.7,
         ease: customEase,
         delay: 0.2,
       },
     },
   }
 
-  const contentVariants = {
+  const desktopContentVariants = {
     hidden: {
       opacity: 0,
-      x: isReversed ? -100 : 100,
+      x: isReversed ? -60 : 60,
       y: 20,
     },
     visible: {
@@ -80,35 +125,37 @@ const ProjectCard = ({ project, index }: { project: (typeof projects)[0]; index:
       x: 0,
       y: 0,
       transition: {
-        duration: 0.8,
+        duration: 0.7,
         ease: customEase,
-        delay: 0.4,
+        delay: 0.3,
       },
     },
   }
 
+  const imageVariants = isMobile ? mobileImageVariants : desktopImageVariants
+  const contentVariants = isMobile ? mobileContentVariants : desktopContentVariants
+
   const techVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      y: 0,
       transition: {
-        duration: 0.6,
-        ease: customEase,
-        delay: 0.6,
-        staggerChildren: 0.08,
+        duration: 0.4,
+        ease: mobileEase,
+        delay: isMobile ? 0.3 : 0.5,
+        staggerChildren: isMobile ? 0.05 : 0.08,
       },
     },
   }
 
   const techItemVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
+    hidden: { opacity: 0, y: isMobile ? 10 : 20 },
     visible: {
       opacity: 1,
-      scale: 1,
+      y: 0,
       transition: {
-        duration: 0.4,
-        ease: customEase,
+        duration: isMobile ? 0.3 : 0.4,
+        ease: mobileEase,
       },
     },
   }
@@ -119,32 +166,42 @@ const ProjectCard = ({ project, index }: { project: (typeof projects)[0]; index:
       className={`grid lg:grid-cols-2 gap-8 lg:gap-16 items-center ${isReversed ? "lg:grid-flow-col-dense" : ""}`}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
+      style={{ willChange: "transform, opacity" }}
     >
-      {/* Enhanced Image Section */}
-      <motion.div className={`relative ${isReversed ? "lg:col-start-2" : ""}`} variants={imageVariants}>
+      {/* Optimized Image Section */}
+      <motion.div
+        className={`relative ${isReversed ? "lg:col-start-2" : ""}`}
+        variants={imageVariants}
+        style={{ willChange: "transform, opacity" }}
+      >
         <div className="relative group">
-          {/* Glow effect behind image */}
-          <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          {/* Simplified glow effect - disabled on mobile for performance */}
+          {!isMobile && (
+            <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          )}
 
           {/* Main image container */}
-          <div className="relative overflow-hidden rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-500 bg-gradient-to-br from-muted/30 to-muted/10 border border-border/50">
+          <div className="relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-muted/20 to-muted/5 border border-border/30">
             <Image
               src={project.image || "/placeholder.svg"}
               alt={project.title}
-              className="w-full h-auto object-contain transition-transform duration-700 hover:scale-105 rounded-xl"
+              className={`w-full h-auto object-contain transition-transform duration-500 rounded-xl ${
+                isMobile ? "" : "hover:scale-[1.02]"
+              }`}
               width={800}
               height={420}
               priority={index === 0}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
+              loading={index === 0 ? "eager" : "lazy"}
             />
 
             {/* Overlay with project info */}
-            <div className="absolute top-4 right-4 flex gap-2">
-              <Badge variant="secondary" className="bg-green-500/90 text-white border-0 shadow-lg">
-                <div className="w-2 h-2 bg-white rounded-full mr-2 animate-pulse" />
+            <div className="absolute top-3 right-3 flex gap-2">
+              <Badge variant="secondary" className="bg-green-500/90 text-white border-0 shadow-sm text-xs">
+                <div className="w-1.5 h-1.5 bg-white rounded-full mr-1.5 animate-pulse" />
                 {project.status}
               </Badge>
-              <Badge variant="outline" className="bg-background/90 backdrop-blur-sm border-border/50">
+              <Badge variant="outline" className="bg-background/90 backdrop-blur-sm border-border/50 text-xs">
                 <Calendar className="w-3 h-3 mr-1" />
                 {project.year}
               </Badge>
@@ -153,10 +210,11 @@ const ProjectCard = ({ project, index }: { project: (typeof projects)[0]; index:
         </div>
       </motion.div>
 
-      {/* Enhanced Content Section */}
+      {/* Optimized Content Section */}
       <motion.div
         className={`space-y-6 ${isReversed ? "lg:col-start-1 lg:row-start-1" : ""}`}
         variants={contentVariants}
+        style={{ willChange: "transform, opacity" }}
       >
         {/* Project Header */}
         <div className="space-y-4">
@@ -169,24 +227,24 @@ const ProjectCard = ({ project, index }: { project: (typeof projects)[0]; index:
 
           <motion.h3
             className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: isMobile ? 15 : 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: isMobile ? 0.4 : 0.6, delay: isMobile ? 0.4 : 0.5, ease: mobileEase }}
           >
             {project.title}
           </motion.h3>
 
           <motion.p
             className="text-base md:text-lg text-muted-foreground leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: isMobile ? 0.4 : 0.6, delay: isMobile ? 0.5 : 0.6, ease: mobileEase }}
           >
             {project.longDescription}
           </motion.p>
         </div>
 
-        {/* Enhanced Tech Stack */}
+        {/* Optimized Tech Stack */}
         <motion.div className="space-y-4" variants={techVariants}>
           <div className="flex items-center gap-2">
             <div className="p-2 rounded-full bg-primary/10">
@@ -195,42 +253,54 @@ const ProjectCard = ({ project, index }: { project: (typeof projects)[0]; index:
             <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider">Technologies Used</h4>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
             {project.tech.map((tech, techIndex) => (
               <motion.div key={tech} variants={techItemVariants}>
                 <Badge
                   variant="outline"
-                  className="w-full justify-center py-2.5 text-sm font-medium hover:bg-primary/10 hover:border-primary/40 hover:text-primary transition-all duration-300 cursor-default group"
+                  className={`w-full justify-center py-2 md:py-2.5 text-xs md:text-sm font-medium transition-colors duration-200 cursor-default ${
+                    isMobile ? "" : "hover:bg-primary/10 hover:border-primary/40 hover:text-primary"
+                  }`}
                 >
-                  <span className="group-hover:scale-105 transition-transform duration-200">{tech}</span>
+                  <span className={isMobile ? "" : "group-hover:scale-105 transition-transform duration-200"}>
+                    {tech}
+                  </span>
                 </Badge>
               </motion.div>
             ))}
           </div>
         </motion.div>
 
-        {/* Custom Button Section */}
+        {/* Simplified Button Section */}
         <motion.div
           className="pt-4"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: isMobile ? 15 : 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          transition={{ duration: isMobile ? 0.4 : 0.6, delay: isMobile ? 0.6 : 0.8, ease: mobileEase }}
         >
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-block">
-              <button className="overflow-hidden relative w-32 p-2 h-12 bg-gradient-to-r from-blue-500 to-purple-600 text-white border-none rounded-md text-xl font-bold cursor-pointer relative z-10 group">
+              <button
+                className={`relative overflow-hidden w-32 p-2 h-12 bg-gradient-to-r from-blue-500 to-purple-600 text-white border-none rounded-md text-lg font-bold cursor-pointer z-10 group transition-transform duration-200 ${
+                  isMobile ? "active:scale-95" : "hover:scale-105"
+                }`}
+              >
                 Live Demo
-                <span className="absolute w-36 h-32 -top-8 -left-2 bg-white rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-500 duration-1000 origin-left"></span>
-                <span className="absolute w-36 h-32 -top-8 -left-2 bg-purple-400 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-700 duration-700 origin-left"></span>
-                <span className="absolute w-36 h-32 -top-8 -left-2 bg-purple-600 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-1000 duration-500 origin-left"></span>
-                <span className="group-hover:opacity-100 group-hover:duration-1000 duration-100 opacity-0 absolute top-2.5 left-6 z-10">
-                  Visit!
-                </span>
+                {!isMobile && (
+                  <>
+                    <span className="absolute w-36 h-32 -top-8 -left-2 bg-white rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-500 duration-1000 origin-left"></span>
+                    <span className="absolute w-36 h-32 -top-8 -left-2 bg-purple-400 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-700 duration-700 origin-left"></span>
+                    <span className="absolute w-36 h-32 -top-8 -left-2 bg-purple-600 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-1000 duration-500 origin-left"></span>
+                    <span className="group-hover:opacity-100 group-hover:duration-1000 duration-100 opacity-0 absolute top-2.5 left-6 z-10">
+                      Visit!
+                    </span>
+                  </>
+                )}
               </button>
             </a>
 
             {/* Project stats */}
-            <div className="flex items-center gap-4 text-sm text-muted-foreground ml-4">
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                 <span>Active</span>
@@ -249,54 +319,59 @@ const ProjectCard = ({ project, index }: { project: (typeof projects)[0]; index:
 
 export function ProjectsShowcase() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-50px" })
+  const isInView = useInView(ref, { once: true, margin: "-30px" })
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
   const featuredProjects = projects.filter((p) => p.featured)
 
   const headerVariants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: isMobile ? 30 : 50 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 1,
-        ease: customEase,
+        duration: isMobile ? 0.6 : 1,
+        ease: isMobile ? mobileEase : customEase,
       },
     },
   }
 
   return (
     <section id="projects" className="py-16 md:py-32 relative overflow-hidden">
-      {/* Enhanced Background */}
-      <div className="absolute inset-0 pointer-events-none" />
-  
-
       <div className="container mx-auto px-4" ref={ref}>
-        {/* Enhanced Section Header */}
+        {/* Optimized Section Header */}
         <motion.div
-          className="text-center mb-20 md:mb-28"
+          className="text-center mb-16 md:mb-28"
           variants={headerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
+          style={{ willChange: "transform, opacity" }}
         >
-     
-
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent leading-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 md:mb-8 bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent leading-tight">
             Featured{" "}
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Projects</span>
           </h2>
 
           <motion.div
-            className="w-32 h-1.5 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 mx-auto mb-8 rounded-full"
+            className="w-24 md:w-32 h-1 md:h-1.5 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 mx-auto mb-6 md:mb-8 rounded-full"
             initial={{ width: 0, opacity: 0 }}
-            animate={isInView ? { width: 128, opacity: 1 } : {}}
-            transition={{ duration: 1, delay: 0.4 }}
+            animate={isInView ? { width: isMobile ? 96 : 128, opacity: 1 } : {}}
+            transition={{ duration: isMobile ? 0.6 : 1, delay: 0.3 }}
           />
-
-        
         </motion.div>
 
         {/* Projects Grid */}
-        <div className="space-y-24 md:space-y-32">
+        <div className="space-y-16 md:space-y-32">
           {featuredProjects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}

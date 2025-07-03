@@ -75,7 +75,7 @@ export function HeroSection() {
             >
               Building scalable, responsive web applications with React, Next.js, and Django.
               <br className="hidden sm:block" />
-              <span className="block sm:inline">Passionate about creating exceptional user experiences.</span>
+              <span className="block sm:inline">Turning ideas into lightning-fast, user-focused web experiences.</span>
             </motion.p>
 
             {/* CTA Buttons */}
