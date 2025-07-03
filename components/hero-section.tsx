@@ -317,8 +317,8 @@ export function HeroSection() {
         onClick={() => scrollToSection("skills")}
       >
         <div className="flex flex-col items-end space-y-1 lg:space-y-2 text-muted-foreground hover:text-foreground transition-colors">
-          <span className="text-xs lg:text-sm font-medium">Scroll Down</span>
-          <ArrowDown className="w-4 h-4 lg:w-5 lg:h-5" />
+          <span className="text-xs lg:text-sm  text-primary font-medium">Scroll Down</span>
+          <ArrowDown className="w-4 h-4 lg:w-5 lg:h-5 text-primary animate-bounce mx-auto" />
         </div>
       </motion.div>
 
