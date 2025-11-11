@@ -22,7 +22,7 @@ export default function Portfolio() {
         <Experience />
         <Contact />
 
-        {/* Footer */}
+       
         <footer className="py-8 border-t">
           <div className="container mx-auto px-4 text-center">
             <p className="text-sm sm:text-base text-muted-foreground">

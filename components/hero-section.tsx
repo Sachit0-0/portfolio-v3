@@ -48,7 +48,7 @@ export function HeroSection() {
 
             {/* Name */}
             <motion.h1
-              className="text-6xl caveat-bold sm:text-7xl md:text-8xl lg:text-9xl xl:text-[6rem] font-bold leading-tight bg-gradient-to-r from-blue-600 via-slate-500 to-purple-600 bg-clip-text text-transparent drop-shadow-2xl"
+              className="text-6xl  sm:text-7xl md:text-8xl lg:text-9xl xl:text-[6rem] font-bold leading-tight bg-gradient-to-r from-blue-600 via-slate-500 to-purple-600 bg-clip-text text-transparent drop-shadow-2xl"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -58,7 +58,7 @@ export function HeroSection() {
 
             {/* Title */}
             <motion.div
-              className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-primary caveat-bold"
+              className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-primary"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.3 }}

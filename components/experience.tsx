@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Download } from "lucide-react"
 import CvButton from "./ui/cvButton"
+import AnimatedSectionHeader from "./ui/animatedSectionHeader"
 
 const experienceData = [
   {
@@ -45,24 +46,7 @@ export default function Experience() {
   return (
     <section id="experience" className="py-24 bg-background relative">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, amount: 0.2 }}
-          className="text-center mb-20"
-        >
-          <h2 className="text-5xl caveat-bold font-bold mb-4 tracking-tight">
-            Work{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent caveat-bold">
-              Experience
-            </span>
-          </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-6 rounded-full" />
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            My professional journey and key achievements in web development
-          </p>
-        </motion.div>
+<AnimatedSectionHeader title="Work" highlight="Experience" />
 
         <div className="relative max-w-4xl mx-auto">
         

@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Code2, Database, ArrowRight } from "lucide-react"
 import { useRef, memo, useMemo } from "react"
 import dynamic from "next/dynamic"
+import AnimatedSectionHeader from "./ui/animatedSectionHeader"
 
 const TechShowcase = dynamic(() => import("./tech-showcase"), { ssr: false })
 
@@ -105,21 +106,7 @@ export function SkillsExpertise() {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-          
-            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent caveat-bold">
-          Technologies & Tools
-            </span>
-          </h2>
-                         <div className="w-32 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8" />
-
-        </motion.div>
+        <AnimatedSectionHeader title="Technologies &" highlight="Tools" />
 
         {/* Skills list */}
         <div className="space-y-20">

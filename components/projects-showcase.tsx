@@ -7,6 +7,7 @@ import { useRef } from "react"
 import Image from "next/image"
 import makescan from "@/public/makemyscan.png"
 import dhn from "@/public/dhn.png"
+import AnimatedSectionHeader from "./ui/animatedSectionHeader"
 
 const projects = [
   {
@@ -228,31 +229,8 @@ export function ProjectsShowcase() {
       <div className="absolute bottom-1/4 right-1/4 w-64 h-64 md:w-96 md:h-96 bg-secondary/5 rounded-full blur-3xl opacity-20 pointer-events-none" />
 
       <div className="container mx-auto px-4 lg:px-8 relative z-10" ref={ref}>
-        {/* Header Section */}
-        <motion.div
-          className="text-center mb-20 lg:mb-32"
-          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{
-            duration: shouldReduceMotion ? 0.3 : 0.6,
-            ease: [0.25, 0.1, 0.25, 1],
-          }}
-        >
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
-            Featured{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Projects</span>
-          </h2>
-          <motion.div
-            className="w-24 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 mx-auto mt-4 rounded-full"
-            initial={{ width: 0, opacity: 0 }}
-            animate={isInView ? { width: 96, opacity: 1 } : {}}
-            transition={{
-              duration: shouldReduceMotion ? 0.3 : 0.5,
-              delay: shouldReduceMotion ? 0 : 0.2,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
-          />
-        </motion.div>
+<AnimatedSectionHeader title="Featured" highlight="Projects" />
+
 
         {/* Projects Grid with Enhanced Stack Effect */}
         <div className="space-y-32 lg:space-y-40">

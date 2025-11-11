@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Github, Linkedin, Mail, MapPin, Phone } from "lucide-react"
+import AnimatedSectionHeader from "./ui/animatedSectionHeader"
 
 export default function Contact() {
   const ref = useRef(null)
@@ -15,23 +16,7 @@ export default function Contact() {
   return (
     <section id="contact" className="relative  py-20 overflow-x-hidden" ref={ref}>
       <div className="container mx-auto px-4 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="mb-16"
-        >
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-6 caveat-bold">
-            Let's{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent caveat-bold">
-              Connect
-            </span>
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto mb-8"></div>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Ready to bring your ideas to life? Let's discuss your next project.
-          </p>
-        </motion.div>
+<AnimatedSectionHeader title="Get in" highlight="Touch" />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto w-full">
           {/* Contact Info */}

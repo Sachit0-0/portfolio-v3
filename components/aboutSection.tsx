@@ -76,45 +76,35 @@ export default function About() {
           >
             {/* Description */}
             <div className="space-y-6">
-              <motion.p
-                className="text-lg text-muted-foreground leading-relaxed  leading-relaxed"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.6 }}
-              >
-                I'm a full-stack developer with a strong focus on frontend
-                technologies — passionate about crafting smooth, responsive
-                interfaces and exceptional user experiences. With 2+ years of
-                experience working with React, Next.js, and Django, I enjoy
-                taking projects from idea to execution with a keen eye for
-                detail and clean, maintainable code.
-              </motion.p>
-            </div>
-
-            <motion.div
+                   <motion.p
+              className="text-base md:text-lg text-muted-foreground leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 1.4 }}
-              className="p-6 rounded-lg bg-primary/8 border border-primary/20 shadow-md"
+              transition={{ duration: 0.6, delay: 0.6 }}
             >
-              <div className="flex items-start gap-3">
-                <div className="p-2 rounded-full bg-primary/10 mt-1">
-                  <Users className="w-4 h-4 text-primary" />
+              I'm a full-stack developer with a strong focus on frontend technologies — passionate about crafting
+              smooth, responsive interfaces and exceptional user experiences. With 2+ years of experience working with
+              React, Next.js, and Django, I enjoy taking projects from idea to execution with a keen eye for detail and
+              clean, maintainable code.
+            </motion.p>
+            </div>
+
+        <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="group p-6 rounded-xl bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 shadow-sm hover:shadow-md transition-shadow duration-300"
+            >
+              <div className="flex items-start gap-4">
+                <div className="p-2.5 rounded-lg bg-primary/15 group-hover:bg-primary/20 transition-colors duration-300 mt-0.5">
+                  <Users className="w-5 h-5 text-primary" />
                 </div>
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">
-                    Clean Code, Thoughtful Design
-                  </h4>
-                  <motion.p
-                    className="text-sm text-bold  leading-relaxed"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6, delay: 0.8 }}
-                  >
-                    Based in Kathmandu, Nepal, I care deeply about performance,
-                    simplicity, and building products that look great and work even
-                    better.
-                  </motion.p>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-foreground mb-2 text-base">Clean Code, Thoughtful Design</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Based in Kathmandu, Nepal, I care deeply about performance, simplicity, and building products that
+                    look great and work even better.
+                  </p>
                 </div>
               </div>
             </motion.div>
