@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Indie+Flower&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -27,9 +28,9 @@
   }
 
   .dark {
-    --background: 222 14% 10%;         /* Dark gray background */
-    --foreground: 0 0% 98%;            /* Almost white text */
-    --card: 222 14% 13%;               /* Slightly lighter for cards */
+    --background: 222 14% 10%; /* Dark gray background */
+    --foreground: 0 0% 98%; /* Almost white text */
+    --card: 222 14% 13%; /* Slightly lighter for cards */
     --card-foreground: 0 0% 98%;
     --popover: 222 14% 12%;
     --popover-foreground: 0 0% 98%;
@@ -49,26 +50,20 @@
   }
 }
 
-
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Indie+Flower&display=swap');
-
-
 .caveat-text {
-  font-family: 'Caveat', cursive;
+  font-family: "Caveat", cursive;
   font-optical-sizing: auto;
-  font-weight: 500; 
+  font-weight: 500;
 }
 
-
 .caveat-bold {
-  font-family: 'Caveat', cursive;
+  font-family: "Caveat", cursive;
   font-optical-sizing: auto;
   font-weight: 700;
 }
 
-
 .indie-text {
-  font-family: 'Indie Flower', cursive;
+  font-family: "Indie Flower", cursive;
   font-weight: 400;
 }
 
@@ -136,9 +131,8 @@ html {
   background: linear-gradient(to bottom right, hsl(0 0% 8%), hsl(0 0% 12%));
 }
 
-
 /* magic card */
-/* From Uiverse.io by Centered101 */ 
+/* From Uiverse.io by Centered101 */
 .card {
   width: 280px;
   height: 280px;
@@ -206,7 +200,11 @@ html {
   bottom: 3px;
   left: 3px;
   right: 3px;
-  background: linear-gradient(90deg, #6366f1 0%, #a21caf 100%); /* blue to purple */
+  background: linear-gradient(
+    90deg,
+    #6366f1 0%,
+    #a21caf 100%
+  ); /* blue to purple */
   top: 80%;
   border-radius: 29px;
   z-index: 2;
@@ -317,4 +315,3 @@ html {
   transform: scale(2.5);
   transition: all 0.5s ease-in-out 0.5s;
 }
-
