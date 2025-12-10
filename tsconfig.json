@@ -34,7 +34,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "components/magicui/useMousePosition.js", "components/ui/magicText.jsx"  ],
   "exclude": [
     "node_modules"
   ]

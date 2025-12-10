@@ -99,10 +99,7 @@ export function SkillsExpertise() {
   return (
     <section id="skills" ref={containerRef} className="relative py-24 overflow-hidden">
       {/* Simplified background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-blue-50/50 dark:from-gray-950 dark:to-blue-950/30" />
-
-      {/* Single subtle background element */}
-      <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
+  
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
