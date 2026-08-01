@@ -1,123 +1,223 @@
-"use client"
+"use client";
 
-import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Github, Linkedin, Mail, MapPin, Phone } from "lucide-react"
-import AnimatedSectionHeader from "./ui/animatedSectionHeader"
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 
-export default function Contact() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+import { Sparkles, Mail, Phone, MapPin, Send } from "lucide-react";
+
+/* ── Section header with split-text animation ────────────────────── */
+function SectionHeader({ title }: { title: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const shouldReduceMotion = useReducedMotion();
+
+  const words = title.split(" ");
 
   return (
-    <section id="contact" className="relative  py-20 overflow-x-hidden" ref={ref}>
-      <div className="container mx-auto px-4 text-center">
-<AnimatedSectionHeader title="Get in" highlight="Touch" />
+    <div ref={ref} className="mb-16 md:mb-24">
+      <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-primary font-mono mb-3">
+        <Sparkles className="w-3.5 h-3.5" />
+        <span>Contact</span>
+      </div>
+      <h2 className="font-display text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.05]">
+        {words.map((word, i) => (
+          <span key={i} className="inline-block mr-[0.25em] overflow-hidden align-top">
+            <motion.span
+              className="inline-block"
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: "110%" }}
+              animate={isInView ? { opacity: 1, y: "0%" } : {}}
+              transition={{
+                duration: shouldReduceMotion ? 0.3 : 0.7,
+                delay: i * 0.06,
+                ease: [0.22, 1, 0.36, 1] as const,
+              }}
+            >
+              {word}
+            </motion.span>
+          </span>
+        ))}
+      </h2>
+    </div>
+  );
+}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto w-full">
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="space-y-8 px-4 sm:px-0"
-          >
-            {[
-              {
-                Icon: Mail,
-                title: "Email",
-                value: "sachitdahal33@gmail.com",
-              },
-              {
-                Icon: Phone,
-                title: "Phone",
-                value: "+977 9803033781",
-              },
-              {
-                Icon: MapPin,
-                title: "Location",
-                value: "Pasikot, Kathmandu, Nepal",
-              },
-            ].map(({ Icon, title, value }) => (
-              <div key={title} className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Icon className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-base sm:text-lg">{title}</h3>
-                  <p className="text-sm sm:text-base text-muted-foreground">{value}</p>
-                </div>
+export default function Contact() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const shouldReduceMotion = useReducedMotion();
+
+  const fadeUp = (delay: number) =>
+    shouldReduceMotion
+      ? ({
+          initial: { opacity: 0 },
+          animate: isInView ? { opacity: 1 } : {},
+          transition: { duration: 0.3 },
+        } as const)
+      : ({
+          initial: { opacity: 0, y: 24 },
+          animate: isInView ? { opacity: 1, y: 0 } : {},
+          transition: {
+            duration: 0.7,
+            delay,
+            ease: [0.22, 1, 0.36, 1] as const,
+          },
+        } as const);
+
+  return (
+    <section
+      id="contact"
+      className="relative py-24 md:py-36 overflow-x-hidden"
+      ref={ref}
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <SectionHeader title="Get in Touch" />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+          {/* Left — Contact info */}
+          <motion.div className="space-y-8" {...fadeUp(0.1)}>
+            <p className="text-muted-foreground text-lg leading-relaxed max-w-md">
+              Based in Kathmandu, Nepal. Focused on clean architecture, reusable
+              components, and end-to-end delivery — from first line of code to
+              production deploy.
+            </p>
+
+            <div className="space-y-5 text-sm">
+              <div>
+                <p className="text-muted-foreground/60 text-xs uppercase tracking-[0.15em] mb-1">
+                  Email
+                </p>
+                <a
+                  href="mailto:sachitdahal33@gmail.com"
+                  className="text-foreground hover:text-primary transition-colors duration-300"
+                >
+                  sachitdahal33@gmail.com
+                </a>
               </div>
-            ))}
+              <div>
+                <p className="text-muted-foreground/60 text-xs uppercase tracking-[0.15em] mb-1">
+                  Phone
+                </p>
+                <p className="text-foreground">+977 9803033781</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground/60 text-xs uppercase tracking-[0.15em] mb-1">
+                  Location
+                </p>
+                <p className="text-foreground">Pasikot, Kathmandu, Nepal</p>
+              </div>
+            </div>
 
-            {/* Social Buttons */}
-            <div className="flex space-x-4 pt-8 justify-center lg:justify-start">
-              <Button size="icon" variant="outline" className="hover:bg-blue-600 hover:text-white bg-transparent" asChild>
-                <a href="https://github.com/Sachit0-0" target="_blank" rel="noopener noreferrer">
-                  <Github className="w-5 h-5" />
-                </a>
-              </Button>
-              <Button size="icon" variant="outline" className="hover:bg-blue-600 hover:text-white bg-transparent" asChild>
-                <a href="https://www.linkedin.com/in/sachit-da-hal-59a05b212/" target="_blank" rel="noopener noreferrer">
-                  <Linkedin className="w-5 h-5" />
-                </a>
-              </Button>
-              <Button size="icon" variant="outline" className="hover:bg-blue-600 hover:text-white bg-transparent" asChild>
-                <a href="mailto:sachitdahal33@gmail.com">
-                  <Mail className="w-5 h-5" />
-                </a>
-              </Button>
+            {/* Social links — text, not icons */}
+            <div className="flex flex-wrap gap-x-6 gap-y-2 pt-4 text-sm text-muted-foreground">
+              <a
+                href="https://github.com/Sachit0-0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-foreground transition-colors duration-300"
+              >
+                GitHub
+              </a>
+              <a
+                href="https://www.linkedin.com/in/sachit-dahal-59a05b212/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-foreground transition-colors duration-300"
+              >
+                LinkedIn
+              </a>
+              <a
+                href="mailto:sachitdahal33@gmail.com"
+                className="hover:text-foreground transition-colors duration-300"
+              >
+                Email
+              </a>
             </div>
           </motion.div>
 
-          {/* Contact Form (no backend yet) */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="px-4 sm:px-0"
-          >
-            <Card className="border-0 bg-gradient-to-br from-background to-muted/30">
-              <CardContent className="p-6">
-                <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="name" className="text-base sm:text-sm font-medium mb-2 block">Name</label>
-                      <Input id="name" name="name" required placeholder="Your name" className="bg-background/50 text-base sm:text-sm" />
-                    </div>
-                    <div>
-                      <label htmlFor="email" className="text-base sm:text-sm font-medium mb-2 block">Email</label>
-                      <Input id="email" type="email" name="email" required placeholder="your@email.com" className="bg-background/50 text-base sm:text-sm" />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="subject" className="text-base sm:text-sm font-medium mb-2 block">Subject</label>
-                    <Input id="subject" name="subject" required placeholder="Project discussion" className="bg-background/50 text-base sm:text-sm" />
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className="text-base sm:text-sm font-medium mb-2 block">Message</label>
-                    <Textarea id="message" name="message" required placeholder="Tell me about your project..." className="min-h-[120px] bg-background/50 resize-none text-base sm:text-sm" />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-base sm:text-lg"
+          {/* Right — Contact form */}
+          <motion.div {...fadeUp(0.25)}>
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="space-y-6"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="text-xs uppercase tracking-[0.15em] text-muted-foreground/60 mb-2 block"
                   >
-                    Send Message
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+                    Name
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    required
+                    placeholder="Your name"
+                    className="w-full bg-transparent border-b border-border/60 focus:border-primary pb-3 pt-1 text-foreground placeholder:text-muted-foreground/30 outline-none transition-colors duration-300 text-sm"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="text-xs uppercase tracking-[0.15em] text-muted-foreground/60 mb-2 block"
+                  >
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="your@email.com"
+                    className="w-full bg-transparent border-b border-border/60 focus:border-primary pb-3 pt-1 text-foreground placeholder:text-muted-foreground/30 outline-none transition-colors duration-300 text-sm"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="subject"
+                  className="text-xs uppercase tracking-[0.15em] text-muted-foreground/60 mb-2 block"
+                >
+                  Subject
+                </label>
+                <input
+                  id="subject"
+                  name="subject"
+                  required
+                  placeholder="Project discussion"
+                  className="w-full bg-transparent border-b border-border/60 focus:border-primary pb-3 pt-1 text-foreground placeholder:text-muted-foreground/30 outline-none transition-colors duration-300 text-sm"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="message"
+                  className="text-xs uppercase tracking-[0.15em] text-muted-foreground/60 mb-2 block"
+                >
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  placeholder="Tell me about your project..."
+                  rows={5}
+                  className="w-full bg-transparent border-b border-border/60 focus:border-primary pb-3 pt-1 text-foreground placeholder:text-muted-foreground/30 outline-none transition-colors duration-300 resize-none text-sm"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="px-7 py-3.5 rounded-full bg-primary text-primary-foreground font-medium text-sm flex items-center gap-2 hover:bg-primary/90 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 cursor-pointer mt-4"
+              >
+                <span>Send Message</span>
+                <Send className="w-4 h-4" />
+              </button>
+            </form>
           </motion.div>
         </div>
       </div>
     </section>
-  )
+  );
 }

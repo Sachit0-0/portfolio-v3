@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
@@ -29,72 +29,79 @@ export function MobileMenu({ activeSection, onSectionClick }: MobileMenuProps) {
     setMounted(true);
   }, []);
 
-  // Lock scroll on menu open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      document.body.style.position = "fixed";
-      document.body.style.width = "100%";
     } else {
       document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.width = "";
     }
     return () => {
       document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.width = "";
     };
   }, [isOpen]);
 
   const handleSectionClick = (link: string) => {
     setIsOpen(false);
-    // Wait for menu animation to complete before scrolling
     setTimeout(() => {
       onSectionClick(link);
-    }, 300);
+    }, 250);
   };
 
   const menuContent = (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-white dark:bg-gray-950 z-[9999] md:hidden flex flex-col"
-          initial={{ opacity: 0, x: "100%" }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: "100%" }}
-          transition={{ duration: 0.3 }}
+          className="fixed inset-0 bg-background/95 backdrop-blur-xl z-[9999] md:hidden flex flex-col justify-between p-6 sm:p-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="flex justify-end p-6">
+          {/* Header row in mobile overlay */}
+          <div className="flex items-center justify-between w-full pt-2">
+            <span className="font-mono text-xs uppercase tracking-widest text-primary font-bold">
+              Navigation
+            </span>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(false)}
-              className="text-gray-900 dark:text-white"
               aria-label="Close menu"
+              className="w-10 h-10 rounded-full border border-border/60 bg-muted/30"
             >
-              <X className="h-6 w-6" />
+              <X className="h-5 w-5 text-foreground" />
             </Button>
           </div>
-          <nav className="flex-1 flex flex-col items-center justify-center gap-8 pb-20">
+
+          {/* Navigation Links */}
+          <nav className="flex flex-col items-center justify-center gap-7 my-auto">
             {navItems.map((item, index) => (
               <motion.button
                 key={item.name}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 30 }}
-                transition={{ duration: 0.3, delay: index * 0.08 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
                 onClick={() => handleSectionClick(item.link)}
                 className={cn(
-                  "text-3xl font-light font-serif text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors",
-                  activeSection === item.link.substring(1) ? "underline" : ""
+                  "font-display text-4xl sm:text-5xl tracking-tight text-foreground/75 hover:text-primary transition-colors duration-200",
+                  activeSection === item.link.substring(1)
+                    ? "text-primary font-bold"
+                    : ""
                 )}
-                style={{ minWidth: 180 }}
               >
                 {item.name}
               </motion.button>
             ))}
           </nav>
+
+          {/* Footer of Mobile Overlay */}
+          <div className="flex items-center justify-between border-t border-border/40 pt-4">
+            <span className="text-xs font-mono text-muted-foreground">
+              Sachit Dahal
+            </span>
+            <ThemeToggle />
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
@@ -102,14 +109,14 @@ export function MobileMenu({ activeSection, onSectionClick }: MobileMenuProps) {
 
   return (
     <div className="md:hidden">
-      <div className="flex items-center gap-12 px-4 py-3 rounded-lg">
+      <div className="flex items-center gap-2">
         <ThemeToggle />
         <Button
           variant="ghost"
           size="icon"
           aria-label={isOpen ? "Close menu" : "Open menu"}
           onClick={() => setIsOpen(!isOpen)}
-          className="w-10 h-10 rounded-full flex items-center justify-center text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          className="w-9 h-9 rounded-full border border-border/50 bg-background/60"
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -120,9 +127,9 @@ export function MobileMenu({ activeSection, onSectionClick }: MobileMenuProps) {
               transition={{ duration: 0.2 }}
             >
               {isOpen ? (
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4 text-foreground" />
               ) : (
-                <Menu className="w-5 h-5" />
+                <Menu className="w-4 h-4 text-foreground" />
               )}
             </motion.div>
           </AnimatePresence>

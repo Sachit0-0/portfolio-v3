@@ -1,244 +1,266 @@
-"use client"
+"use client";
 
-import { Badge } from "@/components/ui/badge"
-import { motion, useInView, useReducedMotion } from "framer-motion"
-import { ExternalLink, Zap, Calendar, Globe } from "lucide-react"
-import { useRef } from "react"
-import Image from "next/image"
-import makescan from "@/public/makemyscan.png"
-import dhn from "@/public/dhn.png"
-import AnimatedSectionHeader from "./ui/animatedSectionHeader"
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import Image from "next/image";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
 
+/* ── Project data ────────────────────────────────────────────────── */
 const projects = [
   {
     id: 1,
-    title: "MakeMyScan - Website Vulnerability Scanner",
+    number: "01",
+    title: "FrameAudit",
+    category: "Full-Stack Plugin & SaaS",
     description:
-      "A comprehensive security scanning platform built with Next.js and Django that performs automated vulnerability assessments on websites.",
-    longDescription:
-      "MakeMyScan is a professional security scanning tool that helps identify vulnerabilities in websites. Built with Next.js for the frontend and Django for the backend, it provides detailed security reports and recommendations for improving website security.",
-    image: makescan,
-    tech: ["Next.js", "Django", "Python", "PostgreSQL", "Security APIs", "Tailwind CSS"],
-    github: "#",
-    live: "https://makemyscan.com/",
-    featured: true,
-    category: "Security Tool",
-    status: "Live",
-    year: "2024",
+      "End-to-end Framer ecosystem product featuring a lightweight React/TypeScript canvas plugin, an automated backend audit engine, Lemon Squeezy payment integration, and a dedicated marketing platform.",
+    tech: ["Framer API", "React", "TypeScript", "Node.js", "Lemon Squeezy"],
+    link: "https://framerify.com/frameaudit",
+    linkLabel: "View Product",
   },
   {
     id: 2,
-    title: "DHN Data Visualization & BI Tool",
+    number: "02",
+    title: "Sneha's Art Portfolio",
+    category: "Client Project",
     description:
-      "Interactive data visualization dashboard built with React and Recharts for comprehensive business intelligence and data analysis.",
-    longDescription:
-      "A powerful business intelligence platform that transforms complex data into interactive visualizations. Features real-time data processing, customizable dashboards, and advanced analytics capabilities for data-driven decision making.",
-    image: dhn,
-    tech: ["React", "Recharts", "TypeScript", "Node.js", "PostgreSQL", "Chart.js"],
-    github: "#",
-    live: "https://dh.monaltech.com/",
-    featured: true,
-    category: "Data Visualization",
-    status: "Live",
-    year: "2024",
+      "CMS-managed artist portfolio with responsive image galleries, custom layout grids, and SEO optimization.",
+    tech: ["Next.js", "Sanity CMS", "Tailwind CSS"],
+    link: "https://sneha.info.np",
+    linkLabel: "Visit Website",
   },
-]
+  {
+    id: 3,
+    number: "03",
+    title: "Visual Journal & Gallery",
+    category: "Creative Portfolio",
+    description:
+      "Sanity-powered photo journal featuring dark mode aesthetics, fluid transitions, and fast image loading.",
+    tech: ["Next.js", "Sanity", "Framer Motion"],
+    link: "https://photo2diary.vercel.app",
+    linkLabel: "Visit Website",
+  },
+  {
+    id: 4,
+    number: "04",
+    title: "EventCalendar",
+    category: "Framer Plugin",
+    description:
+      "Full-featured Framer plugin supporting recurring events, category filters, and multiple interactive calendar views.",
+    tech: ["Framer API", "TypeScript", "React"],
+    link: "https://frame-event.vercel.app",
+    linkLabel: "Live Demo",
+  },
+  {
+    id: 5,
+    number: "05",
+    title: "MakeMyScan",
+    category: "Web Platform",
+    description:
+      "Web vulnerability scanning platform featuring auth, scan history, target management, and real-time security reporting.",
+    image: "/makemyscan.png",
+    tech: ["Next.js", "Django REST", "PostgreSQL"],
+    link: "https://makemyscan.com",
+  },
+  {
+    id: 6,
+    number: "06",
+    title: "DHN BI Dashboard",
+    category: "Enterprise BI",
+    description:
+      "Interactive Business Intelligence platform with drill-down data visualization for a national organization.",
+    image: "/dhn.png",
+    tech: ["React", "Recharts", "TypeScript"],
+    note: "Confidential client build",
+  },
+];
 
-const ProjectCard = ({ project, index }: { project: (typeof projects)[0]; index: number }) => {
-  const cardRef = useRef(null)
-  const isInView = useInView(cardRef, { once: true, margin: "-100px" })
-  const shouldReduceMotion = useReducedMotion()
+/* ── Section header ──────────────────────────────────────────────── */
+function SectionHeader({ title, subtitle }: { title: string; subtitle?: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const shouldReduceMotion = useReducedMotion();
 
-  // Alternating layout: first project image on right, second on left
-  const imageOnRight = index % 2 === 0
-
-  // Smooth animations optimized for mobile
-  const getAnimationProps = (baseProps: any) => {
-    if (shouldReduceMotion) {
-      return {
-        initial: { opacity: 0 },
-        animate: isInView ? { opacity: 1 } : {},
-        transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] },
-      }
-    }
-    return {
-      ...baseProps,
-      transition: {
-        ...baseProps.transition,
-        ease: [0.25, 0.1, 0.25, 1], // Smooth cubic-bezier for all devices
-      },
-    }
-  }
+  const words = title.split(" ");
 
   return (
-    <div className="relative">
-      {/* Stack effect background layers */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-2xl transform rotate-1 scale-[0.98] -z-10" />
-      <div className="absolute inset-0 bg-gradient-to-tl from-accent/10 to-primary/5 rounded-2xl transform -rotate-1 scale-[0.99] -z-20" />
-
-      <motion.div
-        ref={cardRef}
-        className="relative bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
-        {...getAnimationProps({
-          initial: { opacity: 0, y: 40, scale: 0.98 },
-          animate: isInView ? { opacity: 1, y: 0, scale: 1 } : {},
-          transition: {
-            duration: 0.7,
-            delay: index * 0.15,
-            ease: [0.25, 0.1, 0.25, 1],
-          },
-        })}
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Content Section */}
-          <motion.div
-            className={`space-y-6 ${imageOnRight ? "lg:order-1" : "lg:order-2"}`}
-            {...getAnimationProps({
-              initial: { opacity: 0, x: imageOnRight ? -20 : 20 },
-              animate: isInView ? { opacity: 1, x: 0 } : {},
-              transition: {
-                duration: 0.6,
-                delay: index * 0.15 + 0.1,
-                ease: [0.25, 0.1, 0.25, 1],
-              },
-            })}
-          >
-            <div className="flex items-center gap-2">
-              <Badge variant="outline" className="text-sm bg-primary/10 border border-primary/30 text-primary">
-                <Globe className="w-3 h-3 mr-1" />
-                {project.category}
-              </Badge>
-            </div>
-
-            <h3 className="text-xl md:text-2xl font-bold text-foreground">{project.title}</h3>
-
-            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{project.longDescription}</p>
-
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Zap className="w-4 h-4 text-primary" />
-                <h4 className="text-sm font-semibold uppercase tracking-wide">Technologies</h4>
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {project.tech.map((tech, techIndex) => (
-                  <motion.div
-                    key={tech}
-                    {...getAnimationProps({
-                      initial: { opacity: 0, scale: 0.9 },
-                      animate: isInView ? { opacity: 1, scale: 1 } : {},
-                      transition: {
-                        duration: 0.4,
-                        delay: 0.2 + techIndex * 0.03,
-                        ease: [0.25, 0.1, 0.25, 1],
-                      },
-                    })}
-                  >
-                    <Badge variant="outline" className="py-2 text-sm justify-center w-full">
-                      {tech}
-                    </Badge>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            <motion.div
-              className="pt-4 flex flex-col sm:flex-row items-start sm:items-center gap-4"
-              {...getAnimationProps({
-                initial: { opacity: 0, y: 15 },
-                animate: isInView ? { opacity: 1, y: 0 } : {},
-                transition: {
-                  duration: 0.5,
-                  delay: 0.3,
-                  ease: [0.25, 0.1, 0.25, 1],
-                },
-              })}
+    <div ref={ref} className="mb-14 md:mb-20">
+      <span className="text-xs uppercase tracking-[0.2em] text-primary font-mono block mb-3">
+        Portfolio
+      </span>
+      <h2 className="font-display text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.05]">
+        {words.map((word, i) => (
+          <span key={i} className="inline-block mr-[0.25em] overflow-hidden align-top">
+            <motion.span
+              className="inline-block"
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: "110%" }}
+              animate={isInView ? { opacity: 1, y: "0%" } : {}}
+              transition={{
+                duration: shouldReduceMotion ? 0.3 : 0.6,
+                delay: i * 0.05,
+                ease: [0.22, 1, 0.36, 1] as const,
+              }}
             >
-              <a href={project.live} target="_blank" rel="noopener noreferrer">
-                <button className="overflow-hidden relative w-32 p-2 h-12 bg-primary text-white border-none rounded-md text-xl font-bold cursor-pointer relative z-10 group">
-                  Visit Now
-                  <span className="absolute w-36 h-32 -top-8 -left-2 bg-white rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-500 duration-1000 origin-left"></span>
-                  <span className="absolute w-36 h-32 -top-8 -left-2 bg-purple-400 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-700 duration-700 origin-left"></span>
-                  <span className="absolute w-36 h-32 -top-8 -left-2 bg-purple-600 rotate-12 transform scale-x-0 group-hover:scale-x-100 transition-transform group-hover:duration-1000 duration-500 origin-left"></span>
-                  <span className="group-hover:opacity-100 group-hover:duration-1000 duration-100 opacity-0 absolute top-2.5 left-6 z-10">
-                    Demo!
-                  </span>
-                </button>
-              </a>
-              <div className="text-sm text-muted-foreground flex gap-4">
-                <div className="flex items-center gap-1">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  <span>Active</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <ExternalLink className="w-3 h-3" />
-                  <span>Production</span>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Image Section */}
-          <motion.div
-            className={`relative w-full aspect-video ${imageOnRight ? "lg:order-2" : "lg:order-1"}`}
-            {...getAnimationProps({
-              initial: { opacity: 0, x: imageOnRight ? 15 : -15, scale: 0.95 },
-              animate: isInView ? { opacity: 1, x: 0, scale: 1 } : {},
-              transition: {
-                duration: 0.6,
-                delay: 0.2,
-                ease: [0.25, 0.1, 0.25, 1],
-              },
-            })}
-          >
-            <Image
-              src={project.image || "/placeholder.svg"}
-              alt={project.title}
-              className="object-cover rounded-xl border border-border/30 shadow-md"
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              priority={index === 0}
-            />
-            <div className="absolute top-3 right-3 flex gap-2">
-              <Badge variant="secondary" className="bg-green-500/90 text-white text-xs">
-                <div className="w-1.5 h-1.5 bg-white rounded-full mr-1 animate-pulse" />
-                {project.status}
-              </Badge>
-              <Badge variant="outline" className="text-xs backdrop-blur-sm bg-background/80">
-                <Calendar className="w-3 h-3 mr-1" />
-                {project.year}
-              </Badge>
-            </div>
-          </motion.div>
-        </div>
-      </motion.div>
+              {word}
+            </motion.span>
+          </span>
+        ))}
+      </h2>
+      {subtitle && (
+        <motion.p
+          className="mt-3 text-muted-foreground text-base max-w-xl"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          {subtitle}
+        </motion.p>
+      )}
     </div>
-  )
+  );
 }
 
-export function ProjectsShowcase() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-30px" })
-  const shouldReduceMotion = useReducedMotion()
-  const featuredProjects = projects.filter((p) => p.featured)
+/* ── Gallery Card Component ─────────────────────────────────────── */
+function ProjectCard({
+  project,
+  index,
+}: {
+  project: (typeof projects)[0];
+  index: number;
+}) {
+  const cardRef = useRef(null);
+  const isInView = useInView(cardRef, { once: true, margin: "-60px" });
+  const shouldReduceMotion = useReducedMotion();
+
+  // 1. Explicit local image first
+  // 2. Automated website screenshot via Microlink API if link exists
+  // 3. Null fallback (will show subtle placeholder)
+  const bannerSrc =
+    project.image ||
+    (project.link
+      ? `https://api.microlink.io/?url=${encodeURIComponent(
+        project.link
+      )}&screenshot=true&meta=false&embed=screenshot.url`
+      : null);
 
   return (
-    <section id="projects" className="relative py-20 lg:py-32 overflow-hidden">
-      {/* Background decoration - optimized for mobile */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-secondary/3 pointer-events-none" />
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 md:w-96 md:h-96 bg-primary/5 rounded-full blur-3xl opacity-20 pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 md:w-96 md:h-96 bg-secondary/5 rounded-full blur-3xl opacity-20 pointer-events-none" />
+    <motion.article
+      ref={cardRef}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 25 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{
+        duration: shouldReduceMotion ? 0.3 : 0.6,
+        delay: index * 0.08,
+        ease: [0.22, 1, 0.36, 1] as const,
+      }}
+      className="group relative flex flex-col justify-between rounded-2xl border border-border/60 bg-card/30 backdrop-blur-sm p-6 sm:p-8 hover:border-border transition-colors duration-300"
+    >
+      <div>
+        {/* Top Header Row: Index Number & Category Pill */}
+        <div className="flex items-center justify-between mb-5">
+          <span className="font-mono text-xs font-semibold text-primary/90 tracking-widest">
+            {project.number}
+          </span>
+          <span className="text-[11px] font-mono uppercase tracking-wider text-muted-foreground/80 px-2.5 py-0.5 rounded-full border border-border/40 bg-background/60">
+            {project.category}
+          </span>
+        </div>
 
-      <div className="container mx-auto px-4 lg:px-8 relative z-10" ref={ref}>
-<AnimatedSectionHeader title="Featured" highlight="Projects" />
+        {/* Media / Visual Showcase */}
+        {bannerSrc ? (
+          <div className="relative aspect-[16/10] rounded-xl overflow-hidden mb-6 bg-muted/40 border border-border/40">
+            <Image
+              src={bannerSrc}
+              alt={project.title}
+              fill
+              unoptimized={!project.image} // Skips Next.js image optimization for dynamic Microlink URLs
+              className="object-cover object-top transition-all duration-300 opacity-90 group-hover:opacity-100 group-hover:scale-[1.02]"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority={index < 2}
+            />
+          </div>
+        ) : (
+          <div className="relative aspect-[16/10] rounded-xl mb-6 bg-gradient-to-br from-muted/30 via-muted/10 to-background border border-border/40 p-6 flex items-center justify-center overflow-hidden">
+            <span className="font-display text-2xl font-bold tracking-tight text-foreground/20 select-none">
+              {project.title}
+            </span>
+          </div>
+        )}
 
+        {/* Title */}
+        <h3 className="font-display text-2xl md:text-3xl font-bold tracking-tight mb-3">
+          {project.link ? (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 hover:text-primary transition-colors duration-200"
+            >
+              <span>{project.title}</span>
+              <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors duration-200" />
+            </a>
+          ) : (
+            project.title
+          )}
+        </h3>
 
-        {/* Projects Grid with Enhanced Stack Effect */}
-        <div className="space-y-32 lg:space-y-40">
-          {featuredProjects.map((project, index) => (
+        {/* Description */}
+        <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+          {project.description}
+        </p>
+      </div>
+
+      {/* Footer: Tech Stack & Link */}
+      <div className="space-y-4 pt-4 border-t border-border/40">
+        <div className="flex flex-wrap gap-1.5">
+          {project.tech.map((item) => (
+            <span
+              key={item}
+              className="text-[11px] font-mono px-2.5 py-1 rounded-md bg-muted/50 text-muted-foreground border border-border/30"
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+
+        {project.link && (
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-primary font-medium hover:underline pt-1"
+          >
+            <span>{project.linkLabel || "View Project"}</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        )}
+
+        {project.note && !project.link && (
+          <span className="block text-[11px] font-mono text-muted-foreground/60 italic">
+            {project.note}
+          </span>
+        )}
+      </div>
+    </motion.article>
+  );
+}
+
+/* ── Main export ─────────────────────────────────────────────────── */
+export function ProjectsShowcase() {
+  return (
+    <section id="projects" className="relative py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <SectionHeader
+          title="Recent Work"
+          subtitle="Selected software products, published Framer plugins, and client web applications."
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

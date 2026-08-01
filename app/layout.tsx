@@ -8,19 +8,22 @@ import LenisScrollProvider from "./providers/lenis-provider";
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
-  title: "Sachit Dahal - Full Stack Developer",
+  title: "Sachit Dahal — Full-Stack Developer",
   description:
-    "Full-stack web developer with 2+ years of experience in React, Next.js, Django, and modern web technologies. Based in Kathmandu, Nepal.",
+    "Developer with 2+ years shipping production software for national platforms, US startups, and design-led agencies. Based in Kathmandu, Nepal.",
   keywords: [
     "Full Stack Developer",
     "React",
     "Next.js",
     "Django",
+    "Framer Plugins",
     "Web Developer",
     "Nepal",
+    "Sachit Dahal",
   ],
   authors: [{ name: "Sachit Dahal" }],
   creator: "Sachit Dahal",
@@ -28,16 +31,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://sachit.info.np",
-    title: "Sachit Dahal - Full Stack Developer",
+    title: "Sachit Dahal — Full-Stack Developer",
     description:
-      "Full-stack web developer specializing in React, Next.js, and Django",
-    siteName: "Sachit Dahal Portfolio",
+      "Developer with 2+ years shipping production software for national platforms, US startups, and design-led agencies.",
+    siteName: "Sachit Dahal",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sachit Dahal - Full Stack Developer",
+    title: "Sachit Dahal — Full-Stack Developer",
     description:
-      "Full-stack web developer specializing in React, Next.js, and Django",
+      "Developer with 2+ years shipping production software for national platforms, US startups, and design-led agencies.",
   },
 };
 
@@ -47,11 +50,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+    <html lang="en" suppressHydrationWarning className={inter.variable}>
+      <body>
         <ThemeProvider
           attribute="class"
-          defaultTheme="white"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange={false}
         >

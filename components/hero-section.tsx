@@ -43,17 +43,17 @@ export function HeroSection() {
           <motion.div className="space-y-6 lg:space-y-8">
             {/* Greeting */}
             <motion.div
-              className="inline-block px-6 py-3 rounded-full bg-white/20 dark:bg-white/10 border border-blue text-primary dark:text-white/90 text-lg sm:text-xl font-medium"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs sm:text-sm font-mono tracking-widest uppercase"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              Hello, I'm
+              <span>Hello, I'm</span>
             </motion.div>
 
             {/* Name */}
             <motion.h1
-              className="text-6xl  sm:text-7xl md:text-8xl lg:text-9xl xl:text-[6rem] font-bold leading-tight bg-gradient-to-r from-blue-600 via-slate-500 to-purple-600 bg-clip-text text-transparent drop-shadow-2xl"
+              className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[6rem] font-bold leading-tight text-foreground"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -234,105 +234,86 @@ export function HeroSection() {
               {/* Skills Floating Card - Removed hover props */}
               <motion.div
                 className="absolute bottom-[10%] right-[5%] z-10"
-                initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
-                animate={isInView ? { opacity: 1, scale: 1, rotate: 1 } : {}}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.6, delay: 0.9 }}
               >
-                <Card className="w-64 bg-background/90 border shadow-xl">
+                <Card className="w-64 bg-card/95 border border-border/80 shadow-xl backdrop-blur-md">
                   <CardContent className="p-4">
                     <div className="flex items-center gap-2 mb-3">
                       <Code className="w-5 h-5 text-primary" />
-                      <span className="font-semibold">Quick Stats</span>
+                      <span className="font-semibold text-sm">Focus Areas</span>
                     </div>
-                    <div className="grid grid-cols-2 gap-4 text-center">
-                      <div>
-                        <div className="text-2xl font-bold text-primary">
-                          15
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          Projects
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold text-primary">
-                          2+
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          Years Exp
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex justify-center gap-2 mt-3">
-                      <Badge variant="secondary" className="text-xs">
-                        React
-                      </Badge>
-                      <Badge variant="secondary" className="text-xs">
-                        Django
-                      </Badge>
-                      <Badge variant="secondary" className="text-xs">
-                        Next.js
-                      </Badge>
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      <Badge variant="secondary" className="text-xs font-normal">React</Badge>
+                      <Badge variant="secondary" className="text-xs font-normal">Next.js</Badge>
+                      <Badge variant="secondary" className="text-xs font-normal">TypeScript</Badge>
+                      <Badge variant="secondary" className="text-xs font-normal">Tailwind</Badge>
+                      <Badge variant="secondary" className="text-xs font-normal">Django</Badge>
                     </div>
                   </CardContent>
                 </Card>
               </motion.div>
 
-              <div className="pointer-events-none animate-pulse absolute inset-0 z-0">
+
+              <div className="pointer-events-none absolute inset-0 z-0">
+                {/* Code Icon */}
                 <motion.div
                   className="absolute top-[10%] left-[5%]"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.3 }}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={isInView ? { opacity: 0.4, y: 0 } : {}}
+                  transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-border/50 flex items-center justify-center">
-                    <Code className="w-6 h-6 text-primary" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border/30 bg-muted/40 backdrop-blur-[2px]">
+                    <Code className="h-5 w-5 text-muted-foreground" />
                   </div>
                 </motion.div>
 
+                {/* Database Icon */}
                 <motion.div
                   className="absolute bottom-[20%] left-[1%]"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.5 }}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={isInView ? { opacity: 0.4, y: 0 } : {}}
+                  transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500/20 to-blue-500/20 border border-border/50 flex items-center justify-center">
-                    <Database className="w-6 h-6 text-primary" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border/30 bg-muted/40 backdrop-blur-[2px]">
+                    <Database className="h-5 w-5 text-muted-foreground" />
                   </div>
                 </motion.div>
 
                 {/* Server Icon */}
                 <motion.div
                   className="absolute top-1/2 left-1/4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.7 }}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={isInView ? { opacity: 0.4, y: 0 } : {}}
+                  transition={{ duration: 0.8, delay: 0.6 }}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-400/20 to-pink-400/20 border border-border/50 flex items-center justify-center">
-                    <Server className="w-6 h-6 text-primary" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border/30 bg-muted/40 backdrop-blur-[2px]">
+                    <Server className="h-5 w-5 text-muted-foreground" />
                   </div>
                 </motion.div>
 
                 {/* Terminal Icon */}
                 <motion.div
                   className="absolute bottom-[5%] right-[50%]"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.9 }}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={isInView ? { opacity: 0.4, y: 0 } : {}}
+                  transition={{ duration: 0.8, delay: 0.8 }}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500/20 to-blue-500/20 border border-border/50 flex items-center justify-center">
-                    <Terminal className="w-6 h-6 text-primary" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border/30 bg-muted/40 backdrop-blur-[2px]">
+                    <Terminal className="h-5 w-5 text-muted-foreground" />
                   </div>
                 </motion.div>
 
                 {/* Zap Icon */}
                 <motion.div
                   className="absolute top-[35%] right-[1%]"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 1.1 }}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={isInView ? { opacity: 0.4, y: 0 } : {}}
+                  transition={{ duration: 0.8, delay: 1.0 }}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-400/20 to-green-400/20 border border-border/50 flex items-center justify-center">
-                    <Zap className="w-6 h-6 text-primary" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border/30 bg-muted/40 backdrop-blur-[2px]">
+                    <Zap className="h-5 w-5 text-muted-foreground" />
                   </div>
                 </motion.div>
               </div>

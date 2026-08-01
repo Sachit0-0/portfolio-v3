@@ -7,6 +7,7 @@ const nextConfig = {
     ignoreBuildErrors: false,
   },
   images: {
+    // Allows loading screenshot images dynamically from Microlink or any HTTPS source
     remotePatterns: [
       {
         protocol: "https",

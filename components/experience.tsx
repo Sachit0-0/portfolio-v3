@@ -1,110 +1,165 @@
-"use client"
+"use client";
 
-import { useMemo } from "react"
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Download } from "lucide-react"
-import CvButton from "./ui/cvButton"
-import AnimatedSectionHeader from "./ui/animatedSectionHeader"
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
 
+import { Sparkles } from "lucide-react";
+
+/* ── Section header with split-text animation ────────────────────── */
+function SectionHeader({ title }: { title: string }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const shouldReduceMotion = useReducedMotion();
+
+  const words = title.split(" ");
+
+  return (
+    <div ref={ref} className="mb-16 md:mb-24">
+      <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-primary font-mono mb-3">
+        <Sparkles className="w-3.5 h-3.5" />
+        <span>Career Chronology</span>
+      </div>
+      <h2 className="font-display text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.05]">
+        {words.map((word, i) => (
+          <span key={i} className="inline-block mr-[0.25em] overflow-hidden align-top">
+            <motion.span
+              className="inline-block"
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: "110%" }}
+              animate={isInView ? { opacity: 1, y: "0%" } : {}}
+              transition={{
+                duration: shouldReduceMotion ? 0.3 : 0.7,
+                delay: i * 0.06,
+                ease: [0.22, 1, 0.36, 1] as const,
+              }}
+            >
+              {word}
+            </motion.span>
+          </span>
+        ))}
+      </h2>
+    </div>
+  );
+}
+
+/* ── Experience data ─────────────────────────────────────────────── */
 const experienceData = [
+  {
+    title: "JavaScript Developer",
+    company: "Responsive Pixel Pvt. Ltd.",
+    type: "Contract",
+    location: "Remote",
+    period: "05/2025 — 05/2026",
+    bullets: [
+      "Scoped and shipped FrameAudit, a published Framer plugin for auditing design-system consistency across spacing, typography, components, and accessibility.",
+      "Built EventCalendar, a Framer plugin with recurring events, category filters, and custom calendar views on Framer's native CMS.",
+      "Engineered animation scripts and interactive components used across client production sites.",
+    ],
+  },
   {
     title: "Associate Developer",
     company: "Monal Tech Pvt. Ltd.",
-    period: "Sep 2023 - May 2025",
-    location: "Hybrid",
-    description:
-      "Started as Junior Web Developer after completing 3-month internship. Designed and implemented reusable UI components using React, Next.js, and Tailwind CSS. Developed scalable full-stack applications with Django REST and PostgreSQL.",
-    achievements: [
-      "Built interactive data visualization dashboards for national BI platform using Recharts and Chart.js",
-      "Improved team workflows by enhancing documentation and establishing reusable code patterns",
-      "Collaborated with cross-functional teams to deliver client and in-house projects on schedule",
+    type: "Full-time",
+    location: "Kathmandu · Hybrid",
+    period: "09/2023 — 05/2025",
+    bullets: [
+      "Architected reusable UI component libraries used across multiple concurrent client products (React, Next.js, Tailwind CSS).",
+      "Built and deployed full-stack applications with Next.js, Django REST, PostgreSQL, and Docker.",
+      "Delivered a production BI dashboard for a national data platform used by government stakeholders.",
     ],
-    technologies: ["React", "Next.js", "Django REST", "PostgreSQL", "Tailwind CSS", "Recharts"],
   },
   {
     title: "Junior Developer",
-    company: "Nebham LLC",
-    period: "Nov 2023 - Mar 2024",
+    company: "Nebham LLC (via Monal Tech)",
+    type: "Contract",
     location: "Remote",
-    description:
-      "US-based company partnered with Monal Tech. Created dynamic UI components with Next.js and TypeScript. Enhanced application performance and usability while transforming prototype designs into production-ready components.",
-    achievements: [
-      "Transformed Figma and Balsamiq prototypes into production-ready components",
-      "Developed core features for Nebham Patro mobile app and calendar system",
-      "Enhanced application performance and improved user experience",
+    period: "11/2023 — 03/2024",
+    bullets: [
+      "Delivered type-safe UI components in Next.js and TypeScript for a US product company.",
+      "Translated Figma and Balsamiq prototypes into pixel-accurate, production-ready components.",
+      "Built calendar engine and event logic for the Nebham Patro bilingual calendar app.",
     ],
-    technologies: ["Next.js", "TypeScript", "React", "Figma", "Mobile Development"],
   },
-]
+];
 
-export default function Experience() {
-  const experience = useMemo(() => experienceData, [])
+/* ── Experience entry ────────────────────────────────────────────── */
+function ExperienceEntry({
+  entry,
+  index,
+}: {
+  entry: (typeof experienceData)[0];
+  index: number;
+}) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section id="experience" className="py-24 bg-background relative">
-      <div className="container mx-auto px-4">
-<AnimatedSectionHeader title="Work" highlight="Experience" />
+    <motion.div
+      ref={ref}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{
+        duration: shouldReduceMotion ? 0.3 : 0.7,
+        delay: index * 0.1,
+        ease: [0.22, 1, 0.36, 1] as const,
+      }}
+      className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-4 md:gap-12 pb-16 md:pb-20 border-b border-border/30 last:border-b-0"
+    >
+      {/* Left column — meta */}
+      <div className="text-sm text-muted-foreground space-y-1">
+        <p className="tabular-nums">{entry.period}</p>
+        <p>{entry.location}</p>
+        <p className="text-xs text-muted-foreground/60">{entry.type}</p>
+      </div>
 
-        <div className="relative max-w-4xl mx-auto">
-        
-          <div className="absolute left-6 md:left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-600 to-purple-600 hidden md:block rounded-full" />
+      {/* Right column — content */}
+      <div className="space-y-4">
+        <div>
+          <h3 className="text-xl md:text-2xl font-medium tracking-[-0.01em]">
+            {entry.title}
+          </h3>
+          <p className="text-primary text-sm mt-1">{entry.company}</p>
+        </div>
 
-          {experience.map((exp, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              viewport={{ once: true, amount: 0.2 }}
-              className="relative md:pl-20 pb-12"
+        <ul className="space-y-3">
+          {entry.bullets.map((bullet, i) => (
+            <li
+              key={i}
+              className="text-muted-foreground leading-relaxed pl-4 relative before:content-[''] before:absolute before:left-0 before:top-[0.6em] before:w-1.5 before:h-px before:bg-muted-foreground/30"
             >
-              {/* timeline dot */}
-              <div className="absolute left-[13px] md:left-6 w-4 h-4 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full border-4 border-background shadow-md hidden md:block" />
+              {bullet}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </motion.div>
+  );
+}
 
-              <Card className="hover:shadow-xl hover:border-muted/50 border border-border/30 bg-background/80 backdrop-blur-sm transition-all duration-300">
-                <CardContent className="p-6 md:p-8">
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-4">
-                    <div>
-                      <h3 className="text-2xl font-semibold mb-1">{exp.title}</h3>
-                      <p className="text-primary font-medium">{exp.company}</p>
-                      <p className="text-sm text-muted-foreground">{exp.location}</p>
-                    </div>
-                    <Badge variant="outline" className="self-start md:self-center">
-                      {exp.period}
-                    </Badge>
-                  </div>
+/* ── Main export ─────────────────────────────────────────────────── */
+export default function Experience() {
+  return (
+    <section id="experience" className="py-24 md:py-36 relative">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <SectionHeader title="Experience" />
 
-                  <p className="text-muted-foreground mb-4">{exp.description}</p>
-
-                  <div className="mb-4">
-                    <h4 className="font-semibold mb-2">Key Achievements:</h4>
-                    <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                      {exp.achievements.map((item, i) => (
-                        <li key={i}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {exp.technologies.map((tech) => (
-                      <Badge key={tech} variant="secondary" className="text-xs px-2 py-1">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+        <div className="space-y-0">
+          {experienceData.map((entry, index) => (
+            <ExperienceEntry key={index} entry={entry} index={index} />
           ))}
         </div>
-          <div className="flex justify-center">
-            <CvButton />
-          </div>
-      
+
+        {/* Resume download — understated */}
+        <div className="mt-16 md:mt-20">
+          <a
+            href="/SachitDahalCV.pdf"
+            download
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300 underline underline-offset-4 decoration-border hover:decoration-primary"
+          >
+            Download full resume
+          </a>
+        </div>
       </div>
     </section>
-  )
+  );
 }

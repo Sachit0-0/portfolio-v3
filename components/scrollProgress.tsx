@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useSpring, useTransform } from "framer-motion"
 import Image from "next/image"
-import boat from "@/public/boat.avif";
+const boat = "/boat.avif";
 
 export function ScrollProgress() {
   const { scrollYProgress } = useScroll()

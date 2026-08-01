@@ -21,7 +21,6 @@ export function FloatingNavbar() {
   const ticking = useRef(false);
 
   useEffect(() => {
-    // Scroll logic... (omitted for brevity)
     const handleScroll = () => {
       if (!ticking.current) {
         window.requestAnimationFrame(() => {
@@ -31,13 +30,12 @@ export function FloatingNavbar() {
           if (show !== isVisible) setIsVisible(show);
           lastScrollY.current = currentScrollY;
 
-          // Update active section based on scroll position...
           const sections = navItems.map((item) => item.link.substring(1));
           const currentSection = sections.find((section) => {
             const element = document.getElementById(section);
             if (element) {
               const rect = element.getBoundingClientRect();
-              return rect.top <= 100 && rect.bottom >= 100;
+              return rect.top <= 120 && rect.bottom >= 120;
             }
             return false;
           });
@@ -52,47 +50,46 @@ export function FloatingNavbar() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isVisible]);
+  }, [activeSection, isVisible]);
 
   const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId.substring(1))?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+    const target = document.getElementById(sectionId.substring(1));
+    if (target) {
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
   };
 
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.div
+        <motion.header
           initial={{ y: -80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -80, opacity: 0 }}
           transition={{ type: "spring", stiffness: 120, damping: 18 }}
-          // ** PURE FLEXBOX FIX: w-full with justify-center to center the <nav> **
-          className="fixed top-4 z-50 w-full px-48 flex  justify-end"
+          className="fixed top-4 left-0 right-0 z-50 px-4 sm:px-6 md:px-8 flex justify-center pointer-events-none"
         >
-          {/* max-w-fit removed from here, as the outer flex container handles the centering and spacing. */}
-          <nav className="relative bg-background/80 backdrop-blur-md border border-border/50 rounded-full shadow-lg max-w-fit">
-            {/* Desktop Navigation */}
-            {/* max-w-fit is kept here to ensure the <nav> pill only takes up the required width */}
-            <div className="hidden md:flex items-center justify-center space-x-1 px-6 py-3">
+          <nav className="pointer-events-auto relative bg-background/85 backdrop-blur-md border border-border/70 rounded-full shadow-xl max-w-fit flex items-center p-1.5 transition-all duration-300">
+            {/* Desktop Navigation Links */}
+            <div className="hidden md:flex items-center space-x-1 px-3 py-1">
               {navItems.map((item) => (
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.link)}
                   className={cn(
-                    "relative px-4 py-2 text-sm font-medium transition-colors rounded-full whitespace-nowrap",
+                    "relative px-4 py-1.5 text-sm font-medium transition-colors rounded-full whitespace-nowrap",
                     activeSection === item.link.substring(1)
-                      ? "text-primary"
+                      ? "text-primary font-semibold"
                       : "text-muted-foreground hover:text-foreground"
                   )}
                 >
                   {activeSection === item.link.substring(1) && (
                     <motion.div
                       layoutId="activeSection"
-                      className="absolute inset-0 bg-primary/10 rounded-full"
+                      className="absolute inset-0 bg-primary/10 border border-primary/20 rounded-full"
                       transition={{
                         type: "spring",
                         bounce: 0.2,
@@ -104,24 +101,21 @@ export function FloatingNavbar() {
                 </button>
               ))}
 
-              {/* Desktop Theme Toggle */}
-              <div className="ml-2 pl-2 border-l border-border/50">
+              {/* Desktop Theme Toggle Divider */}
+              <div className="ml-2 pl-2 border-l border-border/60">
                 <ThemeToggle />
               </div>
             </div>
 
-            {/* Mobile Navigation */}
-            <div className="md:hidden flex items-center justify-between px-4 py-3">
-              <div className="flex items-center gap-3"></div>
-              <div className="flex-1 flex justify-end">
-                <MobileMenu
-                  activeSection={activeSection}
-                  onSectionClick={scrollToSection}
-                />
-              </div>
+            {/* Mobile Navigation Trigger */}
+            <div className="md:hidden flex items-center px-2 py-1">
+              <MobileMenu
+                activeSection={activeSection}
+                onSectionClick={scrollToSection}
+              />
             </div>
           </nav>
-        </motion.div>
+        </motion.header>
       )}
     </AnimatePresence>
   );
