@@ -45,7 +45,7 @@ function SectionHeader({ title }: { title: string }) {
 const experienceData = [
   {
     title: "JavaScript Developer",
-    company: "Responsive Pixel Pvt. Ltd.",
+   company: "PixelUp Studio (formerly Responsive Pixel Pvt. Ltd.)",
     type: "Contract",
     location: "Remote",
     period: "05/2025 — 05/2026",
