@@ -2,6 +2,7 @@
 
 import { Github, Linkedin, Mail } from "lucide-react"
 import { motion } from "framer-motion"
+import CvButton from "./cvButton"
 
 export default function SocialButtons() {
   const socials = [
@@ -30,34 +31,41 @@ export default function SocialButtons() {
 
   return (
     <motion.div
-      className="flex items-center gap-4 mt-10"
-           initial={{ opacity: 0, y: 50 }}
+      className="flex flex-row items-center gap-4 mt-10 flex-wrap"
+      initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-
     >
-      {socials.map(({ name, icon, color, border, link }, index) => (
-        <a
-          key={index}
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={name}
-          className="relative w-12 h-12 rounded-full group"
-        >
-          {/* Floating background circle */}
-          <div
-            className={`absolute top-0 left-0 w-full h-full ${color} rounded-full duration-300 group-hover:-top-8 group-hover:shadow-2xl`}
-          ></div>
-
-          {/* Icon wrapper with hover light bluish background */}
-          <div
-            className={`relative z-10 w-full h-full flex items-center justify-center border-2 ${border} rounded-full bg-transparent group-hover:bg-[#e6f0ff] transition-colors duration-300`}
+      {/* Social Icons Group */}
+      <div className="flex items-center gap-4">
+        {socials.map(({ name, icon, color, border, link }, index) => (
+          <a
+            key={index}
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={name}
+            className="relative w-12 h-12 rounded-full group shrink-0"
           >
-            {icon}
-          </div>
-        </a>
-      ))}
+            {/* Floating background circle */}
+            <div
+              className={`absolute top-0 left-0 w-full h-full ${color} rounded-full duration-300 group-hover:-top-8 group-hover:shadow-2xl`}
+            ></div>
+
+            {/* Icon wrapper with hover light bluish background */}
+            <div
+              className={`relative z-10 w-full h-full flex items-center justify-center border-2 ${border} rounded-full bg-transparent group-hover:bg-[#e6f0ff] transition-colors duration-300`}
+            >
+              {icon}
+            </div>
+          </a>
+        ))}
+      </div>
+
+      {/* CV Button on the same row */}
+      <div className="shrink-0">
+        <CvButton />
+      </div>
     </motion.div>
   )
 }
