@@ -72,9 +72,9 @@ export function FloatingNavbar() {
           transition={{ type: "spring", stiffness: 120, damping: 18 }}
           className="fixed top-4 left-0 right-0 z-50 px-4 sm:px-6 md:px-8 flex justify-center pointer-events-none"
         >
-          <nav className="pointer-events-auto relative bg-background/85 backdrop-blur-md border border-border/70 rounded-full shadow-xl max-w-fit flex items-center p-1.5 transition-all duration-300">
+          <nav className="pointer-events-auto relative ios-glass rounded-full shadow-xl max-w-fit flex items-center p-1.5 2xl:p-2 transition-all duration-300">
             {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center space-x-1 px-3 py-1">
+            <div className="hidden md:flex items-center space-x-1 px-3 py-1 2xl:px-4 2xl:py-1.5">
               {navItems.map((item) => (
                 <button
                   key={item.name}

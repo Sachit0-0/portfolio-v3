@@ -1,25 +1,32 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, useInView, useReducedMotion, UseInViewOptions } from "framer-motion";
+
+type MarginType = UseInViewOptions["margin"];
+
+/**
+ * Custom hook to verify the component has mounted on the client side.
+ * Prevents SSR/Hydration style mismatch when using client-only hooks.
+ */
+function useIsMounted() {
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  return isMounted;
+}
 
 /* ──────────────────────────────────────────────────────────────────
    ScrollRevealText  —  Awwwards-style word-by-word scroll reveal
-   Each word clips up from below its inline container as it enters
-   the viewport, producing the editorial "curtain rise" effect
-   common on high-end portfolio sites.
    ────────────────────────────────────────────────────────────────── */
 interface ScrollRevealTextProps {
   text: string;
   className?: string;
   as?: React.ElementType;
-  /** Extra delay before first word starts (seconds) */
   delay?: number;
-  /** Per-word stagger gap (seconds) */
   stagger?: number;
-  /** IntersectionObserver margin */
-  margin?: string;
-  /** Whether the words should animate up or fade in */
+  margin?: MarginType;
   variant?: "slide-up" | "fade" | "blur";
 }
 
@@ -33,6 +40,7 @@ export function ScrollRevealText({
   variant = "slide-up",
 }: ScrollRevealTextProps) {
   const ref = useRef(null);
+  const isMounted = useIsMounted();
   const isInView = useInView(ref, { once: true, margin });
   const shouldReduceMotion = useReducedMotion();
 
@@ -68,21 +76,25 @@ export function ScrollRevealText({
     <Component ref={ref} className={className}>
       {words.map((word, i) => (
         <span
-          key={i}
+          key={`${word}-${i}`}
           className="inline-block overflow-hidden align-top mr-[0.25em] pb-0.5"
         >
-          <motion.span
-            className="inline-block"
-            initial={getInitial()}
-            animate={isInView ? getAnimate() : {}}
-            transition={{
-              duration: shouldReduceMotion ? 0.2 : 0.6,
-              delay: delay + i * stagger,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-          >
-            {word}
-          </motion.span>
+          {isMounted ? (
+            <motion.span
+              className="inline-block"
+              initial={getInitial()}
+              animate={isInView ? getAnimate() : {}}
+              transition={{
+                duration: shouldReduceMotion ? 0.2 : 0.6,
+                delay: delay + i * stagger,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              {word}
+            </motion.span>
+          ) : (
+            <span className="inline-block opacity-0">{word}</span>
+          )}
         </span>
       ))}
     </Component>
@@ -91,13 +103,12 @@ export function ScrollRevealText({
 
 /* ──────────────────────────────────────────────────────────────────
    ScrollRevealLine  —  Single-line clip-up reveal
-   Great for one-liners, taglines, and short labels
    ────────────────────────────────────────────────────────────────── */
 interface ScrollRevealLineProps {
   children: React.ReactNode;
   className?: string;
   delay?: number;
-  margin?: string;
+  margin?: MarginType;
 }
 
 export function ScrollRevealLine({
@@ -107,22 +118,27 @@ export function ScrollRevealLine({
   margin = "-60px",
 }: ScrollRevealLineProps) {
   const ref = useRef(null);
+  const isMounted = useIsMounted();
   const isInView = useInView(ref, { once: true, margin });
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <div ref={ref} className={`overflow-hidden ${className}`}>
-      <motion.div
-        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: "100%" }}
-        animate={isInView ? { opacity: 1, y: "0%" } : {}}
-        transition={{
-          duration: shouldReduceMotion ? 0.2 : 0.7,
-          delay,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-      >
-        {children}
-      </motion.div>
+      {isMounted ? (
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: "100%" }}
+          animate={isInView ? { opacity: 1, y: "0%" } : {}}
+          transition={{
+            duration: shouldReduceMotion ? 0.2 : 0.7,
+            delay,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          {children}
+        </motion.div>
+      ) : (
+        <div style={{ opacity: 0 }}>{children}</div>
+      )}
     </div>
   );
 }
@@ -134,7 +150,7 @@ interface ScrollFadeInProps {
   children: React.ReactNode;
   className?: string;
   delay?: number;
-  margin?: string;
+  margin?: MarginType;
   y?: number;
 }
 
@@ -146,22 +162,27 @@ export function ScrollFadeIn({
   y = 30,
 }: ScrollFadeInProps) {
   const ref = useRef(null);
+  const isMounted = useIsMounted();
   const isInView = useInView(ref, { once: true, margin });
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <motion.div
-      ref={ref}
-      className={className}
-      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{
-        duration: shouldReduceMotion ? 0.2 : 0.7,
-        delay,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-    >
-      {children}
-    </motion.div>
+    <div ref={ref} className={className}>
+      {isMounted ? (
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{
+            duration: shouldReduceMotion ? 0.2 : 0.7,
+            delay,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          {children}
+        </motion.div>
+      ) : (
+        <div style={{ opacity: 0 }}>{children}</div>
+      )}
+    </div>
   );
 }

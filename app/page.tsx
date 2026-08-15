@@ -19,12 +19,12 @@ export default function Portfolio() {
         <Experience />
         <Contact />
 
-        <footer className="py-12 border-t border-border/40">
-          <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-muted-foreground tracking-wide">
+        <footer className="py-12 2xl:py-16 border-t border-border/40">
+          <div className="max-w-7xl 2xl:max-w-[1536px] 3xl:max-w-[1850px] 4xl:max-w-[2200px] mx-auto px-6 md:px-12 2xl:px-16 4xl:px-24 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-sm 2xl:text-base text-muted-foreground tracking-wide">
               &copy; {new Date().getFullYear()} Sachit Dahal
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm 2xl:text-base text-muted-foreground">
               Kathmandu, Nepal
             </p>
           </div>

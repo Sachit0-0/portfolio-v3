@@ -87,12 +87,12 @@ useEffect(() => {
     <MotionComponent
       ref={elementRef}
       className={cn(
-        "text-4xl font-bold leading-[5rem] tracking-[-0.02em]",
+        "text-4xl font-bold leading-[5rem] tracking-[-0.02em] min-h-[1.25em]",
         className,
       )}
       {...props}
     >
-      {displayedText}
+      {displayedText || "\u00A0"}
     </MotionComponent>
   );
 }
