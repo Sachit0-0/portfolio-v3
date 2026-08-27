@@ -56,14 +56,14 @@ const projects = [
   {
     id: 4,
     number: "04",
-    title: "EventCalendar",
-    category: "Framer Plugin",
-    urlDomain: "frame-event.vercel.app",
+    title: "FrameScore",
+    category: "Framer Tool & Web App",
+    urlDomain: "framescore.sachit.info.np",
     description:
-      "Full-featured Framer plugin supporting recurring events, category filters, and multiple interactive calendar views.",
-    tech: ["Framer API", "TypeScript", "React"],
-    link: "https://frame-event.vercel.app",
-    linkLabel: "Live Demo",
+      "Performance and SEO audit platform for Framer websites, offering real-time scoring, technical analysis, and actionable optimization insights.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Framer API"],
+    link: "https://framescore.sachit.info.np/",
+    linkLabel: "Visit Website",
   },
   {
     id: 5,
