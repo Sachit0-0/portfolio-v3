@@ -17,23 +17,6 @@ function useIsMounted() {
 /* ── Timeline Data ────────────────────────────────────────────────── */
 const experienceItems = [
   {
-    id: "pixelup",
-    title: "JavaScript Developer",
-    company: "PixelUp Studio (formerly Responsive Pixel Pvt. Ltd.)",
-    type: "Contract",
-    location: "Remote",
-    period: "05/2025 — 05/2026",
-    side: "right",
-    isConcurrent: false,
-    overlapInfo: null,
-    bullets: [
-      "Scoped and shipped FrameAudit, a published Framer plugin for auditing design-system consistency across spacing, typography, components, and accessibility.",
-      "Built EventCalendar, a Framer plugin with recurring events, category filters, and custom calendar views on Framer's native CMS.",
-      "Engineered animation scripts and interactive components used across client production sites.",
-    ],
-    tech: ["Framer Plugin API", "TypeScript", "React", "Node.js", "Lemon Squeezy"],
-  },
-  {
     id: "monal",
     title: "Associate Developer",
     company: "Monal Tech Pvt. Ltd.",
@@ -66,6 +49,23 @@ const experienceItems = [
       "Built calendar engine and event logic for the Nebham Patro bilingual calendar app.",
     ],
     tech: ["Next.js", "TypeScript", "Figma", "REST APIs"],
+  },
+  {
+    id: "pixelup",
+    title: "JavaScript Developer",
+    company: "PixelUp Studio (formerly Responsive Pixel Pvt. Ltd.)",
+    type: "Contract",
+    location: "Remote",
+    period: "05/2025 — 05/2026",
+    side: "left",
+    isConcurrent: false,
+    overlapInfo: null,
+    bullets: [
+      "Scoped and shipped FrameAudit, a published Framer plugin for auditing design-system consistency across spacing, typography, components, and accessibility.",
+      "Built EventCalendar, a Framer plugin with recurring events, category filters, and custom calendar views on Framer's native CMS.",
+      "Engineered animation scripts and interactive components used across client production sites.",
+    ],
+    tech: ["Framer Plugin API", "TypeScript", "React", "Node.js", "Lemon Squeezy"],
   },
 ];
 
