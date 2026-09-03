@@ -26,7 +26,7 @@ const projects = [
     description:
       "End-to-end Framer ecosystem product featuring a lightweight React/TypeScript canvas plugin, an automated backend audit engine, Lemon Squeezy payment integration, and a dedicated marketing platform.",
     tech: ["Framer API", "React", "TypeScript", "Node.js", "Lemon Squeezy"],
-    link: "https://framerify.com/frameaudit",
+    link: "https://www.framer.com/marketplace/plugins/frame-audit/",
     linkLabel: "View Product",
   },
   {
