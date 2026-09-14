@@ -69,18 +69,19 @@ export function FloatingNavbar() {
           initial={{ y: -80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -80, opacity: 0 }}
-          transition={{ type: "spring", stiffness: 120, damping: 18 }}
+          transition={{ type: "spring", stiffness: 200, damping: 24 }}
           className="fixed top-4 left-0 right-0 z-50 px-4 sm:px-6 md:px-8 flex justify-center pointer-events-none"
         >
           <nav className="pointer-events-auto relative ios-glass rounded-full shadow-xl max-w-fit flex items-center p-1.5 2xl:p-2 transition-all duration-300">
             {/* Desktop Navigation Links */}
             <div className="hidden md:flex items-center space-x-1 px-3 py-1 2xl:px-4 2xl:py-1.5">
               {navItems.map((item) => (
-                <button
+                <motion.button
                   key={item.name}
                   onClick={() => scrollToSection(item.link)}
+                  whileTap={{ scale: 0.94 }}
                   className={cn(
-                    "relative px-4 py-1.5 text-sm font-medium transition-colors rounded-full whitespace-nowrap",
+                    "relative px-4 py-1.5 text-sm font-medium transition-colors rounded-full whitespace-nowrap cursor-pointer select-none",
                     activeSection === item.link.substring(1)
                       ? "text-primary font-semibold"
                       : "text-muted-foreground hover:text-foreground"
@@ -89,16 +90,16 @@ export function FloatingNavbar() {
                   {activeSection === item.link.substring(1) && (
                     <motion.div
                       layoutId="activeSection"
-                      className="absolute inset-0 bg-primary/10 border border-primary/20 rounded-full"
+                      className="absolute inset-0 bg-primary/10 border border-primary/25 rounded-full shadow-xs"
                       transition={{
                         type: "spring",
-                        bounce: 0.2,
-                        duration: 0.5,
+                        stiffness: 350,
+                        damping: 30,
                       }}
                     />
                   )}
                   <span className="relative z-10">{item.name}</span>
-                </button>
+                </motion.button>
               ))}
 
               {/* Desktop Theme Toggle Divider */}

@@ -161,13 +161,16 @@ export function SkillsExpertise() {
                     </span>
                     <div className="flex flex-wrap gap-1.5 2xl:gap-2">
                       {group.skills.map((skill) => (
-                        <span
+                        <motion.span
                           key={skill}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs 2xl:text-sm font-medium bg-muted/40 border border-border/40 text-foreground/90 group-hover:border-border/80 transition-all duration-300"
+                          whileHover={{ scale: 1.05, y: -1 }}
+                          whileTap={{ scale: 0.95 }}
+                          transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs 2xl:text-sm font-medium bg-muted/40 border border-border/40 text-foreground/90 hover:border-primary/40 hover:bg-primary/5 transition-colors duration-200 cursor-default select-none"
                         >
                           <span className="w-1.5 h-1.5 rounded-full bg-primary/80" />
                           {skill}
-                        </span>
+                        </motion.span>
                       ))}
                     </div>
                   </div>

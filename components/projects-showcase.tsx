@@ -135,7 +135,9 @@ function ProjectCard({
         delay: index * 0.08,
         ease: [0.22, 1, 0.36, 1] as const,
       }}
-      className="group relative flex flex-col justify-between rounded-3xl ios-glass-card p-6 sm:p-8 2xl:p-10 overflow-hidden hover:-translate-y-1"
+      whileHover={shouldReduceMotion ? undefined : { y: -5 }}
+      whileTap={{ scale: 0.985 }}
+      className="group relative flex flex-col justify-between rounded-3xl ios-glass-card p-6 sm:p-8 2xl:p-10 overflow-hidden cursor-default select-none"
     >
       <div>
         {/* Top Header: Monospace Index & Category */}
@@ -228,7 +230,7 @@ function ProjectCard({
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs 2xl:text-sm font-mono text-primary font-semibold bg-primary/10 border border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-sm group/btn"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs 2xl:text-sm font-mono text-primary font-semibold bg-primary/10 border border-primary/20 hover:bg-primary hover:text-primary-foreground active:scale-95 transition-all duration-200 shadow-sm group/btn cursor-pointer"
             >
               <span>{project.linkLabel || "View Project"}</span>
               <ExternalLink className="w-3.5 h-3.5 2xl:w-4 2xl:h-4 group-hover/btn:translate-x-0.5 transition-transform" />

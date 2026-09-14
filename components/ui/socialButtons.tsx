@@ -1,71 +1,64 @@
-"use client"
+"use client";
 
-import { Github, Linkedin, Mail } from "lucide-react"
-import { motion } from "framer-motion"
-import CvButton from "./cvButton"
+import { Github, Linkedin, Mail } from "lucide-react";
+import { motion } from "framer-motion";
+import CvButton from "./cvButton";
+
+const socials = [
+  {
+    name: "GitHub",
+    icon: Github,
+    link: "https://github.com/Sachit0-0",
+    label: "github.com/Sachit0-0",
+  },
+  {
+    name: "LinkedIn",
+    icon: Linkedin,
+    link: "https://www.linkedin.com/in/sachit-dahal-59a05b212/",
+    label: "in/sachit-dahal",
+  },
+  {
+    name: "Email",
+    icon: Mail,
+    link: "mailto:sachitdahal33@gmail.com",
+    label: "sachitdahal33@gmail.com",
+  },
+];
 
 export default function SocialButtons() {
-  const socials = [
-    {
-      name: "GitHub",
-      icon: <Github className="w-5 h-5 text-white group-hover:text-[#171543] transition-colors duration-300" />,
-      color: "bg-purple-500",
-      border: "border-purple-500",
-      link: "https://github.com/sachit0-0",
-    },
-    {
-      name: "LinkedIn",
-      icon: <Linkedin className="w-5 h-5 text-white group-hover:text-[#171543] transition-colors duration-300" />,
-      color: "bg-blue-500",
-      border: "border-blue-500",
-      link: "https://www.linkedin.com/in/sachit-dahal-59a05b212/",
-    },
-    {
-      name: "Email",
-      icon: <Mail className="w-5 h-5 text-white group-hover:text-[#171543] transition-colors duration-300" />,
-      color: "bg-red-400",
-      border: "border-red-400",
-      link: "mailto:sachitdahal33@gmail.com",
-    },
-  ]
-
   return (
-    <motion.div
-      className="flex flex-row items-center gap-4 mt-10 flex-wrap"
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-    >
-      {/* Social Icons Group */}
-      <div className="flex items-center gap-4">
-        {socials.map(({ name, icon, color, border, link }, index) => (
-          <a
-            key={index}
-            href={link}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={name}
-            className="relative w-12 h-12 rounded-full group shrink-0"
-          >
-            {/* Floating background circle */}
-            <div
-              className={`absolute top-0 left-0 w-full h-full ${color} rounded-full duration-300 group-hover:-top-8 group-hover:shadow-2xl`}
-            ></div>
-
-            {/* Icon wrapper with hover light bluish background */}
-            <div
-              className={`relative z-10 w-full h-full flex items-center justify-center border-2 ${border} rounded-full bg-transparent group-hover:bg-[#e6f0ff] transition-colors duration-300`}
+    <div className="flex flex-wrap items-center gap-3 pt-2">
+      {/* Social Icons Group with Apple Glass Pill & Spring Press */}
+      <div className="flex items-center gap-2.5">
+        {socials.map((social) => {
+          const Icon = social.icon;
+          return (
+            <motion.a
+              key={social.name}
+              href={social.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.name}
+              whileHover={{ scale: 1.08, y: -2 }}
+              whileTap={{ scale: 0.94 }}
+              transition={{ type: "spring", stiffness: 350, damping: 20 }}
+              className="relative group w-10 h-10 sm:w-11 sm:h-11 rounded-full ios-glass border border-border/80 flex items-center justify-center text-foreground/80 hover:text-primary hover:border-primary/50 hover:bg-primary/10 transition-colors duration-200 shadow-sm cursor-pointer"
             >
-              {icon}
-            </div>
-          </a>
-        ))}
+              <Icon className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 group-hover:scale-105" />
+
+              {/* Minimal tooltip */}
+              <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md bg-foreground text-background text-[10px] font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none shadow-md">
+                {social.name}
+              </span>
+            </motion.a>
+          );
+        })}
       </div>
 
-      {/* CV Button on the same row */}
-      <div className="shrink-0">
+      {/* CV Download Button */}
+      <div className="shrink-0 ml-1">
         <CvButton />
       </div>
-    </motion.div>
-  )
+    </div>
+  );
 }

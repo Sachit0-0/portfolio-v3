@@ -36,17 +36,17 @@ export function HeroSection() {
   const mouseY = useMotionValue(0);
 
   const springConfig = { damping: 25, stiffness: 180 };
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]), springConfig);
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), springConfig);
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [4, -4]), springConfig);
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-4, 4]), springConfig);
 
-  const card1ParallaxX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-15, 15]), springConfig);
-  const card1ParallaxY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-15, 15]), springConfig);
+  const card1ParallaxX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), springConfig);
+  const card1ParallaxY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-8, 8]), springConfig);
 
-  const card2ParallaxX = useSpring(useTransform(mouseX, [-0.5, 0.5], [20, -20]), springConfig);
-  const card2ParallaxY = useSpring(useTransform(mouseY, [-0.5, 0.5], [20, -20]), springConfig);
+  const card2ParallaxX = useSpring(useTransform(mouseX, [-0.5, 0.5], [10, -10]), springConfig);
+  const card2ParallaxY = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), springConfig);
 
-  const card3ParallaxX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-25, 25]), springConfig);
-  const card3ParallaxY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-25, 25]), springConfig);
+  const card3ParallaxX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-10, 10]), springConfig);
+  const card3ParallaxY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-10, 10]), springConfig);
 
   // ── Scroll-based differential card speeds ──
   const { scrollYProgress } = useScroll({
@@ -82,20 +82,18 @@ export function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 2xl:gap-24 items-center w-full pt-20 lg:pt-0">
           {/* Left Side - Main Content */}
           <motion.div className="space-y-6 lg:space-y-8 2xl:space-y-10">
-            {/* Greeting Pill Card */}
+            {/* Status Pill Card */}
             <motion.div
-              className="inline-flex items-center gap-3 px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full ios-glass border border-border/80 shadow-lg text-foreground/90 font-mono text-xs sm:text-sm 2xl:text-base tracking-wider uppercase group hover:border-primary/50 transition-all duration-300"
+              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full ios-glass border border-border/80 shadow-sm text-foreground/90 font-mono text-xs sm:text-sm 2xl:text-base tracking-wider uppercase group hover:border-primary/50 transition-all duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <span className="relative flex h-2.5 w-2.5">
+              <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span className="font-semibold text-muted-foreground group-hover:text-foreground transition-colors">Hello, I'm</span>
-              <span className="text-border/80">|</span>
-
+              <span className="font-semibold text-muted-foreground group-hover:text-foreground transition-colors">Available for Projects</span>
             </motion.div>
 
             {/* Name */}
@@ -234,16 +232,16 @@ export function HeroSection() {
                 animate={
                   isInView
                     ? {
-                      opacity: activeCard === 1 ? 1 : activeCard !== null ? 0.45 : 1,
-                      scale: activeCard === 1 ? 1.05 : activeCard !== null ? 0.96 : 1,
-                      translateZ: activeCard === 1 ? 150 : 35,
+                      opacity: 1,
+                      scale: activeCard === 1 ? 1.02 : 1,
+                      translateZ: activeCard === 1 ? 55 : 35,
                       y: 0,
                     }
                     : {}
                 }
                 transition={{ type: "spring", stiffness: 220, damping: 26, mass: 0.7 }}
               >
-                <Card className={`w-72 2xl:w-84 3xl:w-96 4xl:w-[26rem] hero-glass-card rounded-2xl ${activeCard === 1 ? "is-active ring-2 ring-primary/60 shadow-2xl shadow-primary/30" : ""
+                <Card className={`w-72 2xl:w-84 3xl:w-96 4xl:w-[26rem] hero-glass-card rounded-2xl ${activeCard === 1 ? "is-active" : ""
                   }`}>
                   <CardContent className="p-4 2xl:p-5">
                     <div className="flex items-center gap-2 mb-3 pb-2 border-b border-border/30">
@@ -290,16 +288,16 @@ export function HeroSection() {
                 animate={
                   isInView
                     ? {
-                      opacity: activeCard === 2 ? 1 : activeCard !== null ? 0.45 : 1,
-                      scale: activeCard === 2 ? 1.05 : activeCard !== null ? 0.96 : 1,
-                      translateZ: activeCard === 2 ? 160 : 85,
+                      opacity: 1,
+                      scale: activeCard === 2 ? 1.02 : 1,
+                      translateZ: activeCard === 2 ? 100 : 85,
                       y: 0,
                     }
                     : {}
                 }
                 transition={{ type: "spring", stiffness: 220, damping: 26, mass: 0.7 }}
               >
-                <Card className={`w-80 2xl:w-96 3xl:w-[26rem] 4xl:w-[28rem] hero-glass-card rounded-2xl overflow-hidden group ${activeCard === 2 ? "is-active ring-2 ring-primary/60 shadow-2xl shadow-primary/30" : ""
+                <Card className={`w-80 2xl:w-96 3xl:w-[26rem] 4xl:w-[28rem] hero-glass-card rounded-2xl overflow-hidden group ${activeCard === 2 ? "is-active" : ""
                   }`}>
                   <CardContent className="p-6 text-center">
                     <div className="relative w-24 h-24 2xl:w-28 2xl:h-28 mx-auto mb-4 rounded-full p-1 bg-gradient-to-br from-primary via-border to-primary/40 shadow-xl group-hover:scale-105 transition-transform duration-300">
@@ -338,7 +336,7 @@ export function HeroSection() {
                           href={social.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-9 h-9 2xl:w-10 2xl:h-10 rounded-xl bg-muted/60 border border-border/40 flex items-center justify-center hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 shadow-sm"
+                          className="w-9 h-9 2xl:w-10 2xl:h-10 rounded-xl bg-muted/60 border border-border/40 flex items-center justify-center hover:bg-primary hover:text-primary-foreground hover:border-primary active:scale-90 transition-all duration-200 shadow-sm"
                         >
                           <social.icon className="w-4 h-4 2xl:w-5 2xl:h-5" />
                         </a>
@@ -362,16 +360,16 @@ export function HeroSection() {
                 animate={
                   isInView
                     ? {
-                      opacity: activeCard === 3 ? 1 : activeCard !== null ? 0.45 : 1,
-                      scale: activeCard === 3 ? 1.05 : activeCard !== null ? 0.96 : 1,
-                      translateZ: activeCard === 3 ? 150 : 30,
+                      opacity: 1,
+                      scale: activeCard === 3 ? 1.02 : 1,
+                      translateZ: activeCard === 3 ? 45 : 30,
                       y: 0,
                     }
                     : {}
                 }
                 transition={{ type: "spring", stiffness: 220, damping: 26, mass: 0.7 }}
               >
-                <Card className={`w-80 2xl:w-96 3xl:w-[26rem] 4xl:w-[28rem] hero-glass-card rounded-2xl overflow-hidden ${activeCard === 3 ? "is-active ring-2 ring-primary/60 shadow-2xl shadow-primary/30" : ""
+                <Card className={`w-80 2xl:w-96 3xl:w-[26rem] 4xl:w-[28rem] hero-glass-card rounded-2xl overflow-hidden ${activeCard === 3 ? "is-active" : ""
                   }`}>
                   <CardContent className="p-5 2xl:p-6 space-y-3.5">
                     <div className="flex items-center justify-between pb-2.5 border-b border-border/40">
@@ -399,7 +397,7 @@ export function HeroSection() {
                       ].map((item) => (
                         <div
                           key={item.name}
-                          className="flex items-center gap-2.5 p-2 rounded-xl bg-muted/40 border border-border/40 hover:bg-primary/5 hover:border-primary/30 transition-all duration-200"
+                          className="flex items-center gap-2.5 p-2 rounded-xl bg-muted/40 border border-border/40 hover:bg-primary/10 hover:border-primary/30 active:scale-95 transition-all duration-200 cursor-default"
                         >
                           <span className={`w-2 h-2 rounded-full ${item.dot}`} />
                           <div className="flex flex-col min-w-0">

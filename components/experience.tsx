@@ -263,7 +263,7 @@ export default function Experience() {
           <a
             href="/SachitDahalCV.pdf"
             download
-            className="inline-flex items-center gap-3 px-8 py-4 2xl:px-10 2xl:py-5 rounded-full ios-glass border border-border/80 hover:border-primary/50 text-sm 2xl:text-base font-mono text-foreground font-semibold hover:bg-primary/10 hover:text-primary shadow-md transition-all duration-300 group cursor-pointer"
+            className="inline-flex items-center gap-3 px-8 py-4 2xl:px-10 2xl:py-5 rounded-full ios-glass border border-border/80 hover:border-primary/50 text-sm 2xl:text-base font-mono text-foreground font-semibold hover:bg-primary/10 hover:text-primary active:scale-95 shadow-md transition-all duration-200 group cursor-pointer select-none"
           >
             <Download className="w-4 h-4 2xl:w-5 2xl:h-5 text-primary group-hover:translate-y-0.5 transition-transform" />
             <AwwwardsText text="Download Official Resume (PDF)" />

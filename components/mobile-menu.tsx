@@ -51,23 +51,26 @@ export function MobileMenu({ activeSection, onSectionClick }: MobileMenuProps) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-background/95 backdrop-blur-xl z-[9999] md:hidden flex flex-col justify-between p-6 sm:p-8"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="fixed inset-0 bg-background/85 backdrop-blur-2xl z-[9999] md:hidden flex flex-col justify-between p-6 sm:p-8"
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.97 }}
+          transition={{ type: "spring", stiffness: 320, damping: 28 }}
         >
           {/* Header row in mobile overlay */}
           <div className="flex items-center justify-between w-full pt-2">
-            <span className="font-mono text-xs uppercase tracking-widest text-primary font-bold">
-              Navigation
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              <span className="font-mono text-xs uppercase tracking-widest text-primary font-bold">
+                Navigation
+              </span>
+            </div>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(false)}
               aria-label="Close menu"
-              className="w-10 h-10 rounded-full border border-border/60 bg-muted/30"
+              className="w-10 h-10 rounded-full border border-border/60 bg-muted/40 active:scale-90"
             >
               <X className="h-5 w-5 text-foreground" />
             </Button>
@@ -78,13 +81,14 @@ export function MobileMenu({ activeSection, onSectionClick }: MobileMenuProps) {
             {navItems.map((item, index) => (
               <motion.button
                 key={item.name}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
+                exit={{ opacity: 0, y: 15 }}
+                transition={{ duration: 0.25, delay: index * 0.04 }}
+                whileTap={{ scale: 0.94 }}
                 onClick={() => handleSectionClick(item.link)}
                 className={cn(
-                  "font-display text-4xl sm:text-5xl tracking-tight text-foreground/75 hover:text-primary transition-colors duration-200",
+                  "font-display text-4xl sm:text-5xl tracking-tight text-foreground/75 hover:text-primary transition-colors duration-200 cursor-pointer select-none",
                   activeSection === item.link.substring(1)
                     ? "text-primary font-bold"
                     : ""
