@@ -5,10 +5,6 @@ import { motion, useInView, useReducedMotion, UseInViewOptions } from "framer-mo
 
 type MarginType = UseInViewOptions["margin"];
 
-/**
- * Custom hook to verify the component has mounted on the client side.
- * Prevents SSR/Hydration style mismatch when using client-only hooks.
- */
 function useIsMounted() {
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
@@ -18,7 +14,7 @@ function useIsMounted() {
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   ScrollRevealText  —  Awwwards-style word-by-word scroll reveal
+   ScrollRevealText  —  word-by-word scroll reveal
    ────────────────────────────────────────────────────────────────── */
 interface ScrollRevealTextProps {
   text: string;
@@ -35,8 +31,8 @@ export function ScrollRevealText({
   className = "",
   as: Component = "p",
   delay = 0,
-  stagger = 0.035,
-  margin = "-60px",
+  stagger = 0.028,
+  margin = "-40px",
   variant = "slide-up",
 }: ScrollRevealTextProps) {
   const ref = useRef(null);
@@ -50,12 +46,12 @@ export function ScrollRevealText({
     if (shouldReduceMotion) return { opacity: 0 };
     switch (variant) {
       case "blur":
-        return { opacity: 0, y: "40%", filter: "blur(8px)" };
+        return { opacity: 0, y: "30%", filter: "blur(6px)" };
       case "fade":
         return { opacity: 0 };
       case "slide-up":
       default:
-        return { opacity: 0, y: "100%" };
+        return { opacity: 0, y: "80%" };
     }
   };
 
@@ -85,9 +81,9 @@ export function ScrollRevealText({
               initial={getInitial()}
               animate={isInView ? getAnimate() : {}}
               transition={{
-                duration: shouldReduceMotion ? 0.2 : 0.6,
+                duration: shouldReduceMotion ? 0.2 : 0.5,
                 delay: delay + i * stagger,
-                ease: [0.22, 1, 0.36, 1],
+                ease: [0.16, 1, 0.3, 1],
               }}
             >
               {word}
@@ -115,7 +111,7 @@ export function ScrollRevealLine({
   children,
   className = "",
   delay = 0,
-  margin = "-60px",
+  margin = "-40px",
 }: ScrollRevealLineProps) {
   const ref = useRef(null);
   const isMounted = useIsMounted();
@@ -129,9 +125,9 @@ export function ScrollRevealLine({
           initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: "100%" }}
           animate={isInView ? { opacity: 1, y: "0%" } : {}}
           transition={{
-            duration: shouldReduceMotion ? 0.2 : 0.7,
+            duration: shouldReduceMotion ? 0.2 : 0.55,
             delay,
-            ease: [0.22, 1, 0.36, 1],
+            ease: [0.16, 1, 0.3, 1],
           }}
         >
           {children}
@@ -158,8 +154,8 @@ export function ScrollFadeIn({
   children,
   className = "",
   delay = 0,
-  margin = "-60px",
-  y = 30,
+  margin = "-40px",
+  y = 20,
 }: ScrollFadeInProps) {
   const ref = useRef(null);
   const isMounted = useIsMounted();
@@ -173,9 +169,9 @@ export function ScrollFadeIn({
           initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{
-            duration: shouldReduceMotion ? 0.2 : 0.7,
+            duration: shouldReduceMotion ? 0.2 : 0.55,
             delay,
-            ease: [0.22, 1, 0.36, 1],
+            ease: [0.16, 1, 0.3, 1],
           }}
         >
           {children}

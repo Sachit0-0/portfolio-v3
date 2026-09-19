@@ -1,287 +1,269 @@
 "use client";
 
-import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
-import Image from "next/image";
-import { ArrowUpRight, ExternalLink, Sparkles, Globe } from "lucide-react";
-import { AwwwardsText } from "./ui/awwwards-text";
-import { ScrollRevealText, ScrollFadeIn } from "./ui/scroll-reveal";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useRef, useState } from "react";
+import { ArrowUpRight, Globe, Terminal } from "lucide-react";
 
-function useIsMounted() {
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  return isMounted;
+/* ── Project Data ────────────────────────────────────────────────── */
+export interface Project {
+  id: string;
+  number: string;
+  title: string;
+  category: string;
+  urlDomain: string;
+  description: string;
+  link?: string;
+  note?: string;
+  image?: string;
 }
 
-/* ── Project data ────────────────────────────────────────────────── */
-const projects = [
+const projects: Project[] = [
   {
-    id: 1,
+    id: "frame-audit",
     number: "01",
     title: "FrameAudit",
-    category: "Full-Stack Plugin & SaaS",
-    urlDomain: "framerify.com/frameaudit",
+    category: "Framer Plugin & SaaS",
+    urlDomain: "framer.com/marketplace/plugins/frame-audit",
     description:
       "End-to-end Framer ecosystem product featuring a lightweight React/TypeScript canvas plugin, an automated backend audit engine, Lemon Squeezy payment integration, and a dedicated marketing platform.",
-    tech: ["Framer API", "React", "TypeScript", "Node.js", "Lemon Squeezy"],
     link: "https://www.framer.com/marketplace/plugins/frame-audit/",
-    linkLabel: "View Product",
-  },
-  {
-    id: 2,
-    number: "02",
+    image:
+      "/frameAudit.webp",
+  }, {
+    id: "sneha-art",
+    number: "06",
     title: "Sneha's Art Portfolio",
-    category: "Client Project",
+    category: "Client CMS Portfolio",
     urlDomain: "sneha.info.np",
     description:
-      "CMS-managed artist portfolio with responsive image galleries, custom layout grids, and SEO optimization.",
-    tech: ["Next.js", "Sanity CMS", "Tailwind CSS"],
+      "CMS-managed artist portfolio with responsive image galleries, custom layout grids, fluid typography transitions, and SEO optimization.",
     link: "https://sneha.info.np",
-    linkLabel: "Visit Website",
+    image:
+      "sneha2.png",
   },
+
   {
-    id: 3,
-    number: "03",
+    id: "photo2diary",
+    number: "07",
     title: "Visual Journal & Gallery",
-    category: "Creative Portfolio",
+    category: "Creative Media Gallery",
     urlDomain: "photo2diary.vercel.app",
     description:
-      "Sanity-powered photo journal featuring dark mode aesthetics, fluid transitions, and fast image loading.",
-    tech: ["Next.js", "Sanity", "Framer Motion"],
+      "Sanity-powered photo journal featuring dark mode aesthetics, fluid page transitions, fast image caching, and minimalist gallery viewports.",
     link: "https://photo2diary.vercel.app",
-    linkLabel: "Visit Website",
+    image: "/photo2.png",
   },
+
   {
-    id: 4,
-    number: "04",
+    id: "framescore",
+    number: "05",
     title: "FrameScore",
-    category: "Framer Tool & Web App",
+    category: "Performance Audit Tool",
     urlDomain: "framescore.sachit.info.np",
     description:
       "Performance and SEO audit platform for Framer websites, offering real-time scoring, technical analysis, and actionable optimization insights.",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Framer API"],
     link: "https://framescore.sachit.info.np/",
-    linkLabel: "Visit Website",
+    image:
+      "frame-score.webp",
   },
+
+
   {
-    id: 5,
-    number: "05",
+    id: "nepale",
+    number: "03",
+    title: "NEPALÉ",
+    category: "Editorial Brand Experience",
+    urlDomain: "nepale.vercel.app",
+    description:
+      "A concept fashion-editorial site exploring high-fashion editorial design, fluid layout transitions, interactive product features, and custom typography.",
+    link: "https://nepale.vercel.app/",
+    image:
+      "/nepale.png",
+  }, {
+    id: "makemyscan",
+    number: "02",
     title: "MakeMyScan",
-    category: "Web Platform",
+    category: "Security Platform",
     urlDomain: "makemyscan.com",
     description:
-      "Web vulnerability scanning platform featuring auth, scan history, target management, and real-time security reporting.",
-    image: "/makemyscan.png",
-    tech: ["Next.js", "Django REST", "PostgreSQL"],
+      "Web vulnerability scanning platform featuring authentication, scan telemetry history, target management, and automated real-time vulnerability scoring.",
     link: "https://makemyscan.com",
-    linkLabel: "Visit Website",
-  },
-  {
-    id: 6,
-    number: "06",
-    title: "DHN BI Dashboard",
-    category: "Enterprise BI",
-    urlDomain: "dhn.gov.np",
-    description:
-      "Interactive Business Intelligence platform with drill-down data visualization for a national organization.",
-    image: "/dhn.png",
-    tech: ["React", "Recharts", "TypeScript"],
-    note: "Confidential client build",
+    image: "/makemyscan.png",
   },
 ];
 
-/* ── Gallery Card with per-card scroll speed ─────────────────────── */
-function ProjectCard({
-  project,
-  index,
+/* ── Minimalist Clean Project Preview ─────────────────────────────── */
+function ProjectPreviewImage({
+  image,
+  title,
+  category,
 }: {
-  project: (typeof projects)[0];
-  index: number;
+  image?: string;
+  title: string;
+  category: string;
 }) {
-  const cardRef = useRef(null);
-  const isMounted = useIsMounted();
-  const isInView = useInView(cardRef, { once: true, margin: "-60px" });
-  const shouldReduceMotion = useReducedMotion();
-
-  // Differential scroll-speed parallax per card — odd cards drift faster
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "end start"],
-  });
-  const parallaxY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [index % 2 === 0 ? 30 : 50, index % 2 === 0 ? -30 : -50]
-  );
-
-  const bannerSrc =
-    project.image ||
-    (project.link
-      ? `https://api.microlink.io/?url=${encodeURIComponent(
-        project.link
-      )}&screenshot=true&meta=false&embed=screenshot.url`
-      : null);
+  const [hasError, setHasError] = useState(false);
 
   return (
-    <motion.article
-      ref={cardRef}
-      style={isMounted && !shouldReduceMotion ? { y: parallaxY } : undefined}
-      initial={isMounted ? (shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 30 }) : false}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{
-        duration: shouldReduceMotion ? 0.3 : 0.6,
-        delay: index * 0.08,
-        ease: [0.22, 1, 0.36, 1] as const,
-      }}
-      whileHover={shouldReduceMotion ? undefined : { y: -5 }}
-      whileTap={{ scale: 0.985 }}
-      className="group relative flex flex-col justify-between rounded-3xl ios-glass-card p-6 sm:p-8 2xl:p-10 overflow-hidden cursor-default select-none"
-    >
-      <div>
-        {/* Top Header: Monospace Index & Category */}
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-[11px] 2xl:text-xs font-mono font-semibold text-primary px-3 py-1 rounded-full bg-primary/10 border border-primary/20 tracking-wider">
-            [ {project.number} ]
-          </span>
-          <span className="text-[11px] 2xl:text-xs font-mono text-muted-foreground/70 bg-background/50 px-2.5 py-1 rounded-full border border-border/40">
-            {project.category}
-          </span>
+    <div className="relative w-full aspect-[18/10] overflow-hidden bg-card">
+      {/* Clean Minimalist Placeholder Canvas */}
+      <div className="absolute inset-0 bg-gradient-to-br from-muted via-muted/80 to-card flex flex-col items-center justify-center p-6 text-center select-none">
+        <div className="w-12 h-12 rounded-2xl bg-muted/60 border border-border/50 flex items-center justify-center mb-3 shadow-inner">
+          <Globe className="w-6 h-6 text-primary/60" />
         </div>
-
-        {/* Browser Mockup Window Container */}
-        <div className="rounded-2xl border border-border/60 bg-background/80 overflow-hidden mb-6 shadow-sm group-hover:border-border/90 transition-colors">
-          {/* Browser Mockup Top Bar */}
-          <div className="flex items-center justify-between px-3.5 py-2 border-b border-border/40 bg-muted/40">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block" />
-              <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80 inline-block" />
-              <span className="w-2.5 h-2.5 rounded-full bg-green-500/80 inline-block" />
-            </div>
-            <div className="flex items-center gap-1 text-[10px] 2xl:text-xs font-mono text-muted-foreground/70 bg-background/60 px-2.5 py-0.5 rounded-md border border-border/30 max-w-[180px] truncate">
-              <Globe className="w-3 h-3 text-muted-foreground shrink-0" />
-              <span className="truncate">{project.urlDomain || "https://..."}</span>
-            </div>
-          </div>
-
-          {/* Screenshot Media */}
-          {bannerSrc ? (
-            <div className="relative aspect-[16/10] overflow-hidden bg-muted/20">
-              <Image
-                src={bannerSrc}
-                alt={project.title}
-                fill
-                unoptimized={!project.image}
-                className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                sizes="(max-width: 768px) 100vw, (max-width: 1920px) 50vw, 33vw"
-                priority={index < 2}
-              />
-            </div>
-          ) : (
-            <div className="relative aspect-[16/10] bg-gradient-to-br from-muted/30 via-muted/10 to-background p-6 flex items-center justify-center overflow-hidden">
-              <span className="font-display text-2xl font-bold tracking-tight text-foreground/20 select-none">
-                {project.title}
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Title with Awwwards Kinetic Character Roll */}
-        <h3 className="font-display text-2xl md:text-3xl 2xl:text-4xl font-bold tracking-tight mb-3 text-foreground">
-          {project.link ? (
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 hover:text-primary transition-colors duration-200"
-            >
-              <AwwwardsText text={project.title} />
-              <ArrowUpRight className="w-5 h-5 2xl:w-6 2xl:h-6 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 shrink-0" />
-            </a>
-          ) : (
-            <AwwwardsText text={project.title} />
-          )}
-        </h3>
-
-        {/* Description */}
-        <p className="text-sm 2xl:text-base text-muted-foreground leading-relaxed mb-6 font-sans">
-          {project.description}
-        </p>
+        <span className="font-display text-lg sm:text-xl font-bold tracking-tight text-foreground/40">
+          {title}
+        </span>
+        <span className="text-xs font-mono text-primary/60 mt-1">
+          {category}
+        </span>
       </div>
 
-      {/* Footer: Tech Stack & Link Button */}
-      <div className="space-y-4 pt-4 border-t border-border/40">
-        <div className="flex flex-wrap gap-1.5 2xl:gap-2">
-          {project.tech.map((item) => (
-            <span
-              key={item}
-              className="text-[11px] 2xl:text-xs font-mono px-2.5 py-1 rounded-xl bg-muted/40 text-foreground/80 border border-border/40 flex items-center gap-1.5"
-            >
-              <span className="w-1 h-1 rounded-full bg-primary/70" />
-              {item}
-            </span>
-          ))}
-        </div>
+      {/* Actual Project Image */}
+      {image && !hasError && (
+        <img
+          src={image}
+          alt={title}
+          onError={() => setHasError(true)}
+          className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+          loading="lazy"
+        />
+      )}
 
-        <div className="flex items-center justify-between pt-1">
-          {project.link ? (
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs 2xl:text-sm font-mono text-primary font-semibold bg-primary/10 border border-primary/20 hover:bg-primary hover:text-primary-foreground active:scale-95 transition-all duration-200 shadow-sm group/btn cursor-pointer"
-            >
-              <span>{project.linkLabel || "View Project"}</span>
-              <ExternalLink className="w-3.5 h-3.5 2xl:w-4 2xl:h-4 group-hover/btn:translate-x-0.5 transition-transform" />
-            </a>
-          ) : project.note ? (
-            <span className="text-[11px] 2xl:text-xs font-mono text-muted-foreground/60 italic">
-              {project.note}
-            </span>
-          ) : null}
-        </div>
-      </div>
-    </motion.article>
+      {/* Subtle Vignette */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60 pointer-events-none" />
+    </div>
   );
 }
 
-
-/* ── Main export ─────────────────────────────────────────────────── */
-export function ProjectsShowcase() {
+/* ── Studio Browser Mockup Container ─────────────────────────────── */
+function StudioMockup({ project }: { project: Project }) {
   return (
-    <section id="projects" className="relative py-24 md:py-36 2xl:py-48">
-      <div className="max-w-7xl 2xl:max-w-[1536px] 3xl:max-w-[1850px] 4xl:max-w-[2200px] mx-auto px-6 md:px-12 2xl:px-16 4xl:px-24">
-        {/* Section Header with scroll text reveals */}
-        <div className="mb-16 md:mb-24 2xl:mb-32">
-          <ScrollFadeIn delay={0}>
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full ios-glass text-xs sm:text-sm 2xl:text-base font-mono tracking-wider text-primary shadow-md mb-4 uppercase">
-              <Sparkles className="w-4 h-4" />
-              <span>03 / SELECTED PORTFOLIO</span>
-            </div>
-          </ScrollFadeIn>
-          <ScrollRevealText
-            text="Recent Work"
-            as="h2"
-            className="font-display text-4xl sm:text-5xl md:text-6xl 2xl:text-7xl 3xl:text-8xl tracking-tight leading-[1.05] text-foreground"
-            delay={0.1}
-            stagger={0.08}
-          />
-          <ScrollRevealText
-            text="Selected software products, published Framer canvas plugins, and client web applications."
-            className="mt-4 text-muted-foreground text-base 2xl:text-xl 3xl:text-2xl max-w-xl 2xl:max-w-2xl leading-relaxed"
-            delay={0.2}
-            stagger={0.015}
-            variant="blur"
-          />
+    <div className="relative w-full rounded-2xl overflow-hidden studio-card shadow-2xl group transition-all duration-500 hover:border-primary/40">
+      {/* Sleek Browser Omnibar Frame */}
+      <div className="flex items-center justify-between px-4 py-3 bg-muted/60 border-b border-border/50 backdrop-blur-md z-20 relative select-none">
+        {/* Window Dots */}
+        <div className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-border group-hover:bg-red-500/80 transition-colors" />
+          <span className="w-2.5 h-2.5 rounded-full bg-border group-hover:bg-amber-500/80 transition-colors" />
+          <span className="w-2.5 h-2.5 rounded-full bg-border group-hover:bg-primary/80 transition-colors" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 3xl:grid-cols-3 gap-8 2xl:gap-10 3xl:gap-12 4xl:gap-16">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
+        {/* Omnibar Domain */}
+        <div className="flex items-center gap-2 px-3 py-1 rounded-md bg-muted/80 border border-border/50 text-[11px] font-mono text-muted-foreground">
+          <Globe className="w-3 h-3 text-primary/70 shrink-0" />
+          <span className="truncate max-w-[140px] sm:max-w-[240px]">
+            {project.urlDomain}
+          </span>
+        </div>
+
+        {/* Project Number */}
+        <span className="text-[10px] font-mono font-medium text-primary/80 tracking-wider">
+          {project.number}
+        </span>
+      </div>
+
+      {/* Clean Image / Placeholder */}
+      <ProjectPreviewImage
+        image={project.image}
+        title={project.title}
+        category={project.category}
+      />
+    </div>
+  );
+}
+
+/* ── Main Component Export ───────────────────────────────────────── */
+export function ProjectsShowcase() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="relative py-20 md:py-32 2xl:py-44 overflow-hidden"
+    >
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/4 right-0 w-[600px] 2xl:w-[900px] h-[400px] bg-primary/[0.04] blur-[150px] rounded-full pointer-events-none -z-10" />
+
+      <div className="max-w-7xl 2xl:max-w-[1536px] 3xl:max-w-[1850px] 4xl:max-w-[2200px] mx-auto px-6 md:px-12 2xl:px-16 4xl:px-24">
+        {/* Editorial Header */}
+        <div className="mb-16 md:mb-24 max-w-3xl">
+          <div className="flex items-center gap-2 text-xs sm:text-sm font-mono tracking-widest text-primary uppercase mb-4">
+            <Terminal className="w-4 h-4" />
+            <span>// 03 / SELECTED WORK</span>
+          </div>
+          <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-foreground leading-[1.05]">
+            Recent Projects          </h2>
+          <p className="mt-6 text-base sm:text-lg 2xl:text-xl text-muted-foreground leading-relaxed">
+            Production software and client platforms built, shipped, and maintained end-to-end.
+          </p>
+        </div>
+
+        {/* ── Unified Projects Grid (All projects matching, clean layout) ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 2xl:gap-18">
+          {projects.map((project, idx) => (
+            <motion.article
+              key={project.id}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{
+                duration: 0.5,
+                delay: 0.07 * idx,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              whileHover={{ y: -4 }}
+              className="group flex flex-col justify-between space-y-5 cursor-default"
+            >
+              {/* Browser Mockup Frame with Image */}
+              <StudioMockup project={project} />
+
+              {/* Details & Metadata Below Mockup */}
+              <div className="space-y-3 pt-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono tracking-wider text-primary uppercase">
+                    {project.category}
+                  </span>
+                  <span className="text-xs font-mono text-muted-foreground/60">
+                    {project.number}
+                  </span>
+                </div>
+
+                <h3 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground flex items-center justify-between gap-3">
+                  {project.link ? (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline-grow hover-lift text-foreground hover:text-primary transition-colors duration-200 flex items-center gap-2 group/title"
+                    >
+                      {project.title}
+                      <ArrowUpRight className="w-4 h-4 text-muted-foreground/50 group-hover/title:text-primary group-hover/title:translate-x-0.5 group-hover/title:-translate-y-0.5 transition-all duration-200 shrink-0" />
+                    </a>
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      {project.title}
+                      {project.note && (
+                        <span className="text-xs font-mono text-muted-foreground/50 italic font-normal">
+                          {project.note}
+                        </span>
+                      )}
+                    </span>
+                  )}
+                </h3>
+
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {project.description}
+                </p>
+              </div>
+            </motion.article>
           ))}
         </div>
       </div>
     </section>
   );
 }
+
+export default ProjectsShowcase;

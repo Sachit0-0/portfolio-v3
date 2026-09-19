@@ -9,21 +9,21 @@ type LenisScrollProviderProps = {
 
 const LenisScrollProvider: FC<LenisScrollProviderProps> = ({ children }) => {
   const lenisRef = useRef(null);
-  
+
   return (
-    <ReactLenis 
-      ref={lenisRef} 
-      root 
-      options={{ 
-   lerp: 0.07, 
-    duration: 1.2, 
-    smoothWheel: true,
-    autoResize: true, 
-    gestureOrientation: "vertical",
-    overscroll: true,
-    allowNestedScroll: true, 
-    wheelMultiplier: 1, 
-    touchMultiplier: 1.2, 
+    <ReactLenis
+      ref={lenisRef}
+      root
+      options={{
+        lerp: 0.1,
+        duration: 1.4,
+        smoothWheel: true,
+        autoResize: true,
+        gestureOrientation: "vertical",
+        overscroll: false,
+        allowNestedScroll: true,
+        wheelMultiplier: 0.9,
+        touchMultiplier: 1.5,
       }}
     >
       {children}

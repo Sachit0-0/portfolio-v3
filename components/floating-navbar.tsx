@@ -69,7 +69,7 @@ export function FloatingNavbar() {
           initial={{ y: -80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -80, opacity: 0 }}
-          transition={{ type: "spring", stiffness: 200, damping: 24 }}
+          transition={{ type: "spring", stiffness: 260, damping: 28 }}
           className="fixed top-4 left-0 right-0 z-50 px-4 sm:px-6 md:px-8 flex justify-center pointer-events-none"
         >
           <nav className="pointer-events-auto relative ios-glass rounded-full shadow-xl max-w-fit flex items-center p-1.5 2xl:p-2 transition-all duration-300">
@@ -80,6 +80,8 @@ export function FloatingNavbar() {
                   key={item.name}
                   onClick={() => scrollToSection(item.link)}
                   whileTap={{ scale: 0.94 }}
+                  whileHover={{ y: -1 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 28 }}
                   className={cn(
                     "relative px-4 py-1.5 text-sm font-medium transition-colors rounded-full whitespace-nowrap cursor-pointer select-none",
                     activeSection === item.link.substring(1)

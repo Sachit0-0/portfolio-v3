@@ -3,7 +3,6 @@
 import { useRef, useState } from "react";
 import { motion, useInView, useReducedMotion, AnimatePresence } from "framer-motion";
 import {
-  Sparkles,
   Mail,
   Phone,
   MapPin,
@@ -15,8 +14,9 @@ import {
   Check,
   CheckCircle2,
   RefreshCw,
+  Terminal,
 } from "lucide-react";
-import { ScrollRevealText, ScrollFadeIn } from "./ui/scroll-reveal";
+import { ScrollFadeIn } from "./ui/scroll-reveal";
 
 export default function Contact() {
   const ref = useRef(null);
@@ -77,28 +77,18 @@ export default function Contact() {
       <div className="absolute bottom-0 right-1/4 w-[500px] 2xl:w-[800px] h-[300px] 2xl:h-[450px] bg-primary/5 blur-[120px] 2xl:blur-[160px] rounded-full pointer-events-none -z-10" />
 
       <div className="max-w-7xl 2xl:max-w-[1536px] 3xl:max-w-[1850px] 4xl:max-w-[2200px] mx-auto px-6 md:px-12 2xl:px-16 4xl:px-24">
-        {/* Section Header with scroll text reveals */}
-        <div className="mb-16 md:mb-24 2xl:mb-32">
-          <ScrollFadeIn delay={0}>
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full ios-glass text-xs sm:text-sm 2xl:text-base font-mono tracking-wider text-primary shadow-md mb-4 uppercase">
-              <Sparkles className="w-4 h-4" />
-              <span>05 / INITIATE CONTACT</span>
-            </div>
-          </ScrollFadeIn>
-          <ScrollRevealText
-            text="Let's Build Together"
-            as="h2"
-            className="font-display text-4xl sm:text-5xl md:text-6xl 2xl:text-7xl 3xl:text-8xl tracking-tight leading-[1.05] text-foreground"
-            delay={0.1}
-            stagger={0.08}
-          />
-          <ScrollRevealText
-            text="Based in Kathmandu, Nepal. Focused on clean architecture, web applications, custom Framer canvas plugins, and end-to-end software delivery."
-            className="mt-4 text-muted-foreground text-base 2xl:text-xl 3xl:text-2xl max-w-xl 2xl:max-w-2xl leading-relaxed"
-            delay={0.2}
-            stagger={0.015}
-            variant="blur"
-          />
+        {/* Editorial Header (Consistent with Selected Work & Skills) */}
+        <div className="mb-16 md:mb-24 max-w-3xl">
+          <div className="flex items-center gap-2 text-xs sm:text-sm font-mono tracking-widest text-primary uppercase mb-4">
+            <Terminal className="w-4 h-4" />
+            <span>// 05 / INITIATE CONTACT</span>
+          </div>
+          <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-foreground leading-[1.05]">
+            Let's Build Together
+          </h2>
+          <p className="mt-6 text-base sm:text-lg 2xl:text-xl text-muted-foreground leading-relaxed">
+            Based in Kathmandu, Nepal. Available for high-impact web applications, bespoke Framer canvas plugins, and engineering contracts.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 2xl:gap-20 items-start">
@@ -110,7 +100,7 @@ export default function Contact() {
                   Direct Contact Details
                 </h3>
                 <span className="text-[11px] font-mono text-muted-foreground bg-muted/40 px-2.5 py-1 rounded-full border border-border/40">
-                  Click to Copy / Open
+                  Direct Channels
                 </span>
               </div>
 

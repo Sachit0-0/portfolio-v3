@@ -2,9 +2,8 @@
 
 import { motion, useInView, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { Sparkles, Download, Calendar, MapPin, Briefcase, CheckCircle2, GitBranch, GitCommit } from "lucide-react";
-import { AwwwardsText } from "./ui/awwwards-text";
-import { ScrollRevealText, ScrollFadeIn } from "./ui/scroll-reveal";
+import { Download, Calendar, MapPin, Briefcase, CheckCircle2, GitBranch, Terminal } from "lucide-react";
+import { ScrollFadeIn } from "./ui/scroll-reveal";
 
 function useIsMounted() {
   const [isMounted, setIsMounted] = useState(false);
@@ -84,23 +83,8 @@ function TimelineCard({
 
   const isRight = item.side === "right";
 
-  // Per-card scroll parallax vertical drift
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "end start"],
-  });
-
-  const driftY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [isRight ? 20 : 30, isRight ? -20 : -30]
-  );
-
   const cardContent = (
-    <motion.div
-      style={isMounted && !shouldReduceMotion ? { y: driftY } : undefined}
-      className="p-6 sm:p-8 2xl:p-10 rounded-3xl ios-glass-card shadow-lg flex flex-col justify-between group"
-    >
+    <div className="p-6 sm:p-8 2xl:p-10 rounded-3xl ios-glass-card shadow-lg flex flex-col justify-between group">
       {item.overlapInfo && (
         <div className="inline-flex items-center gap-1.5 px-3 py-1 mb-4 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-500 font-mono text-xs font-semibold">
           <GitBranch className="w-3.5 h-3.5" />
@@ -113,8 +97,8 @@ function TimelineCard({
         <span>{item.period}</span>
       </div>
 
-      <h3 className="text-xl md:text-2xl 2xl:text-3xl font-bold text-foreground tracking-tight">
-        <AwwwardsText text={item.title} />
+      <h3 className="text-xl md:text-2xl 2xl:text-3xl font-bold text-foreground tracking-tight group-hover:text-primary transition-colors">
+        {item.title}
       </h3>
       <p className="text-primary font-semibold text-sm 2xl:text-base mt-1 mb-3">{item.company}</p>
 
@@ -147,7 +131,7 @@ function TimelineCard({
           </span>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 
   return (
@@ -166,25 +150,27 @@ function TimelineCard({
         delay: index * 0.1,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="relative grid grid-cols-1 md:grid-cols-2 gap-8 2xl:gap-12 items-center"
+      className="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 2xl:gap-16 items-center"
     >
-      {/* Dynamic Animated Center Node Circle */}
-      <motion.div
-        initial={isMounted ? { scale: 0, opacity: 0 } : false}
-        animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-        transition={{ duration: 0.5, delay: index * 0.1 + 0.2, type: "spring", stiffness: 200 }}
-        className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-8 z-20 w-9 h-9 rounded-full border-2 bg-background border-primary items-center justify-center text-primary shadow-lg shadow-primary/20"
-      >
-        <GitCommit className="w-4 h-4" />
-      </motion.div>
+      {/* Centered Node Circle (centered on desktop line and card, and on mobile line) */}
+      <div className="absolute left-4 md:left-1/2 -translate-x-1/2 top-8 md:top-1/2 md:-translate-y-1/2 z-20 pointer-events-none">
+        <motion.div
+          initial={isMounted ? { scale: 0, opacity: 0 } : false}
+          animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+          transition={{ duration: 0.4, delay: index * 0.1 + 0.15, type: "spring", stiffness: 240, damping: 20 }}
+          className="w-8 h-8 md:w-9 md:h-9 rounded-full border-2 bg-background border-primary flex items-center justify-center text-primary shadow-lg shadow-primary/20"
+        >
+          <div className="w-2.5 h-2.5 rounded-full bg-primary" />
+        </motion.div>
+      </div>
 
       {/* Left Column */}
-      <div className={`${!isRight ? "pl-8 md:pl-0" : "hidden md:block"}`}>
+      <div className={`${!isRight ? "pl-12 md:pl-0" : "hidden md:block"}`}>
         {!isRight && cardContent}
       </div>
 
       {/* Right Column */}
-      <div className={`${isRight ? "md:col-start-2 pl-8 md:pl-0" : "hidden md:block md:col-start-2"}`}>
+      <div className={`${isRight ? "md:col-start-2 pl-12 md:pl-0" : "hidden md:block md:col-start-2"}`}>
         {isRight && cardContent}
       </div>
     </motion.div>
@@ -211,45 +197,42 @@ export default function Experience() {
   const scaleY = useTransform(smoothProgress, [0, 1], [0, 1]);
 
   return (
-    <section id="experience" className="py-24 md:py-36 2xl:py-48 relative border-t border-border/40 overflow-hidden">
+    <section id="experience" className="py-20 md:py-32 2xl:py-44 relative border-t border-border/40 overflow-hidden">
       {/* Background ambient light */}
       <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] 2xl:w-[900px] h-[400px] 2xl:h-[550px] bg-primary/5 blur-[150px] 2xl:blur-[180px] rounded-full pointer-events-none -z-10" />
 
       <div className="max-w-7xl 2xl:max-w-[1536px] 3xl:max-w-[1850px] 4xl:max-w-[2200px] mx-auto px-6 md:px-12 2xl:px-16 4xl:px-24">
-        {/* Left-Aligned Section Header */}
-        <div className="mb-16 md:mb-24 2xl:mb-32 flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-border/40 pb-12">
-          <div className="max-w-2xl">
-            <ScrollFadeIn delay={0}>
-              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full ios-glass text-xs sm:text-sm 2xl:text-base font-mono tracking-wider text-primary shadow-md mb-4 uppercase">
-                <Sparkles className="w-4 h-4" />
-                <span>04 / CAREER CHRONOLOGY</span>
-              </div>
-            </ScrollFadeIn>
-            <ScrollRevealText
-              text="Work Experience"
-              as="h2"
-              className="font-display text-4xl sm:text-5xl md:text-6xl 2xl:text-7xl 3xl:text-8xl tracking-tight leading-[1.15] text-foreground pb-2"
-              delay={0.1}
-              stagger={0.08}
-            />
+        {/* Editorial Header (Consistent with Selected Work & Skills) */}
+        <div className="mb-16 md:mb-24 max-w-3xl">
+          <div className="flex items-center gap-2 text-xs sm:text-sm font-mono tracking-widest text-primary uppercase mb-4">
+            <Terminal className="w-4 h-4" />
+            <span>// 04 / CAREER &amp; EXPERIENCE</span>
           </div>
+          <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-foreground leading-[1.05]">
+            Work Experience
+          </h2>
+          <p className="mt-6 text-base sm:text-lg 2xl:text-xl text-muted-foreground leading-relaxed">
+            Track record of shipping production software for national data platforms, venture-backed products, and design engineering agencies.
+          </p>
         </div>
 
         {/* Alternating Split Timeline */}
         <div ref={containerRef} className="relative">
-          {/* Background Timeline Stem Track */}
-          <div className="hidden md:block absolute top-4 bottom-12 left-1/2 -translate-x-1/2 w-0.5 rounded-full bg-border/40" />
-          <div className="md:hidden absolute top-4 bottom-12 left-4 w-0.5 rounded-full bg-border/40" />
+          {/* Desktop Background & Active Timeline Stem */}
+          <div className="hidden md:block absolute top-4 bottom-12 left-1/2 -translate-x-1/2 w-0.5 rounded-full overflow-hidden bg-border/40">
+            <motion.div
+              style={isMounted ? { scaleY, originY: 0 } : { originY: 0 }}
+              className="w-full h-full bg-gradient-to-b from-primary via-primary to-amber-500 shadow-[0_0_12px_rgba(var(--primary-rgb),0.5)]"
+            />
+          </div>
 
-          {/* Scroll-Driven Animated Active Timeline Stem */}
-          <motion.div
-            style={isMounted ? { scaleY, originY: 0 } : { originY: 0 }}
-            className="hidden md:block absolute top-4 bottom-12 left-1/2 -translate-x-1/2 w-0.5 rounded-full bg-gradient-to-b from-primary via-primary to-amber-500 shadow-[0_0_12px_rgba(var(--primary-rgb),0.5)] z-10"
-          />
-          <motion.div
-            style={isMounted ? { scaleY, originY: 0 } : { originY: 0 }}
-            className="md:hidden absolute top-4 bottom-12 left-4 w-0.5 rounded-full bg-gradient-to-b from-primary via-primary to-amber-500 shadow-[0_0_12px_rgba(var(--primary-rgb),0.5)] z-10"
-          />
+          {/* Mobile Background & Active Timeline Stem */}
+          <div className="md:hidden absolute top-4 bottom-12 left-4 -translate-x-1/2 w-0.5 rounded-full overflow-hidden bg-border/40">
+            <motion.div
+              style={isMounted ? { scaleY, originY: 0 } : { originY: 0 }}
+              className="w-full h-full bg-gradient-to-b from-primary via-primary to-amber-500 shadow-[0_0_12px_rgba(var(--primary-rgb),0.5)]"
+            />
+          </div>
 
           <div className="space-y-12 md:space-y-16 2xl:space-y-24">
             {experienceItems.map((item, index) => (
@@ -266,7 +249,7 @@ export default function Experience() {
             className="inline-flex items-center gap-3 px-8 py-4 2xl:px-10 2xl:py-5 rounded-full ios-glass border border-border/80 hover:border-primary/50 text-sm 2xl:text-base font-mono text-foreground font-semibold hover:bg-primary/10 hover:text-primary active:scale-95 shadow-md transition-all duration-200 group cursor-pointer select-none"
           >
             <Download className="w-4 h-4 2xl:w-5 2xl:h-5 text-primary group-hover:translate-y-0.5 transition-transform" />
-            <AwwwardsText text="Download Official Resume (PDF)" />
+            <span>Download Official Resume (PDF)</span>
           </a>
         </ScrollFadeIn>
       </div>

@@ -39,11 +39,11 @@
     --popover: 0 0% 9%;
     --popover-foreground: 0 0% 92%;
     --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 0 0% 6%;
-    --secondary: 0 0% 14%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 92%;
-    --muted: 0 0% 14%;
-    --muted-foreground: 0 0% 58%;
+    --muted: 0 0% 13%;
+    --muted-foreground: 0 0% 60%;
     --accent: 0 0% 16%;
     --accent-foreground: 0 0% 92%;
     --destructive: 0 62.8% 30.6%;
@@ -51,6 +51,15 @@
     --border: 0 0% 16%;
     --input: 0 0% 16%;
     --ring: 217.2 91.2% 59.8%;
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
   }
 }
 
@@ -64,7 +73,9 @@
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", "Inter", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    text-rendering: optimizeLegibility;
   }
 }
 
@@ -113,6 +124,33 @@
   box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.65), inset 0 1px 0 0 rgba(255, 255, 255, 0.22);
 }
 
+/* ── Awwwards Highlight Card — Figure Rollover Style ─────────────── */
+.highlight-card {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border) / 0.5);
+  box-shadow: 0 4px 20px -6px rgba(0, 0, 0, 0.06);
+  transition: border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.highlight-card:hover {
+  border-color: hsl(var(--primary) / 0.3);
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.15),
+    0 0 0 1px hsl(var(--primary) / 0.08);
+  transform: translateY(-3px);
+}
+
+.dark .highlight-card {
+  box-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.3);
+}
+
+.dark .highlight-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
 /* ── Hero Section Cards Hover Contrast & Pop-up ───────────────────── */
 .hero-glass-card {
   background: rgba(255, 255, 255, 0.7);
@@ -159,12 +197,15 @@
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
+
 .apple-press:active {
   transform: scale(0.97);
 }
 
 /* Universal tactile press feel for buttons and interactive controls */
-button, [role="button"], a {
+button,
+[role="button"],
+a {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -181,6 +222,51 @@ button, [role="button"], a {
   text-transform: uppercase;
 }
 
+/* ── Studio Dark Card — theme-aware deep surface ─────────────────── */
+.studio-card {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border) / 0.6);
+}
+
+.dark .studio-card {
+  background: hsl(var(--card));
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Hover text lift (Apple-style link micro-interaction) ─────────── */
+.hover-lift {
+  display: inline-block;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* ── Underline grow (nav / CTA links) ────────────────────────────── */
+.underline-grow {
+  position: relative;
+  text-decoration: none;
+}
+
+.underline-grow::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.underline-grow:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
 
 /* ── Noise / grain overlay ───────────────────────────────────────── */
 body::after {
@@ -262,6 +348,7 @@ html {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .line-clamp-3 {
@@ -269,4 +356,5 @@ html {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
