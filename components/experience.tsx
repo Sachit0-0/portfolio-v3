@@ -199,7 +199,7 @@ export default function Experience() {
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 40,
     damping: 30,
-    restDelta: 0.001,
+    restDelta: 0.005,
   });
 
   // Vertical timeline stem scale transform

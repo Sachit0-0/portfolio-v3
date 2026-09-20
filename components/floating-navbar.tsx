@@ -19,6 +19,12 @@ export function FloatingNavbar() {
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
+  const activeSectionRef = useRef(activeSection);
+  const isVisibleRef = useRef(isVisible);
+
+  // Keep refs in sync
+  activeSectionRef.current = activeSection;
+  isVisibleRef.current = isVisible;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,7 +33,7 @@ export function FloatingNavbar() {
           const currentScrollY = window.scrollY;
           const show =
             currentScrollY < lastScrollY.current || currentScrollY < 100;
-          if (show !== isVisible) setIsVisible(show);
+          if (show !== isVisibleRef.current) setIsVisible(show);
           lastScrollY.current = currentScrollY;
 
           const sections = navItems.map((item) => item.link.substring(1));
@@ -39,7 +45,7 @@ export function FloatingNavbar() {
             }
             return false;
           });
-          if (currentSection && currentSection !== activeSection) {
+          if (currentSection && currentSection !== activeSectionRef.current) {
             setActiveSection(currentSection);
           }
           ticking.current = false;
@@ -50,7 +56,7 @@ export function FloatingNavbar() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [activeSection, isVisible]);
+  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const target = document.getElementById(sectionId.substring(1));

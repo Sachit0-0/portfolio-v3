@@ -15,15 +15,16 @@ const LenisScrollProvider: FC<LenisScrollProviderProps> = ({ children }) => {
       ref={lenisRef}
       root
       options={{
-        lerp: 0.1,
-        duration: 1.4,
+        lerp: 0.12,
+        duration: 1.2,
         smoothWheel: true,
         autoResize: true,
         gestureOrientation: "vertical",
         overscroll: false,
         allowNestedScroll: true,
-        wheelMultiplier: 0.9,
+        wheelMultiplier: 0.8,
         touchMultiplier: 1.5,
+        syncTouch: false,
       }}
     >
       {children}

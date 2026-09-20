@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useReducedMotion, type Variants } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef, useState, memo } from "react";
 import { ArrowUpRight, Globe, Terminal, ExternalLink } from "lucide-react";
 
@@ -87,19 +87,43 @@ const PROJECTS: ReadonlyArray<Project> = [
   },
 ];
 
-/* ── Framer Motion Animation Variants ────────────────────────────── */
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.55,
-      delay: 0.08 * i,
-      ease: [0.215, 0.61, 0.355, 1],
-    },
-  }),
-};
+/* ── Per-Card Scroll Reveal Wrapper ──────────────────────────────── */
+const ScrollRevealCard = memo(function ScrollRevealCard({
+  children,
+  index,
+  shouldReduceMotion,
+}: {
+  children: React.ReactNode;
+  index: number;
+  shouldReduceMotion: boolean | null;
+}) {
+  const cardRef = useRef<HTMLElement>(null);
+  const isCardInView = useInView(cardRef, { once: true, margin: "-60px" });
+  const fromLeft = index % 2 === 0;
+
+  return (
+    <motion.article
+      ref={cardRef}
+      initial={
+        shouldReduceMotion
+          ? { opacity: 0 }
+          : { opacity: 0, x: fromLeft ? -50 : 50, y: 20 }
+      }
+      animate={
+        isCardInView
+          ? shouldReduceMotion
+            ? { opacity: 1 }
+            : { opacity: 1, x: 0, y: 0 }
+          : undefined
+      }
+      transition={{ duration: 0.65, ease: [0.215, 0.61, 0.355, 1] }}
+      whileHover={shouldReduceMotion ? {} : { y: -6 }}
+      className="group flex flex-col justify-between space-y-5 cursor-default"
+    >
+      {children}
+    </motion.article>
+  );
+});
 
 /* ── Minimalist Clean Project Preview Component ──────────────────── */
 const ProjectPreviewImage = memo(function ProjectPreviewImage({
@@ -211,7 +235,6 @@ const StudioMockup = memo(function StudioMockup({ project }: { project: Project 
 /* ── Main Exported Component ─────────────────────────────────────── */
 export function ProjectsShowcase() {
   const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
   const shouldReduceMotion = useReducedMotion();
 
   return (
@@ -248,15 +271,7 @@ export function ProjectsShowcase() {
         {/* Unified Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 2xl:gap-16">
           {PROJECTS.map((project, idx) => (
-            <motion.article
-              key={project.id}
-              custom={idx}
-              initial={shouldReduceMotion ? { opacity: 0 } : "hidden"}
-              animate={isInView ? "visible" : "hidden"}
-              variants={cardVariants}
-              whileHover={shouldReduceMotion ? {} : { y: -6 }}
-              className="group flex flex-col justify-between space-y-5 cursor-default"
-            >
+            <ScrollRevealCard key={project.id} index={idx} shouldReduceMotion={shouldReduceMotion}>
               {/* Browser Frame Preview */}
               <StudioMockup project={project} />
 
@@ -298,7 +313,7 @@ export function ProjectsShowcase() {
                   {project.description}
                 </p>
               </div>
-            </motion.article>
+            </ScrollRevealCard>
           ))}
         </div>
       </div>

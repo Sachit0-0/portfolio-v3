@@ -18,6 +18,7 @@ const skillGroups = [
       "TypeScript",
       "Tailwind CSS",
       "Framer Motion",
+      "GSAP",
       "Framer Canvas API",
       "HTML5 / CSS3",
       "State Management",

@@ -56,15 +56,20 @@ export function HeroSection() {
   const card3ParallaxX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), springConfig);
   const card3ParallaxY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-8, 8]), springConfig);
 
+  const rafId = useRef<number | null>(null);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const x = (e.clientX - rect.left) / width - 0.5;
-    const y = (e.clientY - rect.top) / height - 0.5;
-    mouseX.set(x);
-    mouseY.set(y);
+    if (rafId.current) return; // skip if a frame is already scheduled
+    rafId.current = requestAnimationFrame(() => {
+      if (!ref.current) { rafId.current = null; return; }
+      const rect = ref.current.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      mouseX.set(x);
+      mouseY.set(y);
+      rafId.current = null;
+    });
   };
 
   const handleMouseLeave = () => {

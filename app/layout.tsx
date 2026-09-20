@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import LenisScrollProvider from "./providers/lenis-provider";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,7 +15,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Sachit Dahal — Full-Stack Developer",
+  title: "Sachit Dahal",
   description:
     "Developer with 2+ years shipping production software for national platforms, US startups, and design-led agencies. Based in Kathmandu, Nepal.",
   keywords: [
@@ -34,14 +34,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://sachit.info.np",
-    title: "Sachit Dahal — Full-Stack Developer",
+    title: "Sachit Dahal",
     description:
       "Developer with 2+ years shipping production software for national platforms, US startups, and design-led agencies.",
     siteName: "Sachit Dahal",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sachit Dahal — Full-Stack Developer",
+    title: "Sachit Dahal",
     description:
       "Developer with 2+ years shipping production software for national platforms, US startups, and design-led agencies.",
   },
