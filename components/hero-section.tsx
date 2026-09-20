@@ -106,10 +106,10 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-transparent via-transparent to-background" />
 
       {/* Main Content Container (z-10 keeps cards and typography sharp) */}
-      <div className="relative z-10 max-w-7xl 2xl:max-w-[2036px] 3xl:max-w-[1850px] 4xl:max-w-[2200px] mx-auto px-6 md:px-12 2xl:px-16 4xl:px-24 min-h-screen flex items-center py-20 lg:py-0">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 2xl:gap-24 items-center w-full pt-20 lg:pt-0">
+      <div className="relative z-10 max-w-7xl 2xl:max-w-[2036px] 3xl:max-w-[1850px] 4xl:max-w-[2200px] mx-auto px-6 md:px-12 2xl:px-16 4xl:px-24 min-h-screen flex items-center py-20 xl:py-0">
+        <div className="grid xl:grid-cols-2 gap-10 xl:gap-16 2xl:gap-24 items-center w-full pt-20 xl:pt-0">
           {/* Left Side - Main Content */}
-          <motion.div className="space-y-6 lg:space-y-8 2xl:space-y-10">
+          <motion.div className="space-y-6 xl:space-y-8 2xl:space-y-10">
             {/* Status Pill */}
             <div className="flex items-center gap-2 text-xs sm:text-sm font-mono tracking-widest text-primary uppercase mb-4">
               <Terminal className="w-4 h-4" />
@@ -165,13 +165,13 @@ export function HeroSection() {
 
           {/* Right Side - Floating Interactive 3D Stage */}
           <div
-            className="relative mt-10 lg:mt-0 perspective-1000"
+            className="relative mt-10 xl:mt-0 perspective-1000"
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             style={{ perspective: 1200 }}
           >
             {/* Mobile & Tablet Overlapping Cards Stage (< lg) */}
-            <div className="relative lg:hidden max-w-md sm:max-w-lg mx-auto w-full pt-4 pb-8 px-1 sm:px-4">
+            <div className="relative xl:hidden max-w-md sm:max-w-lg mx-auto w-full pt-4 pb-8 px-1 sm:px-4">
               {/* Card 1: Code Card (portfolio.tsx) — Top-Left bias */}
               <motion.div
                 className="relative z-10 w-[94%] sm:w-[88%] mr-auto"
@@ -331,7 +331,7 @@ export function HeroSection() {
 
             {/* Desktop: 3D Tilting Parallax Stage with Differential Scroll Speeds */}
             <motion.div
-              className="hidden lg:block relative h-[600px] xl:h-[650px] 2xl:h-[720px] 3xl:h-[820px] 4xl:h-[900px] w-full"
+              className="hidden xl:block relative h-[600px] xl:h-[650px] 2xl:h-[720px] 3xl:h-[820px] 4xl:h-[900px] w-full"
               style={{
                 rotateX,
                 rotateY,
